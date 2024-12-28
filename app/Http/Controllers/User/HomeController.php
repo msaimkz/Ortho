@@ -29,6 +29,11 @@ class HomeController extends Controller
         return view('User.servive');
     }
 
+    public function blogDetail(){
+
+        return view('User.blog-detail');
+    }
+
     public function blog(){
 
         return view('User.blog');
@@ -37,6 +42,11 @@ class HomeController extends Controller
     public function doctor(){
 
         return view('User.doctor');
+    }
+
+    public function doctorDetail(){
+
+        return view('User.doctor-detail');
     }
 
     public function project(){

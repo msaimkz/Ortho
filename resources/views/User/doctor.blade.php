@@ -62,7 +62,7 @@
             <img src="{{ asset('Assets/User/assets/img/team_3.jpg') }}" alt="Team Thumbnail">
           </a>
           <div class="cs_team_bio">
-            <h3 class="cs_team_title cs_extra_bold mb-0"><a href='doctor-details.html'>Dr. Norma Pedric</a></h3>
+            <h3 class="cs_team_title cs_extra_bold mb-0"><a href='{{ route('User.DoctorDetail') }}'>Dr. Norma Pedric</a></h3>
             <p class="cs_team_subtitle">Neurologiest</p>
             <div class="cs_social_btns cs_style_1">
               <a href="#" class="cs_center"><i class="fa-brands fa-facebook-f"></i></a>

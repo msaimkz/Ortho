@@ -69,7 +69,7 @@
               </div>
               <h3 class="cs_post_title"><a href='blog-details.html'>Medical Of This Working Health Blog</a></h3>
               <p class="cs_post_subtitle">Medical standard chunk ofI nibh velit auctor aliquet sollic tudin.</p>
-              <a class='cs_post_btn' href='blog-details.html'>
+              <a class='cs_post_btn' href='{{ route('User.blogDetail') }}'>
                 <span>Read More</span>
                 <span><i class="fa-solid fa-angle-right"></i></span>
               </a>

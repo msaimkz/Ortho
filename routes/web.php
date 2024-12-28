@@ -19,3 +19,5 @@ Route::get('/Ortho/Our-Blogs',[HomeController::class,'blog'])->name('User.blog')
 Route::get('/Ortho/Our-Doctors',[HomeController::class,'doctor'])->name('User.doctor');
 Route::get('/Ortho/Our-Projects',[HomeController::class,'project'])->name('User.project');
 Route::get('/Ortho/Our-TimeTable',[HomeController::class,'timetable'])->name('User.timetable');
+Route::get('/Ortho/Blog-Detail',[HomeController::class,'blogDetail'])->name('User.blogDetail');
+Route::get('/Ortho/Doctor-Detail',[HomeController::class,'DoctorDetail'])->name('User.DoctorDetail');
