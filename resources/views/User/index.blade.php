@@ -198,7 +198,7 @@
       <img src="{{ asset('Assets/User/assets/img/hero_slider_sm_2.png') }}" alt="">
     </div>
     <div class="cs_hero_slider_thumb_mini">
-      <img src="{{ asset('Asset/User/assets/img/hero_slider_sm_3.png') }}" alt="">
+      <img src="{{ asset('Assets/User/assets/img/hero_slider_sm_3.png') }}" alt="">
     </div>
   </div>
 </section>
@@ -209,7 +209,7 @@
     <div class="cs_cta_in">
       <div class="cs_cta_left">
         <div class="cs_cta_thumb wow fadeInLeft" data-wow-duration="0.9s" data-wow-delay="0.25s">
-          <img src="{{ asset('Asset/User/assets/img/cta_img_1.jpg') }}" alt="">
+          <img src="{{ asset('Assets/User/assets/img/cta_img_1.jpg') }}" alt="">
         </div>
         <div class="cs_cta_info">
           <h2 class="cs_cta_title">Meet The Team Support Medical Service. </h2>
@@ -268,7 +268,7 @@
               <div class="cs_iconbox cs_style_1">
                 <div class="cs_iconbox_head">
                   <div class="cs_iconbox_icon cs_center">
-                    <img src="{{ asset('Asset/User/assets/img/icons/about_icon_1.png') }}" alt="">
+                    <img src="{{ asset('Assets/User/assets/img/icons/about_icon_1.png') }}" alt="">
                   </div>
                   <h3 class="cs_iconbox_title m-0">Client Support</h3>
                 </div>
@@ -315,7 +315,7 @@
       <div class="cs_counter_1_wrap">
         <div class="cs_counter cs_style_1">
           <div class="cs_counter_icon cs_center">
-            <img src="{{ asset('Asset/User/assets/img/icons/counter_icon_1.png') }}" alt="Icon">
+            <img src="{{ asset('Assets/User/assets/img/icons/counter_icon_1.png') }}" alt="Icon">
           </div>
           <div class="cs_counter_nmber"><span data-count-to="567" class="odometer"></span>+</div>
           <p class="cs_counter_title mb-0">Active Clients</p>
@@ -368,7 +368,7 @@
           <div class="cs_iconbox_shape"></div>
           <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
             <div class="cs_iconbox_icon cs_center">
-              <img src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}" alt="Service Icon">
+              <img src="{{ asset('Assets/User/assets/img/icons/service_icon_1.png') }}" alt="Service Icon">
             </div>
             <h3 class="iconbox_index">01</h3>
           </div>
@@ -378,11 +378,11 @@
       </div>
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="cs_iconbox cs_style_2 cs_radius_15">
-          <div class="cs_iconbox_overlay cs_bg_filed" data-src="assets/img/service_bg.jpg"></div>
+          <div class="cs_iconbox_overlay cs_bg_filed" data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
           <div class="cs_iconbox_shape"></div>
           <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
             <div class="cs_iconbox_icon cs_center">
-              <img src="assets/img/icons/service_icon_2.png" alt="Service Icon">
+              <img src="{{ asset('Assets/User/assets/img/icons/service_icon_2.png') }}" alt="Service Icon">
             </div>
             <h3 class="iconbox_index">02</h3>
           </div>
@@ -420,7 +420,7 @@
       </div>
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="cs_iconbox cs_style_2 cs_radius_15">
-          <div class="cs_iconbox_overlay cs_bg_filed" data-src="{{ asset('Asset/User/assets/img/service_bg.jpg') }}"></div>
+          <div class="cs_iconbox_overlay cs_bg_filed" data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
           <div class="cs_iconbox_shape"></div>
           <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
             <div class="cs_iconbox_icon cs_center">
@@ -434,11 +434,11 @@
       </div>
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="cs_iconbox cs_style_2 cs_radius_15">
-          <div class="cs_iconbox_overlay cs_bg_filed" data-src="{{ asset('Asset/User/assets/img/service_bg.jpg') }}"></div>
+          <div class="cs_iconbox_overlay cs_bg_filed" data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
           <div class="cs_iconbox_shape"></div>
           <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
             <div class="cs_iconbox_icon cs_center">
-              <img src="{{ asset('Asset/User/assets/img/icons/service_icon_6.png') }}" alt="Service Icon">
+              <img src="{{ asset('Assets/User/assets/img/icons/service_icon_6.png') }}" alt="Service Icon">
             </div>
             <h3 class="iconbox_index">06</h3>
           </div>
@@ -798,7 +798,7 @@
         <div class="col-lg-4">
           <div class="cs_card cs_style_1">
             <a href="#" class="cs_card_thumbnail d-block">
-              <img src="{{ asset('Asses/User/assets/img/project_3.jpg') }}" alt="Project Image" class="w-100">
+              <img src="{{ asset('Assets/User/assets/img/project_3.jpg') }}" alt="Project Image" class="w-100">
             </a>
             <div class="cs_card_info_wrapper">
               <div class="cs_card_text">
@@ -937,7 +937,7 @@
 </section>
 <!-- End Projects Section -->
 <!-- Start CTA Section -->
-<section class="cs_cta cs_style_2 cs_blue_bg cs_bg_filed cs_center" data-src="{{ asset('Asset/User/assets/img/cta_bg_1.jpg') }}">
+<section class="cs_cta cs_style_2 cs_blue_bg cs_bg_filed cs_center" data-src="{{ asset('Assets/User/assets/img/cta_bg_1.jpg') }}">
   <div class="container">
     <div class="row align-items-center cs_gap_y_40">
       <div class="col-lg-6">
@@ -1118,7 +1118,7 @@
             <div class="row cs_gap_y_30 align-items-xl-center">
               <div class="col-lg-6">
                 <div class="cs_card_thumb cs_radius_5">
-                  <img src="{{ asset('Asset/User/assets/img/offerings04.jpg') }}" alt="Department Image">
+                  <img src="{{ asset('Assets/User/assets/img/offerings04.jpg') }}" alt="Department Image">
                 </div>
               </div>
               <div class="col-lg-6">

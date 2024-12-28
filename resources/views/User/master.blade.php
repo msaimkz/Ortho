@@ -64,7 +64,7 @@
           <div class="cs_main_header_in">
             <div class="cs_main_header_left">
               <a class='cs_site_branding' href='index.html'>
-                <img src="assets/img/logo.svg" alt="Logo">
+                <img src="{{ asset('Assets/User/assets/img/logo.svg') }}" alt="Logo">
               </a>
             </div>
             <div class="cs_main_header_right">
@@ -134,13 +134,13 @@
 
 
     !-- Start Footer -->
-    <footer class="cs_footer cs_blue_bg cs_bg_filed cs_white_color" data-src="assets/img/footer_bg.jpg">
+    <footer class="cs_footer cs_blue_bg cs_bg_filed cs_white_color" data-src="{{ asset('Assets/User/assets/img/footer_bg.jpg') }}">
       <div class="container">
         <div class="cs_footer_row">
           <div class="cs_footer_col">
             <div class="cs_footer_highlight_col cs_accent_bg">
               <div class="cs_footer_logo">
-                <img src="assets/img/footer_logo.svg" alt="Logo">
+                <img src="{{ asset('Assets/User/assets/img/footer_logo.svg') }}" alt="Logo">
               </div>
               <ul class="cs_footer_contact cs_mp_0">
                 <li>
@@ -196,7 +196,7 @@
                 <li>
                   <div class="cs_recent_post">
                     <a class='cs_recent_post_thumb' href='blog-details.html'>
-                      <img src="assets/img/recent_post_1.png" alt="">
+                      <img src="{{ asset('Assets/User/assets/img/recent_post_1.png') }}" alt="">
                     </a>
                     <div class="cs_recent_post_right">
                       <p class="">23 jun 2024</p>
@@ -207,7 +207,7 @@
                 <li>
                   <div class="cs_recent_post">
                     <a class='cs_recent_post_thumb' href='blog-details.html'>
-                      <img src="assets/img/recent_post_2.png" alt="">
+                      <img src="{{ asset('Assets/User/assets/img/recent_post_2.png') }}" alt="">
                     </a>
                     <div class="cs_recent_post_right">
                       <p class="">20 jun 2024</p>
