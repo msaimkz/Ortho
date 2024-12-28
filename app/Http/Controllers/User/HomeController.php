@@ -29,6 +29,11 @@ class HomeController extends Controller
         return view('User.servive');
     }
 
+    public function serviceDetail(){
+
+        return view('User.service-detail');
+    }
+
     public function blogDetail(){
 
         return view('User.blog-detail');
@@ -57,5 +62,14 @@ class HomeController extends Controller
     public function timetable(){
 
         return view('User.timetable');
+    }
+    public function error(){
+
+        return view('User.error');
+    }
+
+    public function apoinment(){
+
+        return view('User.apoinment');
     }
 }

@@ -6,7 +6,7 @@
     <div class="container">
       <h1 class="cs_page_title">Our Service</h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href='index.html'>Home</a></li>
+        <li class="breadcrumb-item"><a href='{{ route('User.index') }}'>Home</a></li>
         <li class="breadcrumb-item active">Service</li>
       </ol>
     </div>
@@ -40,7 +40,7 @@
               </div>
               <h3 class="iconbox_index">01</h3>
             </div>
-            <h3 class="cs_iconbox_title"><a href='service-details.html'>Pharmacology</a></h3>
+            <h3 class="cs_iconbox_title"><a href='{{ route('User.serviceDetail') }}'>Pharmacology</a></h3>
             <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
           </div>
         </div>

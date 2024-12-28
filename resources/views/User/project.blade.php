@@ -6,7 +6,7 @@
     <div class="container">
       <h1 class="cs_page_title">Our Portfolio</h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href='index.html'>Home</a></li>
+        <li class="breadcrumb-item"><a href='{{ route('User.index') }}'>Home</a></li>
         <li class="breadcrumb-item active">Portfolio</li>
       </ol>
     </div>

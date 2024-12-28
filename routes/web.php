@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\DashboardController;
 
 Route::get('/d', function () {
     return view('welcome');
@@ -21,3 +22,12 @@ Route::get('/Ortho/Our-Projects',[HomeController::class,'project'])->name('User.
 Route::get('/Ortho/Our-TimeTable',[HomeController::class,'timetable'])->name('User.timetable');
 Route::get('/Ortho/Blog-Detail',[HomeController::class,'blogDetail'])->name('User.blogDetail');
 Route::get('/Ortho/Doctor-Detail',[HomeController::class,'DoctorDetail'])->name('User.DoctorDetail');
+Route::get('/Ortho/Service-Detail',[HomeController::class,'serviceDetail'])->name('User.serviceDetail');
+Route::get('/Ortho/404',[HomeController::class,'error'])->name('User.error');
+Route::get('/Ortho/Booking-Appionment',[HomeController::class,'apoinment'])->name('User.apoinment');
+
+
+
+// User Dashboard Routes
+
+Route::get('/Ortho/Dashboard',[DashboardController::class,'dashboard'])->name('User.dashboard.dashboard');

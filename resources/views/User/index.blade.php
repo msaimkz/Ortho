@@ -18,11 +18,11 @@
                 <p>Call Us at: (+2) 56 54 1453</p>
               </div>
               <div class="cs_hero_btns">
-                <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                   <span>Contact Now </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
-                <a class='cs_btn cs_style_1 cs_color_2' href='about.html'>
+                <a class='cs_btn cs_style_1 cs_color_2' href='{{ route('User.about') }}'>
                   <span>Discover More </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
@@ -47,11 +47,11 @@
                 <p>Call Us at: (+2) 56 54 1453</p>
               </div>
               <div class="cs_hero_btns">
-                <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                   <span>Contact Now </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
-                <a class='cs_btn cs_style_1 cs_color_2' href='about.html'>
+                <a class='cs_btn cs_style_1 cs_color_2' href='{{ route('User.about') }}'>
                   <span>Discover More </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
@@ -76,11 +76,11 @@
                 <p>Call Us at: (+2) 56 54 1453</p>
               </div>
               <div class="cs_hero_btns">
-                <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                   <span>Contact Now </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
-                <a class='cs_btn cs_style_1 cs_color_2' href='about.html'>
+                <a class='cs_btn cs_style_1 cs_color_2' href='{{ route('User.about') }}'>
                   <span>Discover More </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
@@ -105,11 +105,11 @@
                 <p>Call Us at: (+2) 56 54 1453</p>
               </div>
               <div class="cs_hero_btns">
-                <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                   <span>Contact Now </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
-                <a class='cs_btn cs_style_1 cs_color_2' href='about.html'>
+                <a class='cs_btn cs_style_1 cs_color_2' href='{{ route('User.about') }}'>
                   <span>Discover More </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
@@ -134,11 +134,11 @@
                 <p>Call Us at: (+2) 56 54 1453</p>
               </div>
               <div class="cs_hero_btns">
-                <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                   <span>Contact Now </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
-                <a class='cs_btn cs_style_1 cs_color_2' href='about.html'>
+                <a class='cs_btn cs_style_1 cs_color_2' href='{{ route('User.about') }}'>
                   <span>Discover More </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
@@ -163,11 +163,11 @@
                 <p>Call Us at: (+2) 56 54 1453</p>
               </div>
               <div class="cs_hero_btns">
-                <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                   <span>Contact Now </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
-                <a class='cs_btn cs_style_1 cs_color_2' href='about.html'>
+                <a class='cs_btn cs_style_1 cs_color_2' href='{{ route('User.about') }}'>
                   <span>Discover More </span>
                   <i class="fa-solid fa-angles-right"></i>
                 </a>
@@ -217,7 +217,7 @@
         </div>
       </div>
       <div class="cs_cta_right">
-        <a class='cs_btn cs_style_1 cs_color_3' href='appointments.html'>
+        <a class='cs_btn cs_style_1 cs_color_3' href='{{ route('User.doctor') }}'>
           <span>Booking Now </span>
           <i class="fa-solid fa-angles-right"></i>
         </a>
@@ -293,7 +293,7 @@
             </div>
             <p class="cs_about_iconbox_subtitle">There are many variations of pass available this medical service the team  <a href="#">READ MORE +</a></p>
           </div>
-          <a class='cs_btn cs_style_1 cs_color_1' href='about.html'>
+          <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.about') }}'>
             <span>About More </span>
             <i class="fa-solid fa-angles-right"></i>
           </a>
@@ -909,7 +909,7 @@
             <h2 class="cs_section_title cs_white_color">Professional Medical Care Measure Medical.</h2>
             <p class="cs_cta_subtitle cs_white_color">We are privileged to work with hundreds of
               future-thinking medial, including many of the world’s top hardware, software, and brands , feel safe and comfortable in establishing.</p>
-              <a class='cs_btn cs_style_1 cs_color_3' href='contact.html'>
+              <a class='cs_btn cs_style_1 cs_color_3' href='{{ route('User.contact') }}'>
                 <span>Video More </span>
                 <i class="fa-solid fa-angles-right"></i>
               </a>
@@ -988,7 +988,7 @@
 
                   </ul>
                   
-                  <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                  <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                     <span>Read More </span>
                     <i class="fa-solid fa-angles-right"></i>
                   </a>
@@ -1022,7 +1022,7 @@
 
                   </ul>
                   
-                  <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                  <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                     <span>Read More </span>
                     <i class="fa-solid fa-angles-right"></i>
                   </a>
@@ -1056,7 +1056,7 @@
 
                   </ul>
                   
-                  <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                  <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                     <span>Read More </span>
                     <i class="fa-solid fa-angles-right"></i>
                   </a>
@@ -1090,7 +1090,7 @@
 
                   </ul>
                   
-                  <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+                  <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                     <span>Read More </span>
                     <i class="fa-solid fa-angles-right"></i>
                   </a>
