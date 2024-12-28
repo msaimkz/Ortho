@@ -63,64 +63,33 @@
         <div class="container">
           <div class="cs_main_header_in">
             <div class="cs_main_header_left">
-              <a class='cs_site_branding' href='index.html'>
+              <a class='cs_site_branding' href='{{ route('User.index') }}'>
                 <img src="{{ asset('Assets/User/assets/img/logo.svg') }}" alt="Logo">
               </a>
             </div>
             <div class="cs_main_header_right">
               <div class="cs_nav cs_primary_color">
                 <ul class="cs_nav_list">
-                  <li class="menu-item-has-children">
-                    <a href='index.html'>Home</a>
-                    <ul>
-                      <li><a href='index.html'>Main Home</a></li>
-                      <li><a href='home-v2.html'>Home V2</a></li>
-                      <li><a href='home-v3.html'>Home V3</a></li>
-                    </ul>
-                  </li>
-                  <li><a href='about.html'>About</a></li>
-                  <li class="menu-item-has-children">
-                    <a href='service.html'>Service</a>
-                    <ul>
-                      <li><a href='service.html'>Service</a></li>
-                      <li><a href='service-details.html'>Service Details</a></li>
-                    </ul>
-                  </li>
-                  <li class="menu-item-has-children">
-                    <a href='blog.html'>Blog</a>
-                    <ul>
-                      <li><a href='blog.html'>Blog List</a></li>
-                      <li><a href='blog-details.html'>Blog Details</a></li>
-                    </ul>
-                  </li>
+                 
+                  <li><a href='{{ route('User.index') }}'>Home</a></li>
+                  <li><a href='{{ route('User.about') }}'>About</a></li>
+                  <li><a href='{{ route('User.service') }}'>Service</a></li>
+                  <li><a href='{{ route('User.blog') }}'>Blog</a></li>
+                 
+                  
                   <li class="menu-item-has-children">
                     <a href="#">Pages</a>
                     <ul>
-                      <li><a href='appointments.html'>Appointments</a></li>
-                      <li><a href='doctors.html'>Doctors</a></li>
-                      <li><a href='doctor-details.html'>Doctor Details</a></li>
-                      <li><a href='timetable.html'>Timetable</a></li>
-                      <li><a href='projects.html'>Projects</a></li>
-                      <li><a href='error.html'>Error 404</a></li>
+                      <li><a href='{{ route('User.doctor') }}'>Doctors</a></li>
+                      <li><a href='{{ route('User.timetable') }}'>Timetable</a></li>
+                      <li><a href='{{ route('User.project') }}'>Projects</a></li>
                     </ul>
                   </li>
-                  <li><a href='contact.html'>Contact</a></li>
+                  <li><a href='{{ route('User.contact') }}'>Contact</a></li>
                 </ul>
               </div>
-              <div class="cs_search_wrap">
-                <div class="cs_search_toggle cs_center">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-                <form action="#" class="cs_header_search_form">
-                  <div class="cs_header_search_form_in">
-                    <input type="text" placeholder="Search" class="cs_header_search_field">
-                    <button class="cs_header_submit_btn">
-                      <i class="fa-solid fa-magnifying-glass"></i>                     
-                    </button>
-                  </div>
-                </form>
-              </div>
-              <a class='cs_btn cs_style_1 cs_color_1' href='contact.html'>
+             
+              <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
                 <span>Contact Now </span>
                 <i class="fa-solid fa-angles-right"></i>
               </a>
@@ -133,7 +102,7 @@
     @yield('content')
 
 
-    !-- Start Footer -->
+   
     <footer class="cs_footer cs_blue_bg cs_bg_filed cs_white_color" data-src="{{ asset('Assets/User/assets/img/footer_bg.jpg') }}">
       <div class="container">
         <div class="cs_footer_row">
@@ -189,35 +158,7 @@
               </ul>
             </div>
           </div>
-          <div class="cs_footer_col">
-            <div class="cs_footer_widget">
-              <h2 class="cs_footer_widget_title">Recent Posts</h2>
-              <ul class="cs_recent_post_list cs_mp_0">
-                <li>
-                  <div class="cs_recent_post">
-                    <a class='cs_recent_post_thumb' href='blog-details.html'>
-                      <img src="{{ asset('Assets/User/assets/img/recent_post_1.png') }}" alt="">
-                    </a>
-                    <div class="cs_recent_post_right">
-                      <p class="">23 jun 2024</p>
-                      <h3 class="cs_recent_post_title"><a href='blog-details.html'>We round Solution york Blog</a></h3>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="cs_recent_post">
-                    <a class='cs_recent_post_thumb' href='blog-details.html'>
-                      <img src="{{ asset('Assets/User/assets/img/recent_post_2.png') }}" alt="">
-                    </a>
-                    <div class="cs_recent_post_right">
-                      <p class="">20 jun 2024</p>
-                      <h3 class="cs_recent_post_title"><a href='blog-details.html'>The Medical Of This Working Health</a></h3>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+        
         </div>
       </div>
       <div class="cs_footer_bottom cs_primary_bg">

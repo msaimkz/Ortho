@@ -11,4 +11,41 @@ class HomeController extends Controller
 
         return view('User.index');
     }
+
+
+    public function about(){
+
+        return view('User.about');
+    }
+
+
+    public function contact(){
+
+        return view('User.contact');
+    }
+
+    public function service(){
+
+        return view('User.servive');
+    }
+
+    public function blog(){
+
+        return view('User.blog');
+    }
+
+    public function doctor(){
+
+        return view('User.doctor');
+    }
+
+    public function project(){
+
+        return view('User.project');
+    }
+
+    public function timetable(){
+
+        return view('User.timetable');
+    }
 }

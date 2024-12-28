@@ -305,47 +305,7 @@
   <div class="cs_height_120 cs_height_lg_80"></div>
 </section>
 <!-- End About Section -->
-<!-- Start Counter -->
-<div class="cs_counter_area cs_gray_bg">
-  <div class="container">
-    <div class="cs_counter_content cs_blue_bg">
-      <div class="cs_counter_shape position-absolute">
-        <img src="{{ asset('Assets/User/assets/img/about_section_img_1.png') }}" alt="Shape">
-      </div>
-      <div class="cs_counter_1_wrap">
-        <div class="cs_counter cs_style_1">
-          <div class="cs_counter_icon cs_center">
-            <img src="{{ asset('Assets/User/assets/img/icons/counter_icon_1.png') }}" alt="Icon">
-          </div>
-          <div class="cs_counter_nmber"><span data-count-to="567" class="odometer"></span>+</div>
-          <p class="cs_counter_title mb-0">Active Clients</p>
-        </div>
-        <div class="cs_counter cs_style_1">
-          <div class="cs_counter_icon cs_center">
-            <img src="{{ asset('Assets/User/assets/img/icons/counter_icon_2.png') }}" alt="Icon">
-          </div>
-          <div class="cs_counter_nmber"><span data-count-to="23" class="odometer"></span>K+</div>
-          <p class="cs_counter_title mb-0">Team Support</p>
-        </div>
-        <div class="cs_counter cs_style_1">
-          <div class="cs_counter_icon cs_center">
-            <img src="{{ asset('Assets/User/assets/img/icons/counter_icon_3.png') }}" alt="Icon">
-          </div>
-          <div class="cs_counter_nmber"><span data-count-to="241" class="odometer"></span>+</div>
-          <p class="cs_counter_title mb-0">Projects Complite</p>
-        </div>
-        <div class="cs_counter cs_style_1">
-          <div class="cs_counter_icon cs_center">
-            <img src="{{ asset('Assets/User/assets/img/icons/counter_icon_3.png') }}" alt="Icon">
-          </div>
-          <div class="cs_counter_nmber"><span data-count-to="16" class="odometer"></span>K+</div>
-          <p class="cs_counter_title mb-0">Award winner</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Counter -->
+
 <!-- Start Service Section -->
 <section class="cs_gray_bg">
   <div class="cs_height_110 cs_height_lg_70"></div>
@@ -475,15 +435,7 @@
         </div>
       </div>
     </div>
-    <div class="cs_service_footer">
-      <div class="cs_service_footer_icon">
-        <img src="{{ asset('Assets/User/assets/img/icons/service_footer_icon_1.png') }}" alt="Icon">
-      </div>
-      <div class="cs_service_footer_text cs_medium">
-       Delivering tomorrow’s health care for your family.<br> medical this View <a href="#">SEE MORE<span> <i class="fa-solid fa-angles-right"></i></span></a>
-      </div>
-    </div>
-  </div>
+    
   <div class="cs_height_120 cs_height_lg_80"></div>
 </section>
 <!-- End Service Section -->
@@ -1154,52 +1106,7 @@
   <hr>
 </section>
 <!-- End Medical Tab Section -->
-<!-- Start Medical Solution Section -->
-<section class="cs_card cs_style_3 cs_gray_bg position-relative">
-  <div class="cs_height_110 cs_height_lg_70"></div>
-  <div class="container">
-    <div class="row cs_gap_y_40">
-      <div class="col-lg-6">
-      <div class="cs_section_heading cs_style_1">
-        <p class="cs_section_subtitle cs_accent_color">
-          <span class="cs_shape_left"></span>CONTACT US
-        </p>
-        <h2 class="cs_section_title">Make An Appointment <br>Apply For Treatments</h2>
-      </div>
-      <div class="cs_height_25 cs_height_lg_25"></div>
-      <form class="cs_contact_form row cs_gap_y_30 home_form_area">
-        <div class="col-md-6">
-          <input type="text" name="name" class="cs_form_field" placeholder="Your name">
-        </div>
-        <div class="col-md-6">
-          <input type="email" name="email" class="cs_form_field" placeholder="Your email">
-        </div>
-        <div class="col-md-6">
-          <input type="text" name="subject" class="cs_form_field" placeholder="Your Subject">
-        </div>
-        <div class="col-md-6">
-          <input type="text" name="phone" class="cs_form_field" placeholder="Your phone">
-        </div>
-        <div class="col-lg-12">
-          <textarea rows="5" name="message" class="cs_form_field" placeholder="Your comments"></textarea>
-        </div>
-        <div class="col-lg-12">
-          <button type="submit" class="cs_btn cs_style_1 cs_color_1">Send Request</button>
-        </div>
-      </form>
-      </div>
-      <div class="col-lg-6">
-        <div class="cs_solution_thumbnail cs_bg_filed" data-src="{{ asset('Assets/User/assets/img/medical_solution_1.jpg') }}">
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="cs_solution_shape position-absolute">
-    <img src="{{ asset('Assets/User/assets/img/stethoscope.png') }}" alt="Shape">
-  </div>
-  <div class="cs_height_120 cs_height_lg_80"></div>
-</section>
-<!-- End Medical Solution Section -->
+
 <!-- Start Blog Section -->
 <section>
   <div class="cs_height_110 cs_height_lg_70"></div>
