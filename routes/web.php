@@ -31,3 +31,4 @@ Route::get('/Ortho/Booking-Appionment',[HomeController::class,'apoinment'])->nam
 // User Dashboard Routes
 
 Route::get('/Ortho/Dashboard',[DashboardController::class,'dashboard'])->name('User.dashboard.dashboard');
+Route::get('/Ortho/My-Profile',[DashboardController::class,'profile'])->name('User.dashboard.profile');

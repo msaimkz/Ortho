@@ -12,4 +12,9 @@ class DashboardController extends Controller
 
         return view('User.Dashboard.Dashboard');
     }
+
+    public function profile(){
+
+        return view('User.Dashboard.profile');
+    }
 }
