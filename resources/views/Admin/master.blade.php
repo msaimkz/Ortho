@@ -58,7 +58,7 @@
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard"><i
                         class="zmdi zmdi-home m-r-5"></i>Ortho</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#user">Patient</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#user">Admin</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane stretchRight active" id="dashboard">
@@ -66,22 +66,66 @@
                     <ul class="list">
                         <li>
                             <div class="user-info">
-                                <div class="image"><a href="{{ route('User.dashboard.profile') }}"><img
+                                <div class="image"><a href="{{ route('Admin.profile') }}"><img
                                             src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
                                             alt="User"></a></div>
                                 <div class="detail">
                                     <h4>Dr. Charlotte</h4>
-                                    <small><a href="{{ route('User.index') }}">Back</a></small>
+                                    <small>Admin</small>
                                 </div>
                             </div>
                         </li>
                         <li class="header">MAIN</li>
-                        <li class="active open"><a href="index.html"><i
+                        <li class="active open"><a href="{{ route('Admin.dashboard') }}"><i
                                     class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+                        <li><a href="javascript:void(0);" class="menu-toggle"><i
+                                    class="zmdi zmdi-account-o"></i><span>Doctors</span> </a>
+                            <ul class="ml-menu">
+                                <li><a href="{{ route('Admin.doctor') }}">All Doctors</a></li>
+                                <li><a href="add-doctor.html">All Doctor Request</a></li>
+
+                            </ul>
+                        </li>
                         <li><a href="{{ route('User.dashboard.appoinment') }}"><i
-                                    class="zmdi zmdi-calendar-check"></i><span>Appointment</span> </a></li>
-                        <li><a href="book-appointment.html"><i
-                                    class="zmdi zmdi-folder"></i><span>Report</span> </a></li>
+                                    class="zmdi zmdi-account-add"></i><span>Patients</span> </a></li>
+                        <li><a href="javascript:void(0);" class="menu-toggle"><i
+                                    class="zmdi zmdi-balance-wallet
+                                    "></i><span>Subscribtion</span> </a>
+                            <ul class="ml-menu">
+                                <li><a href="doctors.html">All Subscribtion</a></li>
+                                <li><a href="add-doctor.html">Add Subscribtion</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="header">Social Content</li>
+
+                        <li><a href="javascript:void(0);" class="menu-toggle"><i
+                                    class="zmdi zmdi-blogger"></i><span>Blogs</span> </a>
+                            <ul class="ml-menu">
+                                <li><a href="doctors.html">All Blogs</a></li>
+                                <li><a href="add-doctor.html">Add Blogs</a></li>
+
+                            </ul>
+                        </li>
+                        <li><a href="javascript:void(0);" class="menu-toggle"><i
+                                    class="zmdi zmdi-delicious"></i><span>Services</span> </a>
+                            <ul class="ml-menu">
+                                <li><a href="doctors.html">All Services</a></li>
+                                <li><a href="add-doctor.html">Add Services</a></li>
+
+                            </ul>
+                        </li>
+                        <li><a href="javascript:void(0);" class="menu-toggle"><i
+                                    class="zmdi zmdi-copy"></i><span>Projects</span> </a>
+                            <ul class="ml-menu">
+                                <li><a href="doctors.html">All Projects</a></li>
+                                <li><a href="add-doctor.html">Add Projects</a></li>
+
+                            </ul>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>
@@ -90,7 +134,7 @@
                     <ul class="list">
                         <li>
                             <div class="user-info m-b-20 p-b-15">
-                                <div class="image"><a href="{{ route('User.dashboard.profile') }}"><img
+                                <div class="image"><a href="{{ route('Admin.profile') }}"><img
                                             src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
                                             alt="User"></a></div>
                                 <div class="detail">
@@ -130,7 +174,7 @@
     <script src="{{ asset('assets/Dashboard/assets/bundles/morrisscripts.bundle.js') }}"></script><!-- Morris Plugin Js -->
     <script src="{{ asset('assets/Dashboard/assets/bundles/jvectormap.bundle.js') }}"></script> <!-- JVectorMap Plugin Js -->
     <script src="{{ asset('assets/Dashboard/assets/bundles/knob.bundle.js') }}"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
- 
+
     @yield('js')
 
     <script src="{{ asset('assets/Dashboard/assets/bundles/mainscripts.bundle.js') }}"></script>

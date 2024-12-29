@@ -17,4 +17,14 @@ class DashboardController extends Controller
 
         return view('User.Dashboard.profile');
     }
+
+    public function Editprofile(){
+
+        return view('User.Dashboard.Edit-Profile');
+    }
+
+    public function appoinment(){
+
+        return view('User.Dashboard.appoinment');
+    }
 }

@@ -1,4 +1,4 @@
-@extends('User.Dashboard.master')
+@extends('Admin.master')
 
 @section('content')
 <section class="content profile-page">
@@ -14,7 +14,7 @@
                     <i class="zmdi zmdi-edit"></i>
                 </button>
                 <ul class="breadcrumb float-md-right">
-                    <li class="breadcrumb-item"><a href="{{ route('User.dashboard.dashboard') }}"><i class="zmdi zmdi-home"></i> Ortho</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('Admin.dashboard') }}"><i class="zmdi zmdi-home"></i> Ortho</a></li>
                     <li class="breadcrumb-item active">Profile</li>
                 </ul>                
             </div>
@@ -28,7 +28,7 @@
                         <div class="profile-image"> <img src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}" alt=""> </div>
                         <div>
                             <h4 class="m-b-0"><strong>Dr. Charlotte</strong> Deo</h4>
-                            <span class="job_post"><a href="{{ route('User.dashboard.edit-profile') }}">Edit Profile</a></span>
+                            <span class="job_post"><a href="{{ route('Admin.profile.edit') }}">Edit Profile</a></span>
                             <p>795 Folsom Ave, Suite 600<br> San Francisco, CADGE 94107</p>
                         </div>
                         
