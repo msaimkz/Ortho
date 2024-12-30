@@ -86,7 +86,7 @@
 
                             </ul>
                         </li>
-                        <li><a href="{{ route('User.dashboard.appoinment') }}"><i
+                        <li><a href="{{ route('Admin.patients') }}"><i
                                     class="zmdi zmdi-account-add"></i><span>Patients</span> </a></li>
                         <li><a href="javascript:void(0);" class="menu-toggle"><i
                                     class="zmdi zmdi-balance-wallet
@@ -103,8 +103,8 @@
                         <li><a href="javascript:void(0);" class="menu-toggle"><i
                                     class="zmdi zmdi-blogger"></i><span>Blogs</span> </a>
                             <ul class="ml-menu">
-                                <li><a href="doctors.html">All Blogs</a></li>
-                                <li><a href="add-doctor.html">Add Blogs</a></li>
+                                <li><a href="{{ route('Admin.blog') }}">All Blogs</a></li>
+                                <li><a href="{{ route('Admin.blog.create') }}">Add Blogs</a></li>
 
                             </ul>
                         </li>

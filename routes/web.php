@@ -5,6 +5,8 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Doctor\DoctorController;
+use App\Http\Controllers\Admin\Patient\PatientController;
+use App\Http\Controllers\Admin\Blog\BlogController;
 
 Route::get('/d', function () {
     return view('welcome');
@@ -45,3 +47,11 @@ Route::get('/Ortho/Admin/Dashboard',[AdminController::class,'dashboard'])->name(
 Route::get('/Ortho/Admin/Profile',[AdminController::class,'Profile'])->name('Admin.profile');
 Route::get('/Ortho/Admin/Update-Profile',[AdminController::class,'EditProfile'])->name('Admin.profile.edit');
 Route::get('/Ortho/Admin/All-Doctors',[DoctorController::class,'doctor'])->name('Admin.doctor');
+Route::get('/Ortho/Admin/Doctor-Profile',[DoctorController::class,'profile'])->name('Admin.doctor.profile');
+Route::get('/Ortho/Admin/All-Patients',[PatientController::class,'index'])->name('Admin.patients');
+Route::get('/Ortho/Admin/Patient-Profile',[PatientController::class,'profile'])->name('Admin.patients.profile');
+Route::get('/Ortho/Admin/All-Blogs',[BlogController::class,'blog'])->name('Admin.blog');
+Route::get('/Ortho/Admin/Blog-Detail',[BlogController::class,'detail'])->name('Admin.blog.detail');
+Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');
+Route::get('/Ortho/Admin/Edit-Blog',[BlogController::class,'edit'])->name('Admin.blog.edit');
+

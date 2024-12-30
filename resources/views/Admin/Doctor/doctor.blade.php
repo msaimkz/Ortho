@@ -1,5 +1,4 @@
 @extends('Admin.master')
-
 @section('content')
 <section class="content">
     <div class="block-header">
@@ -49,7 +48,7 @@
                                                 <li><a title="instagram" href="#" ><i class="zmdi zmdi-instagram"></i></a></li>
                                             </ul>
                                             <p class="text-muted">795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>                           
-                                            <a href="profile.html"  class="btn btn-default btn-round btn-simple">View Profile</a>
+                                            <a href="{{ route('Admin.doctor.profile') }}"  class="btn btn-default btn-round btn-simple">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
