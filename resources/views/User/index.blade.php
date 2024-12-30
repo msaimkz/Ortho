@@ -247,10 +247,7 @@
             <img src="{{ asset('Assets/User/assets/img/about_img_2.jpg') }}" alt="About Image">
             <img src="{{ asset('Assets/User/assets/img/icons/about_shape_1.png') }}" alt="Shape Image" class="cs_about_thumb_shape_2">
           </div>
-          <div class="cs_experience_box cs_center">
-            <p class="cs_experience_box_number">26+</p>
-            <p class="cs_experience_box_title">Experience</p>
-          </div>
+          
         </div>
       </div>
       <div class="col-lg-6 wow fadeInRight" data-wow-duration="0.9s" data-wow-delay="0.25s">
@@ -258,11 +255,11 @@
           <div class="cs_section_heading cs_style_1">
             <p class="cs_section_subtitle cs_accent_color">
               <span class="cs_shape_left"></span>
-              OUR ABOUT US
+              Doctor Registration Now Open
             </p>
-            <h2 class="cs_section_title">More Than 26+ Years About Provide Medical.</h2>
+            <h2 class="cs_section_title"> Join Our Esteemed Team of Healthcare Professionals!.</h2>
           </div>
-          <p class="cs_about_text">We are privileged to work with hundreds of future-thinking medial, including many of the world’s top hardware, software, and brands , feel safe and comfortable in establishing.</p>
+          <p class="cs_about_text">Are you a dedicated healthcare professional looking to make a meaningful impact? This is your opportunity to join one of the region's most trusted healthcare institutions! We are proud to announce that <b>Ortho Hospital</b> is now accepting registrations for skilled and passionate doctors to become part of our prestigious medical team.</p>
           <div class="row cs_gap_y_30">
             <div class="col-sm-6">
               <div class="cs_iconbox cs_style_1">
@@ -272,7 +269,7 @@
                   </div>
                   <h3 class="cs_iconbox_title m-0">Client Support</h3>
                 </div>
-                <p class="cs_iconbox_subtitle mb-0">But must explain to you medical of and pain was.</p>
+                <p class="cs_iconbox_subtitle mb-0">Dedicated to assisting our clients with care, reliability, and prompt solutions.</p>
               </div>
             </div>
             <div class="col-sm-6">
@@ -283,18 +280,13 @@
                   </div>
                   <h3 class="cs_iconbox_title m-0">Doctor Support</h3>
                 </div>
-                <p class="cs_iconbox_subtitle mb-0">But must explain to you medical of and pain was.</p>
+                <p class="cs_iconbox_subtitle mb-0">Providing expert medical guidance to ensure your health and well-being.</p>
               </div>
             </div>
           </div>
-          <div class="cs_about_iconbox">
-            <div class="cs_about_iconbox_icon cs_center">
-              <i class="fa-regular fa-circle-check"></i>
-            </div>
-            <p class="cs_about_iconbox_subtitle">There are many variations of pass available this medical service the team  <a href="#">READ MORE +</a></p>
-          </div>
+         
           <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.about') }}'>
-            <span>About More </span>
+            <span>Registration Now </span>
             <i class="fa-solid fa-angles-right"></i>
           </a>
         </div>

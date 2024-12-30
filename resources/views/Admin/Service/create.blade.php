@@ -16,15 +16,15 @@
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-5 col-sm-12">
-                <h2>Edit Blog
+                <h2>New Service
                     <small>Welcome to Ortho</small>
                 </h2>
             </div>
             <div class="col-lg-5 col-md-7 col-sm-12">
                 <ul class="breadcrumb float-md-right">
                     <li class="breadcrumb-item"><a href="{{ route('Admin.dashboard') }}"><i class="zmdi zmdi-home"></i> Ortho</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('Admin.blog') }}">Blog</a></li>
-                    <li class="breadcrumb-item active">Edit Blog</li>
+                    <li class="breadcrumb-item"><a href="{{ route('Admin.service') }}">Service</a></li>
+                    <li class="breadcrumb-item active">New Service</li>
                 </ul>
             </div>
         </div>
@@ -36,7 +36,7 @@
                 <div class="card">
                     <div class="body">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Enter Blog title" />
+                            <input type="text" class="form-control" placeholder="Enter Service title" />
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="card">
                     <div class="body">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Enter Blog Slug" />
+                            <input type="text" class="form-control" placeholder="Enter Service Slug" />
                         </div>
                     </div>
                 </div>
@@ -108,6 +108,42 @@
             
             
             <div class="col-lg-12">
+                <div class="card">
+                    <div class="body">
+                       
+                        
+                        <div style="cursor: pointer"  id="frmFileUpload" class="dropzone m-b-20 m-t-20" method="post" enctype="multipart/form-data">
+                            <div class="dz-message">
+                                <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
+                                <h3>Drop files here or click to upload.</h3>
+                                <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em> </div>
+                            
+                        </div>                        
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="a2017">
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                           
+                                            <div class="image">
+                                                <img src="{{ asset('Assets/Dashboard/assets/images/image-gallery/1.jpg') }}" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <a href="" class="btn btn-danger btn-round waves-effect m-3">Delete</a>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                                   
+                </div>
                 <div class="card">
                     <div class="body">
                        

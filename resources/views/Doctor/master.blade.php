@@ -58,7 +58,7 @@
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard"><i
                         class="zmdi zmdi-home m-r-5"></i>Ortho</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#user">Admin</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#user">Doctor</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane stretchRight active" id="dashboard">
@@ -66,12 +66,12 @@
                     <ul class="list">
                         <li>
                             <div class="user-info">
-                                <div class="image"><a href="{{ route('Admin.profile') }}"><img
+                                <div class="image"><a href="{{ route('doctor.profile') }}"><img
                                             src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
                                             alt="User"></a></div>
                                 <div class="detail">
                                     <h4>Dr. Charlotte</h4>
-                                    <small>Admin</small>
+                                    <small>Doctor</small>
                                 </div>
                             </div>
                         </li>
@@ -134,7 +134,7 @@
                     <ul class="list">
                         <li>
                             <div class="user-info m-b-20 p-b-15">
-                                <div class="image"><a href="{{ route('Admin.profile') }}"><img
+                                <div class="image"><a href="{{ route('doctor.profile') }}"><img
                                             src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
                                             alt="User"></a></div>
                                 <div class="detail">

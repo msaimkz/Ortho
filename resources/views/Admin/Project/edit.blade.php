@@ -16,15 +16,15 @@
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-5 col-sm-12">
-                <h2>Edit Blog
+                <h2>Edit Project
                     <small>Welcome to Ortho</small>
                 </h2>
             </div>
             <div class="col-lg-5 col-md-7 col-sm-12">
                 <ul class="breadcrumb float-md-right">
                     <li class="breadcrumb-item"><a href="{{ route('Admin.dashboard') }}"><i class="zmdi zmdi-home"></i> Ortho</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('Admin.blog') }}">Blog</a></li>
-                    <li class="breadcrumb-item active">Edit Blog</li>
+                    <li class="breadcrumb-item"><a href="{{ route('Admin.project') }}">Project</a></li>
+                    <li class="breadcrumb-item active">Edit Project</li>
                 </ul>
             </div>
         </div>
@@ -36,7 +36,7 @@
                 <div class="card">
                     <div class="body">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Enter Blog title" />
+                            <input type="text" class="form-control" placeholder="Enter Project title" />
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="card">
                     <div class="body">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Enter Blog Slug" />
+                            <input type="text" class="form-control" placeholder="Enter Project Slug" />
                         </div>
                     </div>
                 </div>
@@ -80,34 +80,24 @@
                
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="body">
-                        <label for="">Short Descripion</label>
+                        <label for="">Descripion</label>
 
                         <div class="form-group">
-                            <textarea rows="4" class="form-control no-resize" placeholder="Please Write Short Descriptipn..."></textarea>
+                            <textarea rows="4" class="form-control no-resize" placeholder="Please Write  Descriptipn..."></textarea>
                         </div>
                     </div>
                 </div>
                
             </div>
 
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="body">
-                        <label for="">Long Descripion</label>
-
-                        <div class="form-group">
-                            <textarea rows="4" class="form-control no-resize" placeholder="Please Write Long Descriptipn..."></textarea>
-                        </div>
-                    </div>
-                </div>
-               
-            </div>
+            
             
             
             <div class="col-lg-12">
+               
                 <div class="card">
                     <div class="body">
                        

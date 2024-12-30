@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Doctor\DoctorController;
 use App\Http\Controllers\Admin\Patient\PatientController;
 use App\Http\Controllers\Admin\Blog\BlogController;
+use App\Http\Controllers\Admin\Service\ServiceController;
+use App\Http\Controllers\Admin\Project\ProjectController;
+use App\Http\Controllers\Doctor\DoctorsController;
 
 Route::get('/d', function () {
     return view('welcome');
@@ -54,4 +57,18 @@ Route::get('/Ortho/Admin/All-Blogs',[BlogController::class,'blog'])->name('Admin
 Route::get('/Ortho/Admin/Blog-Detail',[BlogController::class,'detail'])->name('Admin.blog.detail');
 Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');
 Route::get('/Ortho/Admin/Edit-Blog',[BlogController::class,'edit'])->name('Admin.blog.edit');
+Route::get('/Ortho/Admin/All-Services',[ServiceController::class,'index'])->name('Admin.service');
+Route::get('/Ortho/Admin/Service-Detail',[ServiceController::class,'show'])->name('Admin.service.detail');
+Route::get('/Ortho/Admin/Create-Service',[ServiceController::class,'create'])->name('Admin.service.create');
+Route::get('/Ortho/Admin/Edit-Service',[ServiceController::class,'edit'])->name('Admin.service.edit');
+Route::get('/Ortho/Admin/All-Projects',[ProjectController::class,'index'])->name('Admin.project');
+Route::get('/Ortho/Admin/Create-Project',[ProjectController::class,'create'])->name('Admin.project.create');
+Route::get('/Ortho/Admin/Edit-Project',[ProjectController::class,'edit'])->name('Admin.project.edit');
+
+
+
+// Doctor Dashboard Routes
+Route::get('/Ortho/Doctor/Dashboard',[DoctorsController::class,'index'])->name('doctor.dashboard');
+Route::get('/Ortho/Doctor/My-Profile',[DoctorsController::class,'profile'])->name('doctor.profile');
+
 
