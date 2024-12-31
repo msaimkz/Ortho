@@ -92,7 +92,7 @@
                                     class="zmdi zmdi-balance-wallet
                                     "></i><span>Subscribtion</span> </a>
                             <ul class="ml-menu">
-                                <li><a href="doctors.html">All Subscribtion</a></li>
+                                <li><a href="{{ route('Admin.subscripion') }}">All Subscribtion</a></li>
                                 <li><a href="add-doctor.html">Add Subscribtion</a></li>
 
                             </ul>

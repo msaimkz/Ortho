@@ -34,7 +34,10 @@
                         </a>
                     </div>
                     <div class="body">
-                       
+                       <div>
+                         <a href="" class="btn btn-danger">Delete</a>
+                         <a href="" class="btn btn-danger">Block</a>
+                       </div>
                         <hr>
                         <strong>Occupation</strong>
                         <p>UI UX Design</p>

@@ -72,4 +72,9 @@ class HomeController extends Controller
 
         return view('User.apoinment');
     }
+
+    public function DoctorRegistration(){
+
+        return view('User.doctor-regiestraion');
+    }
 }

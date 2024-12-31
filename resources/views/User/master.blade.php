@@ -15,6 +15,8 @@
     <link rel="icon" href="{{ asset('Assets/User/assets/img/favicon.png') }}">
     <!-- Site Title -->
     <title>Ortho- Medical & Health</title>
+    @yield('css')
+
     <link rel="stylesheet" href="{{ asset('Assets/User/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('Assets/User/assets/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('Assets/User/assets/css/animate.css') }}">

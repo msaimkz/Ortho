@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Patient\PatientController;
 use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\Project\ProjectController;
+use App\Http\Controllers\Admin\Subscription\SubscriptionController;
 use App\Http\Controllers\Doctor\DoctorsController;
 
 Route::get('/d', function () {
@@ -32,6 +33,7 @@ Route::get('/Ortho/Doctor-Detail',[HomeController::class,'DoctorDetail'])->name(
 Route::get('/Ortho/Service-Detail',[HomeController::class,'serviceDetail'])->name('User.serviceDetail');
 Route::get('/Ortho/404',[HomeController::class,'error'])->name('User.error');
 Route::get('/Ortho/Booking-Appionment',[HomeController::class,'apoinment'])->name('User.apoinment');
+Route::get('/Ortho/Doctor-Registration',[HomeController::class,'DoctorRegistration'])->name('User.doctorRegiestraion');
 
 
 
@@ -64,6 +66,7 @@ Route::get('/Ortho/Admin/Edit-Service',[ServiceController::class,'edit'])->name(
 Route::get('/Ortho/Admin/All-Projects',[ProjectController::class,'index'])->name('Admin.project');
 Route::get('/Ortho/Admin/Create-Project',[ProjectController::class,'create'])->name('Admin.project.create');
 Route::get('/Ortho/Admin/Edit-Project',[ProjectController::class,'edit'])->name('Admin.project.edit');
+Route::get('/Ortho/Admin/All-Subscriptions',[SubscriptionController::class,'index'])->name('Admin.subscripion');
 
 
 

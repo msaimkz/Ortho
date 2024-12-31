@@ -285,7 +285,7 @@
             </div>
           </div>
          
-          <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.about') }}'>
+          <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.doctorRegiestraion') }}'>
             <span>Registration Now </span>
             <i class="fa-solid fa-angles-right"></i>
           </a>
