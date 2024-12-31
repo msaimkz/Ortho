@@ -16,4 +16,9 @@ class DoctorsController extends Controller
 
         return view('Doctor.profile');
     }
+
+    public function Editprofile(){
+
+        return view('Doctor.edit');
+    }
 }

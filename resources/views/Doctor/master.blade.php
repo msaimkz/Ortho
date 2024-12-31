@@ -46,7 +46,9 @@
             </li>
             <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a>
             </li>
-
+            <li class="float-right">
+                <a href="sign-in.html" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
+            </li>
 
 
 
@@ -78,52 +80,22 @@
                         <li class="header">MAIN</li>
                         <li class="active open"><a href="{{ route('Admin.dashboard') }}"><i
                                     class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-account-o"></i><span>Doctors</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.doctor') }}">All Doctors</a></li>
-                                <li><a href="add-doctor.html">All Doctor Request</a></li>
 
-                            </ul>
-                        </li>
                         <li><a href="{{ route('Admin.patients') }}"><i
                                     class="zmdi zmdi-account-add"></i><span>Patients</span> </a></li>
+                        <li><a href="{{ route('Admin.patients') }}"><i
+                                    class="zmdi zmdi-calendar-check"></i><span>Appoinments</span> </a></li>
+
+
                         <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-balance-wallet
-                                    "></i><span>Subscribtion</span> </a>
+                                    class="zmdi zmdi-calendar-check"></i><span>Schedules</span> </a>
                             <ul class="ml-menu">
-                                <li><a href="doctors.html">All Subscribtion</a></li>
-                                <li><a href="add-doctor.html">Add Subscribtion</a></li>
+                                <li><a href="{{ route('Admin.blog') }}">All Schedules</a></li>
+                                <li><a href="{{ route('Admin.blog.create') }}">Add Schedule</a></li>
 
                             </ul>
                         </li>
-
-                        <li class="header">Social Content</li>
-
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-blogger"></i><span>Blogs</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.blog') }}">All Blogs</a></li>
-                                <li><a href="{{ route('Admin.blog.create') }}">Add Blogs</a></li>
-
-                            </ul>
-                        </li>
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-delicious"></i><span>Services</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.service') }}">All Services</a></li>
-                                <li><a href="{{ route('Admin.service.create') }}">Add Services</a></li>
-
-                            </ul>
-                        </li>
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-copy"></i><span>Projects</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.project') }}">All Projects</a></li>
-                                <li><a href="{{ route('Admin.project.create') }}">Add Projects</a></li>
-
-                            </ul>
-                        </li>
+                       
 
 
                     </ul>

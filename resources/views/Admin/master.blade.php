@@ -82,7 +82,7 @@
                                     class="zmdi zmdi-account-o"></i><span>Doctors</span> </a>
                             <ul class="ml-menu">
                                 <li><a href="{{ route('Admin.doctor') }}">All Doctors</a></li>
-                                <li><a href="add-doctor.html">All Doctor Request</a></li>
+                                <li><a href="{{ route('Admin.doctor.request') }}">All Doctor Request</a></li>
 
                             </ul>
                         </li>
@@ -93,7 +93,8 @@
                                     "></i><span>Subscribtion</span> </a>
                             <ul class="ml-menu">
                                 <li><a href="{{ route('Admin.subscripion') }}">All Subscribtion</a></li>
-                                <li><a href="add-doctor.html">Add Subscribtion</a></li>
+                                <li><a href="{{ route('Admin.subscripion.create') }}">Add Subscribtion</a></li>
+                                <li><a href="{{ route('Admin.subscripion.subscriber') }}">Subscribe Patients</a></li>
 
                             </ul>
                         </li>

@@ -53,6 +53,8 @@ Route::get('/Ortho/Admin/Profile',[AdminController::class,'Profile'])->name('Adm
 Route::get('/Ortho/Admin/Update-Profile',[AdminController::class,'EditProfile'])->name('Admin.profile.edit');
 Route::get('/Ortho/Admin/All-Doctors',[DoctorController::class,'doctor'])->name('Admin.doctor');
 Route::get('/Ortho/Admin/Doctor-Profile',[DoctorController::class,'profile'])->name('Admin.doctor.profile');
+Route::get('/Ortho/Admin/Doctor-Registration-Requests',[DoctorController::class,'request'])->name('Admin.doctor.request');
+Route::get('/Ortho/Admin/Doctor-Request-Proflie',[DoctorController::class,'requestProfile'])->name('Admin.doctor.request-profile');
 Route::get('/Ortho/Admin/All-Patients',[PatientController::class,'index'])->name('Admin.patients');
 Route::get('/Ortho/Admin/Patient-Profile',[PatientController::class,'profile'])->name('Admin.patients.profile');
 Route::get('/Ortho/Admin/All-Blogs',[BlogController::class,'blog'])->name('Admin.blog');
@@ -67,11 +69,25 @@ Route::get('/Ortho/Admin/All-Projects',[ProjectController::class,'index'])->name
 Route::get('/Ortho/Admin/Create-Project',[ProjectController::class,'create'])->name('Admin.project.create');
 Route::get('/Ortho/Admin/Edit-Project',[ProjectController::class,'edit'])->name('Admin.project.edit');
 Route::get('/Ortho/Admin/All-Subscriptions',[SubscriptionController::class,'index'])->name('Admin.subscripion');
+Route::get('/Ortho/Admin/Create-Subscription',[SubscriptionController::class,'create'])->name('Admin.subscripion.create');
+Route::get('/Ortho/Admin/Edit-Subscription',[SubscriptionController::class,'edit'])->name('Admin.subscripion.edit');
+Route::get('/Ortho/Admin/Subscribe-Patients',[SubscriptionController::class,'show'])->name('Admin.subscripion.subscriber');
 
 
 
 // Doctor Dashboard Routes
 Route::get('/Ortho/Doctor/Dashboard',[DoctorsController::class,'index'])->name('doctor.dashboard');
 Route::get('/Ortho/Doctor/My-Profile',[DoctorsController::class,'profile'])->name('doctor.profile');
+Route::get('/Ortho/Doctor/Edit-Profile',[DoctorsController::class,'Editprofile'])->name('doctor.profile.edit');
 
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

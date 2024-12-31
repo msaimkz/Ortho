@@ -62,7 +62,7 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{ route('Admin.project.edit') }}"><span class="badge badge-info">Edit</span></a>
+                                                <a href="{{ route('Admin.subscripion.edit') }}"><span class="badge badge-info">Edit</span></a>
                                                 <a href=""><span class="badge badge-danger">Delete</span></a>
                                             </td>
                                         </tr>

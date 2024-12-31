@@ -27,11 +27,7 @@
 				<div class="card">
 					<div class="header">
 						<h2><strong>Edit</strong> Profile<small>Update Profile here...</small> </h2>
-						<ul class="header-dropdown">                            
-                            <li class="remove">
-                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
-                            </li>
-                        </ul>
+						
 					</div>
 					<div class="body">
                         <div class="row clearfix">

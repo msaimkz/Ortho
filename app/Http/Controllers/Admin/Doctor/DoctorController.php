@@ -16,4 +16,14 @@ class DoctorController extends Controller
 
         return view('Admin.Doctor.doctor-profile');
     }
+
+    public function request(){
+
+        return view('Admin.Doctor.request');
+    }
+
+    public function requestProfile(){
+
+        return view('Admin.Doctor.request-profile');
+    }
 }

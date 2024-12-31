@@ -28,7 +28,7 @@
                         <div class="profile-image"> <img src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}" alt=""> </div>
                         <div>
                             <h4 class="m-b-0"><strong>Dr. Charlotte</strong> Deo</h4>
-                            <span class="job_post"><a href="{{ route('Admin.profile.edit') }}">Edit Profile</a></span>
+                            <span class="job_post"><a href="{{ route('doctor.profile.edit') }}">Edit Profile</a></span>
                             <p>795 Folsom Ave, Suite 600<br> San Francisco, CADGE 94107</p>
                         </div>
                         
@@ -91,12 +91,7 @@
                             <hr>
                             <ul class="list-unstyled specialties">
                                 <li>Breast Surgery</li>
-                                <li>Colorectal Surgery</li>
-                                <li>Endocrinology</li>
-                                <li>Cardiology</li>
-                                <li>Cosmetic Dermatology</li>
-                                <li>Mole checks and monitoring</li>
-                                <li>Clinical Neurophysiology</li>
+                               
                             </ul>
                             
                         </div>
