@@ -19,6 +19,7 @@
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/color_skins.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="theme-cyan">
@@ -48,13 +49,14 @@
             </li>
 
 
-        <li class="float-right">
-            <form action="{{ route('logout') }}" method="post" id="logout-form">
-             @csrf
-            </form>
-            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
+            <li class="float-right">
+                <form action="{{ route('logout') }}" method="post" id="logout-form">
+                    @csrf
+                </form>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
 
-        </li>
+            </li>
 
 
         </ul>
@@ -96,7 +98,8 @@
                                     class="zmdi zmdi-account-add"></i><span>Patients</span> </a></li>
                         <li><a href="javascript:void(0);" class="menu-toggle"><i
                                     class="zmdi zmdi-balance-wallet
-                                    "></i><span>Subscribtion</span> </a>
+                                    "></i><span>Subscribtion</span>
+                            </a>
                             <ul class="ml-menu">
                                 <li><a href="{{ route('Admin.subscripion') }}">All Subscribtion</a></li>
                                 <li><a href="{{ route('Admin.subscripion.create') }}">Add Subscribtion</a></li>
@@ -182,12 +185,26 @@
     <script src="{{ asset('assets/Dashboard/assets/bundles/jvectormap.bundle.js') }}"></script> <!-- JVectorMap Plugin Js -->
     <script src="{{ asset('assets/Dashboard/assets/bundles/knob.bundle.js') }}"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
 
-    @yield('js')
+
+
+
 
     <script src="{{ asset('assets/Dashboard/assets/bundles/mainscripts.bundle.js') }}"></script>
+
     <script src="{{ asset('assets/Dashboard/assets/js/pages/index.js') }}"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @yield('js')
+
+
 </body>
 
-<!-- Mirrored from wrraptheme.com/templates/oreo/hospital/html/light/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Dec 2024 04:00:04 GMT -->
 
 </html>
