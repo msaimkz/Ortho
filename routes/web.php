@@ -100,3 +100,4 @@ Route::middleware([
 
 // Auth Routes
 Route::get('/home',[UserAuthController::class,'index'])->middleware(['auth']);
+Route::get('/403-Forbidden',[UserAuthController::class,'statusblockError'])->name('statusblockError');

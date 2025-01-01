@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class UserAuthController extends Controller
 {
+    public function statusblockError(){
+        return view('error.account');
+    }
+
     public function index(){
         if(Auth::user()->status != 'active'){
 
-            return  redirect()->back()->withInput('error','Your Email is Block by Admin');
+            Auth::logout();
+            return  redirect()->route('statusblockError');
         }
 
         if(Auth::user()->role == 'patients'){

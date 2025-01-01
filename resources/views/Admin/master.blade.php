@@ -48,7 +48,13 @@
             </li>
 
 
+        <li class="float-right">
+            <form action="{{ route('logout') }}" method="post" id="logout-form">
+             @csrf
+            </form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
 
+        </li>
 
 
         </ul>
@@ -70,7 +76,7 @@
                                             src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
                                             alt="User"></a></div>
                                 <div class="detail">
-                                    <h4>Dr. Charlotte</h4>
+                                    <h4>{{ Auth::user()->name }}</h4>
                                     <small>Admin</small>
                                 </div>
                             </div>
@@ -139,7 +145,7 @@
                                             src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
                                             alt="User"></a></div>
                                 <div class="detail">
-                                    <h4>Dr. Charlotte</h4>
+                                    <h4>{{ Auth::user()->name }}</h4>
 
                                 </div>
 
@@ -150,10 +156,10 @@
                             <p>795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>
                             <hr>
                             <small class="text-muted">Email address: </small>
-                            <p>Charlotte@example.com</p>
+                            <p>{{ Auth::user()->email }}</p>
                             <hr>
                             <small class="text-muted">Phone: </small>
-                            <p>+ 202-555-0191</p>
+                            <p>{{ Auth::user()->phone }}</p>
                             <hr>
 
 
