@@ -101,15 +101,26 @@
                                     </ul>
                                 </li>
                                 <li><a href='{{ route('User.contact') }}'>Contact</a></li>
-                               
-                                <li class="menu-item-has-children">
-                                    <a href="#">Alex</a>
-                                    <ul>
-                                        <li><a href='{{ route('User.dashboard.dashboard') }}'>Dashboard</a></li>
-                                        <li><a href='{{ route('User.timetable') }}'>Sign Out</a></li>
-                                       
-                                    </ul>
-                                </li>
+                                @if (Auth::check() == true)
+                                    <li class="menu-item-has-children">
+                                        <a href="#">{{ Auth::user()->name }}</a>
+                                        <ul>
+                                            <li><a href='{{ route('profile.show') }}'>Dashboard</a></li>
+                                            <li>
+                                                <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                                                    @csrf
+                                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
+                                                </form>
+                                            </li>
+                                            
+
+                                        </ul>
+                                    </li>
+                                @else
+                                    <li><a href='{{ route('login') }}'>Sign in</a></li>
+                                @endif
+
+
                             </ul>
                         </div>
 

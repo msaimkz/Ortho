@@ -12,9 +12,12 @@ use App\Http\Controllers\Admin\Project\ProjectController;
 use App\Http\Controllers\Admin\Subscription\SubscriptionController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\UserAuthController;
 Route::get('/d', function () {
     return view('welcome');
 });
+
+
 
 
 
@@ -93,3 +96,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+// Auth Routes
+Route::get('/home',[UserAuthController::class,'index'])->middleware(['auth']);

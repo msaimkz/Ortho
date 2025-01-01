@@ -21,13 +21,13 @@ class VerificationController extends Controller
         $user = \App\Models\User::findOrFail($id);
 
         if ($user->hasVerifiedEmail() || !hash_equals($hash, sha1($user->getEmailForVerification()))) {
-            return redirect('/d');
+            return redirect()->route('User.index');
         }
 
         $user->markEmailAsVerified();
 
         event(new Verified($user));
 
-        return redirect('/d')->with('verified', true);
+        return redirect()->route('User.index')->with('verified', true);
     }
 }
