@@ -1,60 +1,181 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<!doctype html>
+<html class="no-js " lang="en">
 
-        <x-validation-errors class="mb-4" />
+<!-- Mirrored from wrraptheme.com/templates/oreo/hospital/html/light/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Dec 2024 04:00:49 GMT -->
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+    <title>:: Ortho Hospital :: </title>
+    <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/plugins/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/authentication.css') }}">
+    <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/color_skins.css') }}">
+</head>
 
-            <div>
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                <div class="mt-4">
-                    <x-label for="terms">
-                        <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-
-                            <div class="ms-2">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
-                                ]) !!}
-                            </div>
+<body class="theme-cyan authentication sidebar-collapse">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-transparent">
+    <div class="container">        
+       
+        <div class="navbar-collapse">
+            <ul class="navbar-nav">
+                
+                
+                      
+                <li class="nav-item">
+                    <a class="nav-link btn btn-white btn-round" href="{{ route('login') }}">SIGN IN</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Navbar -->
+<div class="page-header" style="overflow-y: hidden;">
+    <div class="page-header-image" style="background-image:url({{ asset('Assets/Dashboard/assets/images/login.jpg') }})"></div>
+    <div class="container">
+        <div class="col-md-12 content-center">
+            <div class="card-plain">
+                <form class="form" method="POST" action="{{ route('register') }}">
+                    @csrf
+                
+                    <!-- Header -->
+                    <div class="header">
+                        <div class="logo-container">
                         </div>
-                    </x-label>
-                </div>
-            @endif
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ms-4">
-                    {{ __('Register') }}
-                </x-button>
+                        <h5>Sign Up</h5>
+                    </div>
+                
+                    <!-- Form Fields -->
+                    <div class="content">
+                        <!-- Name Field -->
+                        <div class="input-group">
+                            <input type="text" name="name" class="form-control" placeholder="Enter User Name" value="{{ old('name') }}" required autofocus>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-account-circle"></i>
+                            </span>
+                            <div>
+                                @error('name')
+                                <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                           
+                        </div>
+                
+                        <!-- Email Field -->
+                        <div class="input-group">
+                            <input type="email" name="email" class="form-control" placeholder="Enter Email" value="{{ old('email') }}" required>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-email"></i>
+                            </span>
+                            <div>
+                                @error('email')
+                                <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                           
+                        </div>
+                
+                        <!-- Phone Field -->
+                        <div class="input-group">
+                            <input type="text" name="phone" class="form-control" placeholder="Enter Phone Number" value="{{ old('phone') }}" required>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-phone"></i>
+                            </span>
+                            <div>
+                                @error('phone')
+                                <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                           
+                        </div>
+                
+                        <!-- City Field -->
+                        <div class="input-group">
+                            <input type="text" name="city" class="form-control" placeholder="Enter City" value="{{ old('city') }}" required>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-city"></i>
+                            </span>
+                            <div>
+                                @error('city')
+                                <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            
+                        </div>
+                
+                        <!-- Password Field -->
+                        <div class="input-group">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
+                            <div>
+                                @error('password')
+                                <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            
+                        </div>
+                
+                        <!-- Confirm Password Field -->
+                        <div class="input-group">
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
+                            <div>
+                                @error('password_confirmation')
+                                <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                           
+                        </div>
+                    </div>
+                
+                    <!-- Terms and Conditions -->
+                    @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
+                        <div class="checkbox">
+                            <input id="terms" type="checkbox" name="terms" required>
+                            <label for="terms">
+                                I read and agree to the
+                                <a href="{{ route('terms.show') }}">terms of usage</a> and
+                                <a href="{{ route('policy.show') }}">privacy policy</a>.
+                            </label>
+                        </div>
+                    @endif
+                
+                    <!-- Submit Button -->
+                    <div class="footer text-center">
+                        <button type="submit" class="btn btn-primary btn-round btn-block waves-effect waves-light">SIGN UP</button>
+                    </div>
+                
+                    <!-- Login Link -->
+                    <div class="text-center mt-3">
+                        <h5><a class="link" href="{{ route('login') }}">You already have a membership?</a></h5>
+                    </div>
+                </form>
+                
             </div>
-        </form>
-    </x-authentication-card>
-</x-guest-layout>
+        </div>
+    </div>
+   
+</div>
+
+<!-- Jquery Core Js -->
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
+<script>
+   $(".navbar-toggler").on('click',function() {
+    $("html").toggleClass("nav-open");
+});
+</script>
+</body>
+
+<!-- Mirrored from wrraptheme.com/templates/oreo/hospital/html/light/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Dec 2024 04:00:49 GMT -->
+</html>

@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\Project\ProjectController;
 use App\Http\Controllers\Admin\Subscription\SubscriptionController;
 use App\Http\Controllers\Doctor\DoctorsController;
-
+use App\Http\Controllers\Auth\VerificationController;
 Route::get('/d', function () {
     return view('welcome');
 });
@@ -80,7 +80,9 @@ Route::get('/Ortho/Doctor/Dashboard',[DoctorsController::class,'index'])->name('
 Route::get('/Ortho/Doctor/My-Profile',[DoctorsController::class,'profile'])->name('doctor.profile');
 Route::get('/Ortho/Doctor/Edit-Profile',[DoctorsController::class,'Editprofile'])->name('doctor.profile.edit');
 
-
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
 
 Route::middleware([
     'auth:sanctum',
