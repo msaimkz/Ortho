@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-lg-7 col-md-5 col-sm-12">
                     <h2>Profile
-                        <small>Welcome to Oreo</small>
+                        <small>Welcome to Ortho</small>
                     </h2>
                 </div>
                 <div class="col-lg-5 col-md-7 col-sm-12">
@@ -122,7 +122,7 @@
 @section('js')
     <script type="text/javascript">
         $('#ChangePasswordForm').submit(function(event) {
-
+            $('#btn').prop('disabled', true);
             event.preventDefault();
             var element = $(this);
 
@@ -132,9 +132,12 @@
                 data: element.serializeArray(),
                 dataType: 'json',
                 success: function(response) {
+                    
                     $('#Currentpassword').val('')
                     $('#password').val('')
                     $('#password_confirmation').val('')
+
+                    $('#btn').prop('disabled', false);
                     if (response['status'] == true) {
                         const Toast = Swal.mixin({
                             toast: true,

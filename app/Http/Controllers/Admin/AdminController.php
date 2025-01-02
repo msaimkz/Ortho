@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Admin\AdminProfile;
+use App\Rules\ValidDateOfBirth;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -63,6 +66,65 @@ class AdminController extends Controller
              return response()->json([
                'status' => false,
                 'errors' => $validator->errors(),
+             ]);
+        }
+    }
+
+    public function UpdateProfile(Request $request){
+
+        $validator = Validator::make($request->all(),[
+           'name' => ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
+           'email' => ['required','email','max:30','unique:users,email,' . Auth::id()],
+           'phone' => ['required','regex:/^0[3-9][0-9]{2}[0-9]{7}$/'],
+           'city' =>  ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
+           'age' =>   ['nullable','numeric','min:11','max:89'],
+           'gender' => ['nullable','in:male,female'],
+           'date_of_birth' => ['nullable','date',new ValidDateOfBirth()],
+           'bio' => ['nullable','min:10','max:250'],
+           'address' => ['nullable','min:10','max:150'],
+        ],[
+            'date_of_birth.date' => 'Date of birth must be a valid date',
+            'age.min' => 'Age must be at least 11 years old',
+            'age.max' => 'Age must be less than or equal to 89 years',
+            'age.numeric' => 'Please enter a valid age',
+            'city.regex' => 'City should  contain only Alphabets',
+            'name.regex' => 'Name should  contain only Alphabets',
+        ]);
+
+        if($validator->passes()){
+
+            $id = Auth::user()->id;
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->city = $request->city;
+            $user->update();
+
+            $profile = AdminProfile::updateOrCreate(
+               ['user_id' => $id],
+               [
+              
+                'age' => $request->age, 
+                'gender' => $request->gender, 
+                'date_of_birth' => $request->date_of_birth ? Carbon::parse($request->date_of_birth)->format('Y-m-d') : null, 
+                'bio' => $request->bio,
+                'address' => $request->address,
+               ]    
+            );
+
+            return response()->json([
+                'status' => true,
+                'msg'=> 'Profile Update Successfully',
+             ]);
+
+
+        }
+        else{
+
+             return response()->json([
+                'status' => false,
+                'errors'=> $validator->errors(),
              ]);
         }
     }
