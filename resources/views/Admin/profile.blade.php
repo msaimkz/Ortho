@@ -33,7 +33,10 @@
                             <div>
                                 <h4 class="m-b-0"><strong>{{ Auth::user()->name }}</strong></h4>
                                 <span class="job_post"><a href="{{ route('Admin.profile.edit') }}">Edit Profile</a></span>
-                                <p>795 Folsom Ave, Suite 600<br> San Francisco, CADGE 94107</p>
+                                @if (!empty($profile->address))
+                                <p>{{ ucwords($profile->address) }}</p>
+                                    
+                                @endif
                             </div>
 
 
@@ -50,42 +53,52 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane body active" id="about">
-                                <p>Dr. Charlotte Deo Leon is a neurosurgeon in East Patchogue,Contrary to popular belief,
-                                    Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin
-                                    literature from 45 BC, making it over 2000 years old. He received his medical degree
-                                    from Harvard Medical School and has been in practice for 21 years. He is one of 5
-                                    doctors at Brookhaven Memorial Hospital Medical Center and one of 9 at Southside
-                                    Hospital who specialize in Neurological Surgery.</p>
+                                @if (!empty($profile->bio))
+                                <p>{{ $profile->bio }}.</p>
+                                @endif
+                                
                                 <h6>Qualifications</h6>
                                 <hr>
                                 <ul class="list-unstyled">
                                     <li>
-                                        <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
+                                        <p><strong>Name:</strong> {{ ucwords(Auth::user()->name) }}</p>
                                     </li>
                                     <li>
                                         <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
                                     </li>
                                     <li>
-                                        <p><strong>City:</strong> {{ Auth::user()->city }}</p>
+                                        <p><strong>City:</strong> {{ ucwords(Auth::user()->city) }}</p>
                                     </li>
                                     <li>
                                         <p><strong>Phone:</strong> {{ Auth::user()->phone }}</p>
                                     </li>
+                                    @if (!empty($profile->address))
                                     <li>
-                                        <p><strong>Address:</strong> Certified Chiropractic Sports Physician 1982</p>
+                                        <p><strong>Address:</strong> {{ $profile->address }}</p>
                                     </li>
+                                    @endif
+                                   
+                                    @if (!empty($profile->gender))
                                     <li>
-                                        <p><strong>Gender:</strong> Female</p>
+                                        <p><strong>Gender:</strong> {{ ucwords($profile->gender) }}</p>
                                     </li>
+                                    @endif
+                                   
+                                    @if (!empty($profile->address))
                                     <li>
-                                        <p><strong>Date Of Birth:</strong> Past-President, Int. Fed. 1991</p>
+                                        <p><strong>Date Of Birth:</strong> {{ \Carbon\Carbon::parse($profile->date_of_birth)->format('d D M Y') }}</p>
                                     </li>
+                                    @endif
+                                   
+                                    @if (!empty($profile->age))
                                     <li>
-                                        <p><strong>Age:</strong> Palmer Clinic</p>
+                                        <p><strong>Age:</strong> {{ $profile->age }} Years</p>
                                     </li>
+                                    @endif
+                                   
+                                    
                                 </ul>
-                                <h6>Specialties</h6>
-                                <hr>
+                               
 
                             </div>
                             <div class="tab-pane body" id="Account">

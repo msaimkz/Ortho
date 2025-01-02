@@ -78,7 +78,7 @@
                                             src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
                                             alt="User"></a></div>
                                 <div class="detail">
-                                    <h4>{{ Auth::user()->name }}</h4>
+                                    <h4 class="user-name">{{ Auth::user()->name }}</h4>
                                     <small>Admin</small>
                                 </div>
                             </div>
@@ -148,16 +148,19 @@
                                             src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
                                             alt="User"></a></div>
                                 <div class="detail">
-                                    <h4>{{ Auth::user()->name }}</h4>
+                                    <h4 class="user-name">{{ Auth::user()->name }}</h4>
 
                                 </div>
 
                             </div>
                         </li>
                         <li>
+                            @if (!empty($profile->address))
                             <small class="text-muted">Location: </small>
-                            <p>795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>
+                            <p class="user-location">{{ $profile->address }}</p>
                             <hr>
+                            @endif
+                           
                             <small class="text-muted">Email address: </small>
                             <p>{{ Auth::user()->email }}</p>
                             <hr>

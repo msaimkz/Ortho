@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <input type="text" name="age" id="age" class="form-control" placeholder="Age">
+                                        <input type="text" name="age" id="age" class="form-control" placeholder="Age" value="{{ ($profile->age != null) ? $profile->age : '' }}">
                                         <span style="color: red"></span>
 
                                     </div>
@@ -80,8 +80,8 @@
                                 <div class="col-sm-6">
                                     <select name="gender" id="gender" class="form-control show-tick">
                                         <option value="">- Gender -</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="male" {{ ($profile->gender != null && $profile->gender == 'male') ? 'selected' : '' }}>Male</option>
+                                        <option value="female" {{ ($profile->gender != null && $profile->gender == 'female') ? 'selected' : '' }}>Female</option>
                                     </select>
                                     <span style="color: red"></span>
 
@@ -91,7 +91,7 @@
                                     <div class="form-group">
                                         
                                         <input type="text" name="date_of_birth" id="DOB" class="form-control datetimepicker"
-                                            placeholder="Date Of Birth">
+                                            placeholder="Date Of Birth" value="{{ ($profile->age != null) ? \Carbon\Carbon::parse($profile->date_of_birth)->format('d D M Y') : '' }}">
                                             <div>
                                                 <p style="color: red"></p>
 
@@ -103,14 +103,14 @@
 
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <textarea rows="4" name="bio" id="bio" class="form-control no-resize" placeholder="Please type About You Bio..."></textarea>
+                                    <textarea rows="4" name="bio" id="bio" class="form-control no-resize" placeholder="Please type About You Bio...">{{ ($profile->bio != null) ? $profile->bio : '' }}</textarea>
                                     <span style="color: red"></span>
 
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <textarea rows="4" name="address" id="address" class="form-control no-resize" placeholder="Please type About Your Address..."></textarea>
+                                    <textarea rows="4" name="address" id="address" class="form-control no-resize" placeholder="Please type About Your Address...">{{ ($profile->address != null) ? $profile->address : '' }}</textarea>
                                     <span style="color: red"></span>
 
                                 </div>
@@ -180,6 +180,15 @@
                             icon: "success",
                             title: response['msg'],
                         });
+                        $('.user-name').html(response.name)
+                        if(response.address != null){
+                            $('.user-location').html(response.address)
+                        }
+                        else{
+                        $('.user-location').html('')
+
+                        }
+
                     } else {
 
                        

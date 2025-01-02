@@ -19,17 +19,42 @@ class AdminController extends Controller
 
     public function dashboard(){
 
+       
+
+     
         return view('Admin.dashboard');
     }
 
     public function Profile(){
 
-        return view('Admin.profile');
+        $id = Auth::user()->id;
+
+        $profile = AdminProfile::where('user_id',$id)->first();
+
+        if($profile != null){
+            return view('Admin.profile',compact('profile'));
+
+        }
+        else{
+            return view('Admin.profile');
+
+        }
     }
 
     public function EditProfile(){
 
-        return view('Admin.edit-profile');
+        $id = Auth::user()->id;
+
+        $profile = AdminProfile::where('user_id',$id)->first();
+
+        if($profile != null){
+            return view('Admin.edit-profile',compact('profile'));
+
+        }
+        else{
+            return view('Admin.edit-profile');
+
+        }
     }
 
     public function ChangePassword(Request $request){
@@ -115,6 +140,8 @@ class AdminController extends Controller
 
             return response()->json([
                 'status' => true,
+                'name' => $user->name,
+                'address' => $profile->address,
                 'msg'=> 'Profile Update Successfully',
              ]);
 
