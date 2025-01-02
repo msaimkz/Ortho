@@ -59,7 +59,8 @@ Route::get('/Ortho/Admin/Doctor-Profile',[DoctorController::class,'profile'])->n
 Route::get('/Ortho/Admin/Doctor-Registration-Requests',[DoctorController::class,'request'])->name('Admin.doctor.request');
 Route::get('/Ortho/Admin/Doctor-Request-Proflie',[DoctorController::class,'requestProfile'])->name('Admin.doctor.request-profile');
 Route::get('/Ortho/Admin/All-Patients',[PatientController::class,'index'])->name('Admin.patients');
-Route::get('/Ortho/Admin/Patient-Profile',[PatientController::class,'profile'])->name('Admin.patients.profile');
+Route::get('/Ortho/Admin/Patient-Profile/{id}',[PatientController::class,'profile'])->name('Admin.patients.profile');
+Route::get('/Ortho/Admin/Change-Patient-Status/{id}',[PatientController::class,'status'])->name('Admin.patients.statusChange');
 Route::get('/Ortho/Admin/All-Blogs',[BlogController::class,'blog'])->name('Admin.blog');
 Route::get('/Ortho/Admin/Blog-Detail',[BlogController::class,'detail'])->name('Admin.blog.detail');
 Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');

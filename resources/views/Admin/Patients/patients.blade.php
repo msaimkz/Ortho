@@ -41,29 +41,41 @@
                                     <table class="table m-b-0 table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Media</th>
+                                               
                                                 <th>Patients ID</th>
                                                 <th>Name</th>
-                                                <th>Age</th>
-                                                <th>Address</th>
+                                                <th>Email</th>
+                                                <th>City</th>
                                                 <th>Number</th>
-                                                <th>Last Visit</th>
+                                                <th>Status</th>
+                                                <th>Regiestration Date</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><span class="list-icon"><img class="patients-img"
-                                                            src="{{ asset('Assets/Dashboard/assets/images/xs/avatar1.jpg') }}" alt=""></span>
-                                                </td>
-                                                <td><span class="list-name">KU 00598</span></td>
-                                                <td>Daniel</td>
-                                                <td>32</td>
-                                                <td>71 Pilgrim Avenue Chevy Chase, MD 20815</td>
-                                                <td>404-447-6013</td>
-                                                <td>11 Jan 2018</td>
-                                                <td><a href="{{ route('Admin.patients.profile') }}"><span class="badge badge-success">View</span></a></td>
-                                            </tr>
+                                            @if (!empty($patients))
+                                                @foreach ($patients as $patient )
+                                                <tr>
+                                                   
+                                                    <td><span class="list-name">{{ $patient->id }}</span></td>
+                                                    <td>{{ $patient->name }}</td>
+                                                    <td>{{ $patient->email }}</td>
+                                                    <td>{{ $patient->city }}</td>
+                                                    <td>{{ $patient->phone }}</td>
+                                                    @if ($patient->status == 'active')
+                                                        <td><span class="badge badge-success">Active</span></td>
+                                                    @else
+                                                    <td><span class="badge badge-danger">Block</span></td>
+                                                        
+                                                    @endif
+                                                    <td>{{ \Carbon\Carbon::parse($patient->created_at)->format('d M Y') }}</td>
+                                                    <td><a href="{{ route('Admin.patients.profile', $patient->id) }}"><span class="badge badge-success">View</span></a></td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                
+                                            @endif
+                                            
                                         </tbody>
                                     </table>
                                 </div>

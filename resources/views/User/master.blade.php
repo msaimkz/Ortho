@@ -105,7 +105,7 @@
                                     <li class="menu-item-has-children">
                                         <a href="#">{{ Auth::user()->name }}</a>
                                         <ul>
-                                            <li><a href='{{ route('profile.show') }}'>Dashboard</a></li>
+                                            <li><a href='{{ route('User.dashboard.dashboard') }}'>Dashboard</a></li>
                                             <li>
                                                 <form action="{{ route('logout') }}" method="POST" id="logout-form">
                                                     @csrf
