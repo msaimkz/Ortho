@@ -38,7 +38,7 @@
                         </div>
                         <div class="body">
                             <div>
-                                <a href="javascript:void(0)" class="btn btn-danger">Delete</a>
+                                <button href="javascript:void(0)" class="btn btn-danger" id="delete">Delete</button>
                                 @if ($patient->status == 'active')
                                     <button type="button" class="btn btn-danger" id="status">Block</button>
                                 @else
@@ -102,6 +102,7 @@
 @section('js')
     <script type="text/javascript">
         $('#status').click(function() {
+            $('#status').prop('disabled', true);
 
             $.ajax({
                 url: '{{ route('Admin.patients.statusChange', $patient->id) }}',
@@ -109,16 +110,20 @@
                 data: {},
                 dataType: 'json',
                 success: function(response) {
+                    $('#status').prop('disabled', false);
+
                     if (response['status'] == true) {
 
-                        if(response['patientStatus'] == 'active'){
+                        if (response['patientStatus'] == 'active') {
 
                             $('#status').removeClass('btn-success').addClass('btn-danger').html('Block')
-                            $('#status-badge').removeClass('badge-danger').addClass('badge-success').html('Active')
-                        }
-                        else{
-                            $('#status').removeClass('btn-danger').addClass('btn-success').html('Active')
-                            $('#status-badge').removeClass('badge-success').addClass('badge-danger').html('Block')
+                            $('#status-badge').removeClass('badge-danger').addClass('badge-success')
+                                .html('Active')
+                        } else {
+                            $('#status').removeClass('btn-danger').addClass('btn-success').html(
+                                'Active')
+                            $('#status-badge').removeClass('badge-success').addClass('badge-danger')
+                                .html('Block')
 
                         }
 
@@ -137,6 +142,26 @@
                             icon: "success",
                             title: response['msg'],
                         });
+                    }
+
+                }
+            })
+        })
+
+        $('#delete').click(function() {
+            $('#delete').prop('disabled', true);
+
+            $.ajax({
+                url: '{{ route('Admin.patients.DeletePatient', $patient->id) }}',
+                type: 'delete',
+                data: {},
+                dataType: 'json',
+                success: function(response) {
+                    $('#delete').prop('disabled', false);
+
+                    if (response['status'] == true) {
+
+                        window.location.href = "{{ route('Admin.patients') }}"
                     }
 
                 }
