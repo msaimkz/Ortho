@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TempImage;
+use App\Models\TempFile;
 
 class TempController extends Controller
 {
-    public function create(Request $request){
+    public function image(Request $request){
 
         $image = $request->image;
 
@@ -36,4 +37,36 @@ class TempController extends Controller
      
  
     }
+
+    public function file(Request $request){
+
+        $file = $request->file;
+        $filename = $file->getClientOriginalname();
+        if(!empty($file)){
+ 
+         $ext = $file->getClientOriginalExtension();
+         $NewfileName = time().'.'.$ext;
+ 
+         $file->move(public_path().'/Uploads/TempFile',$NewfileName);
+ 
+ 
+ 
+ 
+         $temp = new TempFile();
+         $temp->name = $NewfileName;
+         $temp->save();
+ 
+         return response()->json([
+             'status' => true,
+             'FileName' => $filename,
+             'id' => $temp->id,
+             'msg' => 'File uploads  Successfully',
+         ]);
+        }
+ 
+     
+ 
+    }
+
+    
 }

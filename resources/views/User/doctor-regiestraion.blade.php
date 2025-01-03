@@ -32,37 +32,64 @@
                     <h2 class="cs_section_title">Registration Now</h2>
                 </div>
                 <div class="cs_height_40 cs_height_lg_35"></div>
-                <form class="cs_appointment_form row cs_gap_y_30">
+                <form class="cs_appointment_form row cs_gap_y_30" id="RegiesterForm">
                     <div class="col-md-6">
-                        <input type="text" name="name" class="cs_form_field" placeholder="Name">
+                        <input type="text" name="name" class="cs_form_field" id="name" placeholder="Name">
+                        <span style="color: red"></span>
                     </div>
                     <div class="col-md-6">
-                        <input type="email" name="email" class="cs_form_field" placeholder="Email">
+                        <input type="email" name="email" class="cs_form_field" id="email" placeholder="Email">
+                        <span style="color: red"></span>
+
                     </div>
                     <div class="col-md-6">
-                        <input type="text" name="phone" class="cs_form_field" placeholder="Phone No">
+                        <input type="text" name="phone" class="cs_form_field" id="phone" placeholder="Phone No">
+                        <span style="color: red"></span>
+
                     </div>
                     <div class="col-md-6">
-                        <input type="city" name="city" class="cs_form_field" placeholder="City">
+                        <input type="city" name="city" class="cs_form_field" id="city" placeholder="City">
+                        <span style="color: red"></span>
+
                     </div>
                     <div class="col-md-6">
-                        <select name="gender" class="cs_form_field">
-                            <option value="choose-service">Select a Gender</option>
-                            <option value="dental-care">Male</option>
-                            <option value="neurology">Female</option>
+                        <select name="gender" id="gender" class="cs_form_field">
+                            <option value="">Select a Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
                         </select>
+                        <span style="color: red"></span>
+
                     </div>
                     <div class="col-md-6">
-                        <input type="text" name="date_of_birth" autocomplete="off" class="datetimepicker cs_form_field"
-                            placeholder="Date Of Birth">
+                        <input type="text" name="date_of_birth" id="date_of_birth" autocomplete="off"
+                            class="datetimepicker cs_form_field" placeholder="Date Of Birth">
+                        <span style="color: red"></span>
+
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" name="age" id="age" class="cs_form_field" placeholder="Age">
+                        <span style="color: red"></span>
+
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" name="speciality" id="speciality" class="cs_form_field"
+                            placeholder="Speciality">
+                        <span style="color: red"></span>
+
                     </div>
                     <div class="col-md-12">
                         <textarea name="address" class="cs_form_field" id="address" cols="10" rows="3" placeholder="Address"></textarea>
+                        <span style="color: red"></span>
+
+                    </div>
+                    <div class="col-md-12">
+                        <textarea name="bio" class="cs_form_field" id="bio" cols="10" rows="3" placeholder="About Bio"></textarea>
+                        <span style="color: red"></span>
+
                     </div>
 
-                    <div class="col-md-12">
-                        <input type="text" name="date" class="cs_form_field" placeholder="Speciality">
-                    </div>
+
                     <div class="col-md-12">
                         <label for="">Profile Image</label>
                         <div class="card">
@@ -71,7 +98,7 @@
                                 <div id="image" class="dropzone">
                                     Drag and drop your file here or click to upload.
                                 </div>
-                                <p class="mt-3 text-center" id="fileInfo"></p>
+                                <p class="mt-3 text-center text-danger" id="ImageInfo"></p>
                             </div>
                         </div>
                         <div class="row mt-2" id="image-row">
@@ -85,11 +112,16 @@
                         <div class="card">
                             <div class="container mt-5">
 
-                                <div id="dropzone" class="dropzone">
+                                <div id="file" class="dropzone">
                                     Drag and drop your file here or click to upload.
                                 </div>
-                                <p class="mt-3 text-center" id="fileInfo"></p>
+                                <p class="mt-3 text-center text-danger" id="fileInfo"></p>
                             </div>
+                        </div>
+                        <div class="row mt-2" id="file-row">
+
+
+
                         </div>
 
                     </div>
@@ -98,13 +130,21 @@
 
                     </div>
                     <div class="col-md-12">
-                        <input type="text" name="facebook" class="cs_form_field" placeholder="Facebook">
+                        <input type="text" name="facebook" id="facebook" class="cs_form_field"
+                            placeholder="Facebook">
+                        <span style="color: red"></span>
                     </div>
                     <div class="col-md-12">
-                        <input type="text" name="Instagram" class="cs_form_field" placeholder="Instagram">
+                        <input type="text" name="Instagram" id="Instagram" class="cs_form_field"
+                            placeholder="Instagram">
+                        <span style="color: red"></span>
+
                     </div>
                     <div class="col-md-12">
-                        <input type="text" name="Twitter" class="cs_form_field" placeholder="Twitter">
+                        <input type="text" name="Twitter" id="Twitter" class="cs_form_field"
+                            placeholder="Twitter">
+                        <span style="color: red"></span>
+
                     </div>
 
                     <div class="col-md-12">
@@ -127,16 +167,8 @@
                 format: 'Y-m-d',
             });
         });
-
         Dropzone.autoDiscover = false;
         const dropzone = $("#image").dropzone({
-            init: function() {
-                this.on('addedfile', function(file) {
-                    if (this.files.length > 1) {
-                        this.removeFile(this.files[0]);
-                    }
-                });
-            },
             url: "{{ route('TempImages') }}",
             maxFiles: 1,
             paramName: 'image',
@@ -145,20 +177,211 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(file, response) {
-              this.removeAllFiles(true);
-              var baseUrl = "{{ asset('Uploads/temp/') }}";
-                var imgCard = `<div class="col-md-3">
-                            <input type="hidden" name="image_id" id="image_id" value="${response['id']}">
-                            <div class="card">
-                              <img src="${baseUrl}/${response['imageName']}" class="img-fluid" alt="">
-                              <div class="card-body">
-                                  <button class="btn btn-danger">Delete</button>
-                              </div>
-                          </div>`
-                          $('#image-row').append(imgCard);
+            init: function() {
+                this.on('addedfile', function(file) {
+                    if (this.files.length > 1) {
 
+                        this.removeFile(this.files[0]);
+                    }
+                });
+
+                this.on('success', function(file, response) {
+
+                    this.removeAllFiles(true);
+
+
+                    var baseUrl = "{{ asset('Uploads/temp/') }}";
+                    var imgCard = `
+                <div class="col-md-3" id="image-card-${response['id']}">
+                    <input type="hidden" name="image_id" id="image_id" value="${response['id']}">
+                    <div class="card">
+                        <img src="${baseUrl}/${response['imageName']}" class="img-fluid" alt="">
+                        <div class="card-body">
+                            <button class="btn btn-danger" id="image-card-btn" data-id="${response['id']}">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    $('#image-row').html(imgCard);
+                });
+
+                this.on('removedfile', function(file) {
+                    console.log("File removed from Dropzone preview:", file);
+                });
             }
+        });
+
+
+        $('#image-row').on('click', '.btn-danger', function(event) {
+            event.preventDefault();
+            $(this).closest('.col-md-3').remove();
+        });
+
+
+        const dropzonefile = $("#file").dropzone({
+            url: "{{ route('TempFiles') }}",
+            maxFiles: 1,
+            paramName: 'file',
+            addRemoveLinks: true,
+            acceptedFiles: "application/pdf",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            init: function() {
+                this.on('addedfile', function(file) {
+                    if (this.files.length > 1) {
+
+                        this.removeFile(this.files[0]);
+                    }
+                });
+
+                this.on('success', function(file, response) {
+
+                    this.removeAllFiles(true);
+
+
+
+                    var fileCard = `
+                <div class="col-md-3" id="file-card-${response['id']}">
+                    <input type="hidden" name="file_id" id="file_id" value="${response['id']}">
+                    <div class="card">
+                        <img src="{{ asset('Assets/User/assets/img/PDF.png') }}" class="img-fluid" alt="">
+                        <div class="card-body d-flex flex-column align-items-start">
+                            <span class="text-secondary font-weight-bold" style="word-wrap: break-word; max-width: 100%;">
+                                <i class="bi bi-file-earmark-text me-2"></i> ${response['FileName']}
+                            </span>
+                            <button class="btn btn-sm btn-danger mt-2" id="file-card-btn" data-id="${response['id']}">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            `;
+                    $('#file-row').html(fileCard);
+                });
+
+                this.on('removedfile', function(file) {
+                    console.log("File removed from Dropzone preview:", file);
+                });
+            }
+        });
+
+
+        $('#file-row').on('click', '.btn-danger', function(event) {
+            event.preventDefault();
+            $(this).closest('.col-md-3').remove();
+        });
+
+        $('#RegiesterForm').submit(function(event) {
+            event.preventDefault();
+            var element = $(this);
+
+            $.ajax({
+                url: "{{ route('User.DoctorRegiestrationRequest') }}",
+                type: "post",
+                data: element.serializeArray(),
+                dataType: "json",
+                success: function(response) {
+                    if (response['status'] == true) {
+                        // Handle success if necessary
+                    } else {
+                        var errors = response['errors'];
+
+                        // Error handling for each field
+                        if (errors['name']) {
+                            $('#name').addClass('is-invalid').siblings('span').html(errors['name']);
+                        } else {
+                            $('#name').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['email']) {
+                            $('#email').addClass('is-invalid').siblings('span').html(errors['email']);
+                        } else {
+                            $('#email').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['phone']) {
+                            $('#phone').addClass('is-invalid').siblings('span').html(errors['phone']);
+                        } else {
+                            $('#phone').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['city']) {
+                            $('#city').addClass('is-invalid').siblings('span').html(errors['city']);
+                        } else {
+                            $('#city').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['age']) {
+                            $('#age').addClass('is-invalid').siblings('span').html(errors['age']);
+                        } else {
+                            $('#age').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['gender']) {
+                            $('#gender').addClass('is-invalid').siblings('span').html(errors['gender']);
+                        } else {
+                            $('#gender').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['speciality']) {
+                            $('#speciality').addClass('is-invalid').siblings('span').html(errors[
+                                'speciality']);
+                        } else {
+                            $('#speciality').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['bio']) {
+                            $('#bio').addClass('is-invalid').siblings('span').html(errors['bio']);
+                        } else {
+                            $('#bio').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['address']) {
+                            $('#address').addClass('is-invalid').siblings('span').html(errors[
+                                'address']);
+                        } else {
+                            $('#address').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['facebook']) {
+                            $('#facebook').addClass('is-invalid').siblings('span').html(errors[
+                                'facebook']);
+                        } else {
+                            $('#facebook').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['Instagram']) {
+                            $('#Instagram').addClass('is-invalid').siblings('span').html(errors[
+                                'Instagram']);
+                        } else {
+                            $('#Instagram').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        if (errors['Twitter']) {
+                            $('#Twitter').addClass('is-invalid').siblings('span').html(errors[
+                                'Twitter']);
+                        } else {
+                            $('#Twitter').removeClass('is-invalid').siblings('span').html('');
+                        }
+
+                        // Fix for 'image_id' and 'file_id' error handling
+                        if (errors['image_id']) {
+                            $('#ImageInfo').html(errors['image_id']);
+                        } else {
+                            $('#ImageInfo').html('');
+                        }
+
+                        if (errors['file_id']) {
+                            $('#fileInfo').html(errors['file_id']);
+                        } else {
+                            $('#fileInfo').html('');
+                        }
+                    }
+                }
+            });
         });
     </script>
 @endsection

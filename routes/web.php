@@ -38,6 +38,7 @@ Route::get('/Ortho/Service-Detail',[HomeController::class,'serviceDetail'])->nam
 Route::get('/Ortho/404',[HomeController::class,'error'])->name('User.error');
 Route::get('/Ortho/Booking-Appionment',[HomeController::class,'apoinment'])->name('User.apoinment');
 Route::get('/Ortho/Doctor-Registration',[HomeController::class,'DoctorRegistration'])->name('User.doctorRegiestraion');
+Route::post('/Ortho/Send-Doctor-Registration-Request',[DoctorController::class,'DoctorRegiestration'])->name('User.DoctorRegiestrationRequest');
 
 
 
@@ -108,4 +109,5 @@ Route::middleware([
 // Other Routes
 Route::get('/home',[UserAuthController::class,'index'])->middleware(['auth']);
 Route::get('/Ortho/403-Forbidden',[UserAuthController::class,'statusblockError'])->name('statusblockError');
-Route::post('/Ortho/Temp-Images',[TempController::class,'create'])->name('TempImages');
+Route::post('/Ortho/Temp-Images',[TempController::class,'image'])->name('TempImages');
+Route::post('/Ortho/Temp-Files',[TempController::class,'file'])->name('TempFiles');
