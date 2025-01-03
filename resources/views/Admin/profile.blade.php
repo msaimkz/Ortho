@@ -27,8 +27,15 @@
                 <div class="col-lg-4 col-md-12">
                     <div class="card profile-header">
                         <div class="body text-center">
-                            <div class="profile-image"> <img
-                                    src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}" alt="">
+                            <div class="profile-image">
+                                @if (Auth::user()->profile_photo_path != null)
+                                <img
+                                src="{{ asset('Uploads/Admin/ProfileImages/'. Auth::user()->profile_photo_path) }}" alt="">
+                                @else
+                                <img
+                                src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}" alt=""> 
+                                @endif
+                                 
                             </div>
                             <div>
                                 <h4 class="m-b-0"><strong>{{ Auth::user()->name }}</strong></h4>

@@ -74,9 +74,17 @@
                     <ul class="list">
                         <li>
                             <div class="user-info">
-                                <div class="image"><a href="{{ route('Admin.profile') }}"><img
-                                            src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                            alt="User"></a></div>
+                                <div class="image"><a href="{{ route('Admin.profile') }}">
+                                    @if (Auth::user()->profile_photo_path != null)
+                                    <img
+                                    src="{{ asset('Uploads/Admin/ProfileImages/'. Auth::user()->profile_photo_path) }}"
+                                    alt="User" class="Profile-Image"></a></div>
+                                    @else
+                                    <img
+                                    src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                    alt="User" class="Profile-Image"></a></div>
+                                    @endif
+                                    
                                 <div class="detail">
                                     <h4 class="user-name">{{ Auth::user()->name }}</h4>
                                     <small>Admin</small>
@@ -144,9 +152,19 @@
                     <ul class="list">
                         <li>
                             <div class="user-info m-b-20 p-b-15">
-                                <div class="image"><a href="{{ route('Admin.profile') }}"><img
-                                            src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                            alt="User"></a></div>
+                                <div class="image">
+                                  <a href="{{ route('Admin.profile') }}">
+                                    @if (Auth::user()->profile_photo_path != null)
+                                    <img
+                                    src="{{ asset('Uploads/Admin/ProfileImages/'. Auth::user()->profile_photo_path) }}"
+                                    alt="User" class="Profile-Image">
+                                    @else
+                                    <img
+                                    src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                    alt="User" class="Profile-Image">
+                                    @endif
+                                  </a>
+                                </div>
                                 <div class="detail">
                                     <h4 class="user-name">{{ Auth::user()->name }}</h4>
 

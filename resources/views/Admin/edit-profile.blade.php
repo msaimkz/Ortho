@@ -35,10 +35,21 @@
                         <form id="UpdateProfileForm">
                             <div class="body">
                                 <div class="row clearfix">
-                                    <div class="col-md-12 my-3" >
-                                        <img id="image" style="width: 150px; height: 150px; border-radius: 20px; cursor: pointer;"
-                                            src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                            class="img-fluid" alt="">
+                                    <label for="">Update Profile Image</label>
+
+                                    <div class="col-md-12 my-3">
+                                        @if (Auth::user()->profile_photo_path != null)
+                                            <img id="image"
+                                                style="width: 150px; height: 150px; border-radius: 20px; cursor: pointer;"
+                                                src="{{ asset('Uploads/Admin/ProfileImages/' . Auth::user()->profile_photo_path) }}"
+                                                class="img-fluid" alt="">
+                                        @else
+                                            <img id="image"
+                                                style="width: 150px; height: 150px; border-radius: 20px; cursor: pointer;"
+                                                src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                                class="img-fluid" alt="">
+                                        @endif
+
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
@@ -150,8 +161,9 @@
     </script>
     <script src="{{ asset('Assets/Dashboard/assets/plugins/momentjs/moment.js') }}"></script> <!-- Moment Plugin Js -->
     <script
-        src="{{ asset('Assets/Dashboard/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
-        <script src = "{{ asset('Assets/Dashboard/assets/plugins/dropzone/dropzone.js') }}"></script> <!-- Dropzone Plugin Js -->
+        src="{{ asset('Assets/Dashboard/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}">
+    </script>
+    <script src="{{ asset('Assets/Dashboard/assets/plugins/dropzone/dropzone.js') }}"></script> <!-- Dropzone Plugin Js -->
 
     </script>
 
@@ -296,8 +308,24 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(file, response) {
-                $("#image_id").val(response.image_id);
-                //console.log(response)
+                $('#image').attr('src', '/Uploads/Admin/ProfileImages/' + response.imageName);
+                $('.Profile-Image').attr('src', '/Uploads/Admin/ProfileImages/' + response.imageName);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: response['msg'],
+                });
+
             }
         });
     </script>

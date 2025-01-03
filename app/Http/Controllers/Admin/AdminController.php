@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Admin\AdminProfile;
 use App\Rules\ValidDateOfBirth;
+use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\Drivers\GD\Driver;
 
 
 class AdminController extends Controller
@@ -192,8 +193,18 @@ class AdminController extends Controller
 
         $image->move(public_path().'/Uploads/temp',$NewImageName);
 
+
+
         $sPath = public_path().'/Uploads/temp/'.$NewImageName;
         $dPath = public_path().'/Uploads/Admin/ProfileImages/'.$NewImageName;
+
+        if($user->profile_photo_path != null){
+            $DeleteSourcePath = public_path().'/Uploads/Admin/ProfileImages/'.$user->profile_photo_path;
+
+            if(File::exists($DeleteSourcePath)){
+                File::delete($DeleteSourcePath);
+            }
+        }
 
         $manager = new ImageManager(new Driver());
         $ImageManager = $manager->read($sPath);
@@ -205,6 +216,7 @@ class AdminController extends Controller
 
         return response()->json([
             'status' => true,
+            'imageName' => $NewImageName,
             'msg' => 'Profile Image Updated Successfully',
         ]);
        }
