@@ -79,6 +79,7 @@ Route::get('/Ortho/Admin/Edit-Subscription',[SubscriptionController::class,'edit
 Route::get('/Ortho/Admin/Subscribe-Patients',[SubscriptionController::class,'show'])->name('Admin.subscripion.subscriber');
 Route::post('/Ortho/Admin/Change-Password',[AdminController::class,'ChangePassword'])->name('Admin.ChangePassword');
 Route::post('/Ortho/Admin/Edit-Profile',[AdminController::class,'UpdateProfile'])->name('Admin.UpdateProfile');
+Route::post('/Ortho/Admin/Edit-Profile-Image',[AdminController::class,'ProfileImg'])->name('Admin.UpdateProfileImage');
 
 
 

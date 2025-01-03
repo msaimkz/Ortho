@@ -1,9 +1,10 @@
-@extends('Admin.dashboard')
+@extends('Admin.master')
 @section('css')
     <link
         href="{{ asset('Assets/Dashboard/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}"
         rel="stylesheet" />
     <link href="{{ asset('Assets/Dashboard/assets/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/plugins/dropzone/dropzone.css') }}">
 @endsection
 @section('content')
     <section class="content">
@@ -31,97 +32,109 @@
                             <h2><strong>Edit</strong> Profile<small>Update Profile here...</small> </h2>
 
                         </div>
-                    <form  id="UpdateProfileForm">
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-md-12 my-3">
-                                    <img style="width: 150px; height: 150px; border-radius: 20px; cursor: pointer;"
-                                        src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}" class="img-fluid"
-                                        alt="">
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="{{ Auth::user()->name }}">
-                                        <span style="color: red"></span>
+                        <form id="UpdateProfileForm">
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-md-12 my-3" >
+                                        <img id="image" style="width: 150px; height: 150px; border-radius: 20px; cursor: pointer;"
+                                            src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                            class="img-fluid" alt="">
                                     </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="name" id="name" class="form-control"
+                                                placeholder="Name" value="{{ Auth::user()->name }}">
+                                            <span style="color: red"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="email" id="email" class="form-control"
+                                                placeholder="Email" value="{{ Auth::user()->email }}">
+                                            <span style="color: red"></span>
+
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="{{ Auth::user()->email }}">
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <input type="text" name="phone" id="phone" class="form-control"
+                                                placeholder="Phone" value="{{ Auth::user()->phone }}">
+                                            <span style="color: red"></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <input type="text" name="city" id="city" class="form-control"
+                                                placeholder="City" value="{{ Auth::user()->city }}">
+                                            <span style="color: red"></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <input type="text" name="age" id="age" class="form-control"
+                                                placeholder="Age" value="{{ $profile->age != null ? $profile->age : '' }}">
+                                            <span style="color: red"></span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <select name="gender" id="gender" class="form-control show-tick">
+                                            <option value="">- Gender -</option>
+                                            <option value="male"
+                                                {{ $profile->gender != null && $profile->gender == 'male' ? 'selected' : '' }}>
+                                                Male</option>
+                                            <option value="female"
+                                                {{ $profile->gender != null && $profile->gender == 'female' ? 'selected' : '' }}>
+                                                Female</option>
+                                        </select>
                                         <span style="color: red"></span>
 
                                     </div>
-                                </div>
 
-                            </div>
-                            <div class="row clearfix">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone" value="{{ Auth::user()->phone }}">
-                                        <span style="color: red"></span>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
 
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <input type="text" name="city" id="city" class="form-control" placeholder="City" value="{{ Auth::user()->city }}">
-                                        <span style="color: red"></span>
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <input type="text" name="age" id="age" class="form-control" placeholder="Age" value="{{ ($profile->age != null) ? $profile->age : '' }}">
-                                        <span style="color: red"></span>
-
-                                    </div>
-                                </div>
-                               
-                                <div class="col-sm-6">
-                                    <select name="gender" id="gender" class="form-control show-tick">
-                                        <option value="">- Gender -</option>
-                                        <option value="male" {{ ($profile->gender != null && $profile->gender == 'male') ? 'selected' : '' }}>Male</option>
-                                        <option value="female" {{ ($profile->gender != null && $profile->gender == 'female') ? 'selected' : '' }}>Female</option>
-                                    </select>
-                                    <span style="color: red"></span>
-
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        
-                                        <input type="text" name="date_of_birth" id="DOB" class="form-control datetimepicker"
-                                            placeholder="Date Of Birth" value="{{ ($profile->age != null) ? \Carbon\Carbon::parse($profile->date_of_birth)->format('d D M Y') : '' }}">
+                                            <input type="text" name="date_of_birth" id="DOB"
+                                                class="form-control datetimepicker" placeholder="Date Of Birth"
+                                                value="{{ $profile->age != null ? \Carbon\Carbon::parse($profile->date_of_birth)->format('d D M Y') : '' }}">
                                             <div>
                                                 <p style="color: red"></p>
 
                                             </div>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <textarea rows="4" name="bio" id="bio" class="form-control no-resize" placeholder="Please type About You Bio...">{{ ($profile->bio != null) ? $profile->bio : '' }}</textarea>
-                                    <span style="color: red"></span>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <textarea rows="4" name="bio" id="bio" class="form-control no-resize"
+                                            placeholder="Please type About You Bio...">{{ $profile->bio != null ? $profile->bio : '' }}</textarea>
+                                        <span style="color: red"></span>
 
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <textarea rows="4" name="address" id="address" class="form-control no-resize"
+                                            placeholder="Please type About Your Address...">{{ $profile->address != null ? $profile->address : '' }}</textarea>
+                                        <span style="color: red"></span>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button type="submit" id="btn" class="btn btn-primary btn-round">Save</button>
+                                    <a href="{{ route('User.dashboard.dashboard') }}"
+                                        class="btn btn-default btn-round btn-simple">Cancel</a>
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <textarea rows="4" name="address" id="address" class="form-control no-resize" placeholder="Please type About Your Address...">{{ ($profile->address != null) ? $profile->address : '' }}</textarea>
-                                    <span style="color: red"></span>
-
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <button type="submit" id="btn" class="btn btn-primary btn-round">Save</button>
-                                <a href="{{ route('User.dashboard.dashboard') }}"
-                                    class="btn btn-default btn-round btn-simple">Cancel</a>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -137,7 +150,9 @@
     </script>
     <script src="{{ asset('Assets/Dashboard/assets/plugins/momentjs/moment.js') }}"></script> <!-- Moment Plugin Js -->
     <script
-        src="{{ asset('Assets/Dashboard/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}">
+        src="{{ asset('Assets/Dashboard/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+        <script src = "{{ asset('Assets/Dashboard/assets/plugins/dropzone/dropzone.js') }}"></script> <!-- Dropzone Plugin Js -->
+
     </script>
 
     <script>
@@ -181,17 +196,16 @@
                             title: response['msg'],
                         });
                         $('.user-name').html(response.name)
-                        if(response.address != null){
+                        if (response.address != null) {
                             $('.user-location').html(response.address)
-                        }
-                        else{
-                        $('.user-location').html('')
+                        } else {
+                            $('.user-location').html('')
 
                         }
 
                     } else {
 
-                       
+
 
                         var errors = response['errors']
                         if (errors['name']) {
@@ -262,6 +276,29 @@
                 }
             })
         })
+
+
+        Dropzone.autoDiscover = false;
+        const dropzone = $("#image").dropzone({
+            init: function() {
+                this.on('addedfile', function(file) {
+                    if (this.files.length > 1) {
+                        this.removeFile(this.files[0]);
+                    }
+                });
+            },
+            url: "{{ route('Admin.UpdateProfileImage') }}",
+            maxFiles: 1,
+            paramName: 'image',
+            addRemoveLinks: true,
+            acceptedFiles: "image/jpeg,image/png,image/gif",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(file, response) {
+                $("#image_id").val(response.image_id);
+                //console.log(response)
+            }
+        });
     </script>
 @endsection
-

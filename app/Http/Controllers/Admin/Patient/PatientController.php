@@ -70,7 +70,7 @@ class PatientController extends Controller
             return response()->json([
                 'status' => true,
                 'patientStatus' => $patient->status,
-                'msg' => $patient->name.'Status Change Successfully',
+                'msg' => ucwords($patient->name).' Status Change Successfully',
             ]);
         }
     }

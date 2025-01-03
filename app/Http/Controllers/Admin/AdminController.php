@@ -11,6 +11,10 @@ use App\Models\User;
 use App\Models\Admin\AdminProfile;
 use App\Rules\ValidDateOfBirth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
+
 
 class AdminController extends Controller
 {
@@ -19,10 +23,19 @@ class AdminController extends Controller
 
     public function dashboard(){
 
+        $patientCounts = User::where('role','patients')->count();
+
+        $patients = User::where('role','patients')->limit(4)->get();
+
+        $patientsCityCount = User::select('city', DB::raw('count(*) as total'))
+        ->where('role', 'patients')
+        ->groupBy('city')
+        ->get();
+
        
 
      
-        return view('Admin.dashboard');
+        return view('Admin.dashboard',compact('patientCounts','patients','patientsCityCount'));
     }
 
     public function Profile(){
@@ -154,5 +167,47 @@ class AdminController extends Controller
                 'errors'=> $validator->errors(),
              ]);
         }
+    }
+
+    public function ProfileImg(Request $request){
+  
+       $id = Auth::user()->id;
+
+       $user = User::find($id);
+
+       if($user == null){
+
+         return response()->json([
+            'status' => false,
+            'error' => 'User Not Found'
+         ]);
+       }
+
+       $image = $request->image;
+
+       if(!empty($image)){
+
+        $ext = $image->getClientOriginalExtension();
+        $NewImageName = $user->id.'-'.time().'.'.$ext;
+
+        $image->move(public_path().'/Uploads/temp',$NewImageName);
+
+        $sPath = public_path().'/Uploads/temp/'.$NewImageName;
+        $dPath = public_path().'/Uploads/Admin/ProfileImages/'.$NewImageName;
+
+        $manager = new ImageManager(new Driver());
+        $ImageManager = $manager->read($sPath);
+        $ImageManager->cover(300,300);
+        $ImageManager->save($dPath);
+
+        $user->profile_photo_path = $NewImageName;
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'msg' => 'Profile Image Updated Successfully',
+        ]);
+       }
+
     }
 }
