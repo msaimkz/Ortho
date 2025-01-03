@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Subscription\SubscriptionController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\TempController;
 Route::get('/d', function () {
     return view('welcome');
 });
@@ -104,6 +105,7 @@ Route::middleware([
 });
 
 
-// Auth Routes
+// Other Routes
 Route::get('/home',[UserAuthController::class,'index'])->middleware(['auth']);
-Route::get('/403-Forbidden',[UserAuthController::class,'statusblockError'])->name('statusblockError');
+Route::get('/Ortho/403-Forbidden',[UserAuthController::class,'statusblockError'])->name('statusblockError');
+Route::post('/Ortho/Temp-Images',[TempController::class,'create'])->name('TempImages');

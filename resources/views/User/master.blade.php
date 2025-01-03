@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ asset('Assets/User/assets/css/odometer.css') }}">
     <link rel="stylesheet" href="{{ asset('Assets/User/assets/css/slick.min.css') }}">
     <link rel="stylesheet" href="{{ asset('Assets/User/assets/css/style.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body>
@@ -219,11 +221,21 @@
     <!-- End Scroll Up Button -->
 
     <!-- Script -->
+    
     <script src="{{ asset('Assets/User/assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('Assets/User/assets/js/wow.min.js') }}"></script>
     <script src="{{ asset('Assets/User/assets/js/jquery.slick.min.js') }}"></script>
     <script src="{{ asset('Assets/User/assets/js/odometer.js') }}"></script>
     <script src="{{ asset('Assets/User/assets/js/main.js') }}"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    @yield('js')
+
 </body>
 
 <!-- Mirrored from medilo-html.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Dec 2024 11:29:34 GMT -->
