@@ -59,7 +59,7 @@ Route::get('/Ortho/Admin/Update-Profile',[AdminController::class,'EditProfile'])
 Route::get('/Ortho/Admin/All-Doctors',[DoctorController::class,'doctor'])->name('Admin.doctor');
 Route::get('/Ortho/Admin/Doctor-Profile',[DoctorController::class,'profile'])->name('Admin.doctor.profile');
 Route::get('/Ortho/Admin/Doctor-Registration-Requests',[DoctorController::class,'request'])->name('Admin.doctor.request');
-Route::get('/Ortho/Admin/Doctor-Request-Proflie',[DoctorController::class,'requestProfile'])->name('Admin.doctor.request-profile');
+Route::get('/Ortho/Admin/Doctor-Request-Profile/{id}',[DoctorController::class,'requestProfile'])->name('Admin.doctor.request-profile');
 Route::get('/Ortho/Admin/All-Patients',[PatientController::class,'index'])->name('Admin.patients');
 Route::get('/Ortho/Admin/Patient-Profile/{id}',[PatientController::class,'profile'])->name('Admin.patients.profile');
 Route::get('/Ortho/Admin/Change-Patient-Status/{id}',[PatientController::class,'status'])->name('Admin.patients.statusChange');

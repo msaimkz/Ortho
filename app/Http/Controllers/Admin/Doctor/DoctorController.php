@@ -30,12 +30,18 @@ class DoctorController extends Controller
 
     public function request(){
 
-        return view('Admin.Doctor.request');
+        $doctorRequests = DoctorRequest::all();
+
+        return view('Admin.Doctor.request',compact('doctorRequests'));
     }
 
-    public function requestProfile(){
+    public function requestProfile(string $id){
+ 
 
-        return view('Admin.Doctor.request-profile');
+        $doctorRequest = DoctorRequest::find($id);
+ 
+
+        return view('Admin.Doctor.request-profile',compact('doctorRequest'));
     }
 
     public function DoctorRegiestration(Request $request){
@@ -47,6 +53,10 @@ class DoctorController extends Controller
             'phone' => ['required','regex:/^0[3-9][0-9]{2}[0-9]{7}$/'],
             'city' =>  ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
             'speciality' =>  ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
+            'MedicalSchool' =>  ['required','min:3','max:25','regex:/^[a-zA-Z\s]+$/'],
+            'Certifications' =>  ['required','min:3','max:55','regex:/^[a-zA-Z\s]+$/'],
+            'Experience' =>  ['nullable','min:3','max:55','regex:/^[a-zA-Z\s]+$/'],
+            'Internship' =>  ['nullable','min:3','max:55','regex:/^[a-zA-Z\s]+$/'],
             'age' =>   ['required','numeric','min:11','max:89'],
             'gender' => ['required','in:male,female'],
             'date_of_birth' => ['required','date',new ValidDateOfBirth()],
@@ -68,11 +78,19 @@ class DoctorController extends Controller
              'file_id.numeric' => 'Graduate Degree contain only number',
              'image_id.required' => 'Profile Image  is Required',
              'image_id.numeric' => 'Profile Image id contain only number',
+             'MedicalSchool.required' => 'Medical School Name Field is Required',
+             'MedicalSchool.min' => 'Medical School Name minimum 3 letter required',
+             'MedicalSchool.max' => 'Medical School Name maximum 24  letter required',
+             'MedicalSchool.regex' => 'Medical School Name contain only Alphabets',
+             'Certifications.required' => 'Certifications Field is Required',
+             'Certifications.min' => 'Certifications minimum 3 letter required',
+             'Certifications.max' => 'Certifications maximum 54  letter required',
+             'Certifications.regex' => 'Certifications contain only Alphabets',
          ]);
 
          if($validator->passes()){
 
-            $doctorRequestExist = DoctorRequest::where('email',$request->email)->first();
+            $doctorRequestExist = DoctorRequest::where('email',$request->email)->orWhere('user_id',Auth::user()->id)->first();
 
             if($doctorRequestExist != null){
 
@@ -94,6 +112,10 @@ class DoctorController extends Controller
             $doctorRequest->age = $request->age;
             $doctorRequest->gender = $request->gender;
             $doctorRequest->Speciality = $request->speciality;
+            $doctorRequest->MedicalSchool = $request->MedicalSchool;
+            $doctorRequest->Certifications = $request->Certifications;
+            $doctorRequest->Experience = $request->Experience;
+            $doctorRequest->Internship = $request->Internship;
             $doctorRequest->date_of_birth = $request->date_of_birth ? Carbon::parse($request->date_of_birth)->format('Y-m-d') : null;
             $doctorRequest->bio = $request->bio; 
             $doctorRequest->address = $request->address; 

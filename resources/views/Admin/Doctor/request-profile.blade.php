@@ -25,22 +25,20 @@
             <div class="col-lg-4 col-md-12">
                 <div class="card profile-header">
                     <div class="body text-center">
-                        <div class="profile-image"> <img src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}" alt=""> </div>
+                        <div class="profile-image"> <img src="{{ asset('Uploads/Doctor Request/Profile/'.$doctorRequest->profile_img) }}" alt=""> </div>
                         <div>
-                            <h4 class="m-b-0"><strong>Dr. Charlotte</strong> Deo</h4>
-                            <span class="job_post">Neurologist</span>
-                            <p>795 Folsom Ave, Suite 600<br> San Francisco, CADGE 94107</p>
+                            <h4 class="m-b-0"><strong>Dr. {{ ucwords($doctorRequest->name) }}</strong></h4>
+                            <span class="job_post">{{ ucwords($doctorRequest->speciality) }}</span>
+                            <p>{{ ucwords($doctorRequest->address) }}</p>
                         </div>
                         <div>
                             <button class="btn btn-success btn-round">Approve</button>
                             <button class="btn btn-danger btn-round">Delete</button>
                         </div>
                         <p class="social-icon m-t-5 m-b-0">
-                            <a title="Twitter" href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a>
-                            <a title="Facebook" href="javascript:void(0);"><i class="zmdi zmdi-facebook"></i></a>
-                            <a title="Google-plus" href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a>
-                            <a title="Behance" href="javascript:void(0);"><i class="zmdi zmdi-behance"></i></a>
-                            <a title="Instagram" href="javascript:void(0);"><i class="zmdi zmdi-instagram "></i></a>
+                            <a title="Twitter" href="{{ $doctorRequest->twitter }}" target="_blank"><i class="zmdi zmdi-twitter"></i></a>
+                            <a title="Facebook" href="{{ $doctorRequest->Facebook }}"><i class="zmdi zmdi-facebook"></i></a>
+                            <a title="Instagram" href="{{ $doctorRequest->Instagram }}"><i class="zmdi zmdi-instagram "></i></a>
                         </p>
                     </div>                    
                 </div>                               
@@ -54,24 +52,27 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane body active" id="about">
-                            <p>Dr. Charlotte Deo Leon is a neurosurgeon in East Patchogue,Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. He received his medical degree from Harvard Medical School and has been in practice for 21 years. He is one of 5 doctors at Brookhaven Memorial Hospital Medical Center and one of 9 at Southside Hospital who specialize in Neurological Surgery.</p>
+                            <p>{{ $doctorRequest->bio }}.</p>
                             <h6>Qualifications</h6>
                             <hr>
                             <ul class="list-unstyled">
                                 <li>
-                                    <p><strong>Hospital Affiliations:</strong> UCSF MEDICAL CENTER</p>
+                                    <p><strong>Email ID:</strong> {{ $doctorRequest->email }}</p>
                                 </li>
                                 <li>
-                                    <p><strong>Medical School:</strong> Palmer College of Chiropractic 1978</p>
+                                    <p><strong>Phone No:</strong> {{ $doctorRequest->phone }}</p>
                                 </li>
                                 <li>
-                                    <p><strong>Residency:</strong> New york</p>
+                                    <p><strong>Medical School:</strong> {{ ucwords($doctorRequest->MedicalSchool) }}</p>
                                 </li>
                                 <li>
-                                    <p><strong>Certifications:</strong> Certified Chiropractic Sports Physician 1982</p>
+                                    <p><strong>Residency:</strong> {{ ucwords($doctorRequest->city) }}</p>
                                 </li>
                                 <li>
-                                    <p><strong>Gender:</strong> Female</p>
+                                    <p><strong>Certifications:</strong> {{ ucwords($doctorRequest->Certifications) }}</p>
+                                </li>
+                                <li>
+                                    <p><strong>Gender:</strong> {{ ucwords($doctorRequest->gender) }}</p>
                                 </li>
                                 <li>
                                     <p><strong>Experience / Tranining:</strong> Past-President, Int. Fed. 1991</p>
@@ -83,7 +84,7 @@
                             <h6>Specialties</h6>
                             <hr>
                             <ul class="list-unstyled specialties">
-                                <li>Breast Surgery</li>
+                                <li>{{ ucwords($doctorRequest->speciality) }}</li>
                                 
                             </ul>
                         </div>

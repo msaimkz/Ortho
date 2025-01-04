@@ -227,6 +227,8 @@
     <script src="{{ asset('Assets/User/assets/js/jquery.slick.min.js') }}"></script>
     <script src="{{ asset('Assets/User/assets/js/odometer.js') }}"></script>
     <script src="{{ asset('Assets/User/assets/js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {

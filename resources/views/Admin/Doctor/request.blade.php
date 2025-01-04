@@ -51,20 +51,38 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        @if (!empty($doctorRequests))
+                                            @foreach ($doctorRequests as $doctorRequest)
+                                            <tr>
                                            
-                                            <td><span class="list-name">KU 00598</span></td>
-                                            <td>Daniel</td>
-                                            <td>daniel@gmail.com</td>
-                                            <td>Dentist</td>
-                                            <td>
-                                                <span class="badge badge-success">Approve</span>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('Admin.doctor.request-profile') }}"><span class="badge badge-info">View More</span></a>
-                                                <a href=""><span class="badge badge-danger">Delete</span></a>
-                                            </td>
-                                        </tr>
+                                                <td><span class="list-name">{{ $doctorRequest->id }}</span></td>
+                                                <td>{{ ucwords($doctorRequest->name) }}</td>
+                                                <td>{{ $doctorRequest->email }}</td>
+                                                <td>{{ ucwords($doctorRequest->speciality) }}</td>
+                                                <td>
+                                                    @if ($doctorRequest->status == 'approve')
+                                                    <span class="badge badge-success">Approve</span>
+                                                        
+                                                    @elseif ($doctorRequest->status == 'reject')
+                                                    <span class="badge badge-danger">Rejected</span>
+                                                    @else
+                                                    <span class="badge badge-warning">Pending</span>
+                                                        
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('Admin.doctor.request-profile',$doctorRequest->id) }}"><span class="badge badge-info">View More</span></a>
+                                                    <a href=""><span class="badge badge-danger">Delete</span></a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                        
+                                            <tr>
+                                                <td >Record Not Found</td>
+                                            </tr>
+                                        @endif
+                                        
                                     </tbody>
                                 </table>
                             </div>

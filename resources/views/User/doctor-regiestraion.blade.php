@@ -71,6 +71,26 @@
                             placeholder="Speciality">
                         <span class="error-message" style="color: red"></span>
                     </div>
+                    <div class="col-md-6">
+                        <input type="text" name="MedicalSchool" id="MedicalSchool" class="cs_form_field"
+                            placeholder="Medical School Name">
+                        <span class="error-message" style="color: red"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" name="Certifications" id="Certifications" class="cs_form_field"
+                            placeholder="Certifications">
+                        <span class="error-message" style="color: red"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" name="Experience" id="Experience" class="cs_form_field"
+                            placeholder="Past Experience / Tranining (Optional)">
+                        <span class="error-message" style="color: red"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" name="Internship" id="Internship" class="cs_form_field"
+                            placeholder="Past Internship (Optional)">
+                        <span class="error-message" style="color: red"></span>
+                    </div>
                     <div class="col-md-12">
                         <textarea name="address" class="cs_form_field" id="address" cols="10" rows="3" placeholder="Address"></textarea>
                         <span class="error-message" style="color: red"></span>
@@ -256,6 +276,7 @@
         $('#RegiesterForm').submit(function(event) {
             event.preventDefault();
             var element = $(this);
+            $('#btn').prop('disabled', true);
 
             $.ajax({
                 url: "{{ route('User.DoctorRegiestrationRequest') }}",
@@ -281,8 +302,23 @@
                         $('#RegiesterForm')[0].reset();
                         $('.is-invalid').removeClass('is-invalid');
                         $('span.error-message').html('');
+                        $('#file-row').html('');
+                        $('#image-row').html('');
+
 
                     } else {
+
+                        if(response['IsAlreadyRegister']  == true){
+                            Swal.fire({
+                            icon: "error",
+                            title: response['error'],
+                            toast: true,
+                            position: "top-end",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                        });
+                        }
 
                         var errors = response['errors'];
 
@@ -309,7 +345,7 @@
                     }
                 },
                 error: function(xhr, status, error) {
-                    $('#btn').prop('disabled', false); // Re-enable the button
+                    $('#btn').prop('disabled', false);
                     Swal.fire({
                         icon: "error",
                         title: "An error occurred",
