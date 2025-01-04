@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ValidDateOfBirth;
 use App\Models\Admin\DoctorRequest;
+use App\Models\DoctorProfile;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
@@ -14,7 +16,8 @@ use Intervention\Image\Drivers\GD\Driver;
 use App\Models\TempImage;
 use App\Models\TempFile;
 use Carbon\Carbon;
-
+use App\Mail\Admin\DoctorRequestMail;
+use Illuminate\Support\Facades\Mail;
 
 class DoctorController extends Controller
 {
@@ -192,5 +195,58 @@ class DoctorController extends Controller
             ]);
          }
         
+    }
+
+    public function requestProfileStatus(Request $request){
+       
+        if($request->status == 'approve'){
+
+            $id = $request->id;
+
+            $doctorRequest = DoctorRequest::find($id);
+            $doctorProfile = new DoctorProfile();
+
+            $doctorProfile->user_id = $doctorRequest->user_id;
+            $doctorProfile->name = $doctorRequest->name;
+            $doctorProfile->email = $doctorRequest->email;
+            $doctorProfile->phone = $doctorRequest->phone;
+            $doctorProfile->city = $doctorRequest->city;
+            $doctorProfile->age = $doctorRequest->age;
+            $doctorProfile->gender = $doctorRequest->gender;
+            $doctorProfile->date_of_birth = $doctorRequest->date_of_birth;
+            $doctorProfile->speciality = $doctorRequest->speciality;
+            $doctorProfile->bio = $doctorRequest->bio;
+            $doctorProfile->address = $doctorRequest->address;
+            $doctorProfile->MedicalSchool = $doctorRequest->MedicalSchool;
+            $doctorProfile->Certifications = $doctorRequest->Certifications;
+            $doctorProfile->Experience = $doctorRequest->Experience;
+            $doctorProfile->Internship = $doctorRequest->Internship;
+            $doctorProfile->Facebook = $doctorRequest->Facebook;
+            $doctorProfile->Instagram = $doctorRequest->Instagram;
+            $doctorProfile->Twitter = $doctorRequest->Twitter;
+            $doctorProfile->profile_img = $doctorRequest->profile_img;
+            $doctorProfile->graduate_degree = $doctorRequest->graduate_degree;
+            $doctorProfile->save();
+
+            $doctorRequest->status = 'approve';
+            $doctorRequest->save();
+
+            $doctor = User::find($doctorRequest->user_id);
+            $doctor->role = 'doctor';
+            $doctor->save();
+
+            Mail::to($doctorRequest->email)->send(new DoctorRequestMail(
+                [
+                    'name' => $doctorRequest->name,
+                    'status' => $doctorRequest->status,
+                ]
+            ));
+
+            return response()->json([
+                'status' => true,
+                'msg' => $doctorRequest->name.' Doctor Registration Request Approved Successfully',
+            ]);
+
+        }
     }
 }
