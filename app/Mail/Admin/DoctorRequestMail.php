@@ -45,6 +45,9 @@ class DoctorRequestMail extends Mailable
     {
         return new Content(
             view: 'Email.DoctorRequestEmail',
+            with: [
+                'doctor' => $this->doctor, // Pass the $doctor variable to the view
+            ],
         );
     }
 
