@@ -35,22 +35,19 @@
                 <form class="cs_appointment_form row cs_gap_y_30" id="RegiesterForm">
                     <div class="col-md-6">
                         <input type="text" name="name" class="cs_form_field" id="name" placeholder="Name">
-                        <span style="color: red"></span>
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
                         <input type="email" name="email" class="cs_form_field" id="email" placeholder="Email">
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
                         <input type="text" name="phone" class="cs_form_field" id="phone" placeholder="Phone No">
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
                         <input type="city" name="city" class="cs_form_field" id="city" placeholder="City">
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
                         <select name="gender" id="gender" class="cs_form_field">
@@ -58,99 +55,79 @@
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
                         <input type="text" name="date_of_birth" id="date_of_birth" autocomplete="off"
                             class="datetimepicker cs_form_field" placeholder="Date Of Birth">
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
                         <input type="text" name="age" id="age" class="cs_form_field" placeholder="Age">
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
                         <input type="text" name="speciality" id="speciality" class="cs_form_field"
                             placeholder="Speciality">
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-12">
                         <textarea name="address" class="cs_form_field" id="address" cols="10" rows="3" placeholder="Address"></textarea>
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-12">
                         <textarea name="bio" class="cs_form_field" id="bio" cols="10" rows="3" placeholder="About Bio"></textarea>
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
-
 
                     <div class="col-md-12">
                         <label for="">Profile Image</label>
                         <div class="card">
                             <div class="container mt-5">
-
                                 <div id="image" class="dropzone">
                                     Drag and drop your file here or click to upload.
                                 </div>
                                 <p class="mt-3 text-center text-danger" id="ImageInfo"></p>
                             </div>
                         </div>
-                        <div class="row mt-2" id="image-row">
-
-
-
-                        </div>
+                        <div class="row mt-2" id="image-row"></div>
                     </div>
                     <div class="col-md-12">
-                        <label for="">Graduaion Pass Degree</label>
+                        <label for="">Graduation Pass Degree</label>
                         <div class="card">
                             <div class="container mt-5">
-
                                 <div id="file" class="dropzone">
                                     Drag and drop your file here or click to upload.
                                 </div>
                                 <p class="mt-3 text-center text-danger" id="fileInfo"></p>
                             </div>
                         </div>
-                        <div class="row mt-2" id="file-row">
-
-
-
-                        </div>
-
+                        <div class="row mt-2" id="file-row"></div>
                     </div>
                     <div class="col-md-12">
                         <label for="profile">Social Media Links</label>
-
                     </div>
                     <div class="col-md-12">
                         <input type="text" name="facebook" id="facebook" class="cs_form_field"
                             placeholder="Facebook">
-                        <span style="color: red"></span>
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-12">
                         <input type="text" name="Instagram" id="Instagram" class="cs_form_field"
                             placeholder="Instagram">
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-12">
                         <input type="text" name="Twitter" id="Twitter" class="cs_form_field"
                             placeholder="Twitter">
-                        <span style="color: red"></span>
-
+                        <span class="error-message" style="color: red"></span>
                     </div>
-
                     <div class="col-md-12">
-                        <button type="submit" class="cs_btn cs_style_1 cs_white_color">Register Now</button>
+                        <button type="submit" class="cs_btn cs_style_1 cs_white_color" id="btn">Register
+                            Now</button>
                     </div>
                 </form>
+
             </div>
         </div>
         <div class="cs_height_120 cs_height_lg_80"></div>
@@ -163,10 +140,12 @@
     <script>
         $(document).ready(function() {
             $('.datetimepicker').datetimepicker({
-                // options here
                 format: 'Y-m-d',
+                timepicker: false,
+               
             });
         });
+
         Dropzone.autoDiscover = false;
         const dropzone = $("#image").dropzone({
             url: "{{ route('TempImages') }}",
@@ -284,103 +263,59 @@
                 data: element.serializeArray(),
                 dataType: "json",
                 success: function(response) {
-                    if (response['status'] == true) {
-                        // Handle success if necessary
+                    $('#btn').prop('disabled', false);
+
+                    if (response['status'] === true) {
+
+                        Swal.fire({
+                            icon: "success",
+                            title: response['msg'],
+                            toast: true,
+                            position: "top-end",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                        });
+
+
+                        $('#RegiesterForm')[0].reset();
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('span.error-message').html('');
+
                     } else {
+
                         var errors = response['errors'];
 
-                        // Error handling for each field
-                        if (errors['name']) {
-                            $('#name').addClass('is-invalid').siblings('span').html(errors['name']);
-                        } else {
-                            $('#name').removeClass('is-invalid').siblings('span').html('');
-                        }
 
-                        if (errors['email']) {
-                            $('#email').addClass('is-invalid').siblings('span').html(errors['email']);
-                        } else {
-                            $('#email').removeClass('is-invalid').siblings('span').html('');
-                        }
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('span.error-message').html('');
 
-                        if (errors['phone']) {
-                            $('#phone').addClass('is-invalid').siblings('span').html(errors['phone']);
-                        } else {
-                            $('#phone').removeClass('is-invalid').siblings('span').html('');
-                        }
 
-                        if (errors['city']) {
-                            $('#city').addClass('is-invalid').siblings('span').html(errors['city']);
-                        } else {
-                            $('#city').removeClass('is-invalid').siblings('span').html('');
-                        }
+                        $.each(errors, function(key, value) {
+                            var field = $('#' + key);
+                            if (field.length) {
+                                field.addClass('is-invalid').siblings('span.error-message')
+                                    .html(value);
+                            } else {
 
-                        if (errors['age']) {
-                            $('#age').addClass('is-invalid').siblings('span').html(errors['age']);
-                        } else {
-                            $('#age').removeClass('is-invalid').siblings('span').html('');
-                        }
-
-                        if (errors['gender']) {
-                            $('#gender').addClass('is-invalid').siblings('span').html(errors['gender']);
-                        } else {
-                            $('#gender').removeClass('is-invalid').siblings('span').html('');
-                        }
-
-                        if (errors['speciality']) {
-                            $('#speciality').addClass('is-invalid').siblings('span').html(errors[
-                                'speciality']);
-                        } else {
-                            $('#speciality').removeClass('is-invalid').siblings('span').html('');
-                        }
-
-                        if (errors['bio']) {
-                            $('#bio').addClass('is-invalid').siblings('span').html(errors['bio']);
-                        } else {
-                            $('#bio').removeClass('is-invalid').siblings('span').html('');
-                        }
-
-                        if (errors['address']) {
-                            $('#address').addClass('is-invalid').siblings('span').html(errors[
-                                'address']);
-                        } else {
-                            $('#address').removeClass('is-invalid').siblings('span').html('');
-                        }
-
-                        if (errors['facebook']) {
-                            $('#facebook').addClass('is-invalid').siblings('span').html(errors[
-                                'facebook']);
-                        } else {
-                            $('#facebook').removeClass('is-invalid').siblings('span').html('');
-                        }
-
-                        if (errors['Instagram']) {
-                            $('#Instagram').addClass('is-invalid').siblings('span').html(errors[
-                                'Instagram']);
-                        } else {
-                            $('#Instagram').removeClass('is-invalid').siblings('span').html('');
-                        }
-
-                        if (errors['Twitter']) {
-                            $('#Twitter').addClass('is-invalid').siblings('span').html(errors[
-                                'Twitter']);
-                        } else {
-                            $('#Twitter').removeClass('is-invalid').siblings('span').html('');
-                        }
-
-                        // Fix for 'image_id' and 'file_id' error handling
-                        if (errors['image_id']) {
-                            $('#ImageInfo').html(errors['image_id']);
-                        } else {
-                            $('#ImageInfo').html('');
-                        }
-
-                        if (errors['file_id']) {
-                            $('#fileInfo').html(errors['file_id']);
-                        } else {
-                            $('#fileInfo').html('');
-                        }
+                                if (key === 'image_id') {
+                                    $('#ImageInfo').html(value);
+                                }
+                                if (key === 'file_id') {
+                                    $('#fileInfo').html(value);
+                                }
+                            }
+                        });
                     }
-                }
+                },
+                error: function(xhr, status, error) {
+                    $('#btn').prop('disabled', false); // Re-enable the button
+                    Swal.fire({
+                        icon: "error",
+                        title: "An error occurred",
+                        text: "Please try again later.",
+                    });
+                },
             });
         });
     </script>
