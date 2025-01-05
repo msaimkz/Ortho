@@ -36,10 +36,16 @@
                                 <p>{{ ucwords($doctorRequest->address) }}</p>
                             </div>
                             <div>
-                                <button class="btn btn-success btn-round" id="approve"
-                                    data-id="{{ $doctorRequest->id }}">Approve</button>
-                                <button class="btn btn-danger btn-round" id="reject"
-                                    data-id="{{ $doctorRequest->id }}">Reject</button>
+                                @if ($doctorRequest->status == 'pending')
+                                    <button class="btn btn-success btn-round" id="approve"
+                                        data-id="{{ $doctorRequest->id }}">Approve</button>
+                                    <button class="btn btn-danger btn-round" id="reject"
+                                        data-id="{{ $doctorRequest->id }}">Reject</button>
+                                @else
+                                    <button class="btn btn-danger btn-round" id="delete"
+                                        data-id="{{ $doctorRequest->id }}">Delete</button>
+                                @endif
+
                             </div>
                             <p class="social-icon m-t-5 m-b-0">
                                 <a title="Twitter" href="{{ $doctorRequest->Twitter }}" target="_blank"><i
@@ -150,6 +156,41 @@
                 dataType: "json",
                 success: function(response) {
                     $('#approve').prop('disabled', false);
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: response['msg'],
+                    });
+                }
+            })
+
+        })
+
+        $('#reject').click(function() {
+            $('#reject').prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('Admin.doctor.ChangeStatus') }}",
+                type: "post",
+                data: {
+
+                    id: $(this).data('id'),
+                    status: 'reject'
+                },
+                dataType: "json",
+                success: function(response) {
+                    $('#reject').prop('disabled', false);
 
                     const Toast = Swal.mixin({
                         toast: true,

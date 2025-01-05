@@ -52,11 +52,11 @@ class DoctorController extends Controller
 
         $validator = Validator::make($request->all(),[
             'name' => ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
-            'email' => ['required','email','max:30'],
+            'email' => ['required','email','max:30','unique:doctor_requests,email,'. Auth::user()->id .',user_id'],
             'phone' => ['required','regex:/^0[3-9][0-9]{2}[0-9]{7}$/'],
             'city' =>  ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
             'speciality' =>  ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
-            'MedicalSchool' =>  ['required','min:3','max:25','regex:/^[a-zA-Z\s]+$/'],
+            'MedicalSchool' =>  ['required','min:3','max:60','regex:/^[a-zA-Z\s]+$/'],
             'Certifications' =>  ['required','min:3','max:55','regex:/^[a-zA-Z\s]+$/'],
             'Experience' =>  ['nullable','min:3','max:55','regex:/^[a-zA-Z\s]+$/'],
             'Internship' =>  ['nullable','min:3','max:55','regex:/^[a-zA-Z\s]+$/'],
@@ -247,6 +247,25 @@ class DoctorController extends Controller
                 'msg' => $doctorRequest->name.' Doctor Registration Request Approved Successfully',
             ]);
 
+        }
+        else{
+            $id = $request->id;
+
+            $doctorRequest = DoctorRequest::find($id);
+            $doctorRequest->status = 'reject';
+            $doctorRequest->save();
+
+            Mail::to($doctorRequest->email)->send(new DoctorRequestMail(
+                [
+                    'name' => $doctorRequest->name,
+                    'status' => $doctorRequest->status,
+                ]
+            ));
+
+            return response()->json([
+                'status' => true,
+                'msg' => $doctorRequest->name.' Doctor Registration Request Rejected Successfully',
+            ]);
         }
     }
 }

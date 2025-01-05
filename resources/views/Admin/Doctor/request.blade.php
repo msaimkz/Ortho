@@ -61,7 +61,7 @@
                                                 <td>{{ ucwords($doctorRequest->speciality) }}</td>
                                                 <td>
                                                     @if ($doctorRequest->status == 'approve')
-                                                    <span class="badge badge-success">Approve</span>
+                                                    <span class="badge badge-success">Approved</span>
                                                         
                                                     @elseif ($doctorRequest->status == 'reject')
                                                     <span class="badge badge-danger">Rejected</span>
@@ -72,7 +72,6 @@
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('Admin.doctor.request-profile',$doctorRequest->id) }}"><span class="badge badge-info">View More</span></a>
-                                                    <a href=""><span class="badge badge-danger">Delete</span></a>
                                                 </td>
                                             </tr>
                                             @endforeach
