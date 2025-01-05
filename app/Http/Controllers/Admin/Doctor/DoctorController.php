@@ -40,6 +40,7 @@ class DoctorController extends Controller
     public function ChangeStatus(Request $request){
 
         $id = $request->id;
+        
 
         $doctor = DoctorProfile::find($id);
 
@@ -88,7 +89,7 @@ class DoctorController extends Controller
         $doctor = DoctorProfile::find($id);
         $name = $doctor->name;
 
-        $dpath = public_path().'/Uploads/Doctor/Profile'. $doctor->profile_img;
+        $dpath = public_path().'/Uploads/Doctor/Profile/'. $doctor->profile_img;
 
         if(File::exists($dpath)){
  
@@ -109,7 +110,7 @@ class DoctorController extends Controller
             ]
         ));
 
-        $user = User::where('id',$id)->first();
+        $user = User::where('id',$doctor->user_id)->first();
         $user->delete();
 
         $doctor->delete();

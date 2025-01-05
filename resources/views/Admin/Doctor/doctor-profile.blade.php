@@ -198,54 +198,58 @@
 @section('js')
     <script>
         $('#status').click(function() {
-            $('#status').prop('disabled', true);
+            if (confirm("Are you sure you want to change the Account status of this user's account?")) {
+                $('#status').prop('disabled', true);
 
-            $.ajax({
-                url: "{{ route('Admin.doctor.ChangeStatus') }}",
-                type: "post",
-                data: {
+                $.ajax({
+                    url: "{{ route('Admin.doctor.ChangeStatus') }}",
+                    type: "post",
+                    data: {
 
-                    id: $(this).data('id'),
+                        id: $(this).data('id'),
 
-                },
-                dataType: "json",
-                success: function(response) {
-                    $('#status').prop('disabled', false);
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#status').prop('disabled', false);
 
-                    if (response['Doctorstatus'] == 'active') {
+                        if (response['Doctorstatus'] == 'active') {
 
-                        $('#status').removeClass('btn-success').addClass('btn-danger').html('Block')
-                        $('#status-badge').removeClass('badge-danger').addClass('badge-success')
-                            .html('Active')
-                    } else {
-                        $('#status').removeClass('btn-danger').addClass('btn-success').html(
-                            'Active')
-                        $('#status-badge').removeClass('badge-success').addClass('badge-danger')
-                            .html('Block')
+                            $('#status').removeClass('btn-success').addClass('btn-danger').html('Block')
+                            $('#status-badge').removeClass('badge-danger').addClass('badge-success')
+                                .html('Active')
+                        } else {
+                            $('#status').removeClass('btn-danger').addClass('btn-success').html(
+                                'Active')
+                            $('#status-badge').removeClass('badge-success').addClass('badge-danger')
+                                .html('Block')
 
-                    }
-
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
                         }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: response['msg'],
-                    });
-                }
-            })
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+                    }
+                })
+
+            }
 
         })
 
         $('#delete').click(function() {
+            if(confirm("Are you sure you want to Delete this user Account?"))
             $('#delete').prop('disabled', true);
 
             $.ajax({
@@ -260,7 +264,7 @@
                 success: function(response) {
                     $('#delete').prop('disabled', false);
                     window.location.href = " {{ route('Admin.doctor') }}"
-      
+
                 }
             })
 
