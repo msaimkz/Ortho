@@ -14,6 +14,11 @@ use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\TempController;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+
+
+
 Route::get('/d', function () {
     return view('welcome');
 });
@@ -95,6 +100,11 @@ Route::get('/Ortho/Doctor/Dashboard',[DoctorsController::class,'index'])->name('
 Route::get('/Ortho/Doctor/My-Profile',[DoctorsController::class,'profile'])->name('doctor.profile');
 Route::get('/Ortho/Doctor/Edit-Profile',[DoctorsController::class,'Editprofile'])->name('doctor.profile.edit');
 
+
+// Blog Routes
+
+Route::post('Ortho/Store-Blog',[BlogController::class,'store'])->name('Store-Blog');
+
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
     ->middleware(['auth', 'signed'])
     ->name('verification.verify');
@@ -115,3 +125,15 @@ Route::get('/home',[UserAuthController::class,'index'])->middleware(['auth']);
 Route::get('/Ortho/403-Forbidden',[UserAuthController::class,'statusblockError'])->name('statusblockError');
 Route::post('/Ortho/Temp-Images',[TempController::class,'image'])->name('TempImages');
 Route::post('/Ortho/Temp-Files',[TempController::class,'file'])->name('TempFiles');
+
+Route::get('Admin/getSlug', function (Request $request) {
+
+    $slug = '';
+    if (!empty($request->title)) {
+      $slug = Str::slug($request->title);
+    }
+    return response()->json([
+      'status' => true,
+      'slug' => $slug,
+    ]);
+  })->name('GetSlug');
