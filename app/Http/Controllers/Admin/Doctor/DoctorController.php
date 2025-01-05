@@ -17,18 +17,109 @@ use App\Models\TempImage;
 use App\Models\TempFile;
 use Carbon\Carbon;
 use App\Mail\Admin\DoctorRequestMail;
+use App\Mail\Admin\DoctorStatusMail;
+use App\Mail\Admin\DoctorDeleteMail;
 use Illuminate\Support\Facades\Mail;
 
 class DoctorController extends Controller
 {
     public function doctor(){
 
-        return view('Admin.Doctor.doctor');
+
+        $doctors = DoctorProfile::latest()->get();
+
+        return view('Admin.Doctor.doctor',compact('doctors'));
     }
 
-    public function profile(){
+    public function profile(string $id){
 
-        return view('Admin.Doctor.doctor-profile');
+        $doctor = DoctorProfile::find($id);
+        return view('Admin.Doctor.doctor-profile',compact('doctor'));
+    }
+
+    public function ChangeStatus(Request $request){
+
+        $id = $request->id;
+
+        $doctor = DoctorProfile::find($id);
+
+        if($doctor->status == 'active'){
+
+            $doctor->status = 'block';
+            $doctor->save();
+
+            Mail::to($doctor->email)->send(new DoctorStatusMail(
+                [
+                    'name' => $doctor->name,
+                    'status' => $doctor->status,
+                ]
+            ));
+
+            return response()->json([
+                'status' => true,
+                'Doctorstatus' => 'block',
+                'msg' => $doctor->name. ' Account Blocked Succesfully'
+            ]);
+        }
+        else{
+
+            $doctor->status = 'active';
+            $doctor->save();
+
+            Mail::to($doctor->email)->send(new DoctorStatusMail(
+                [
+                    'name' => $doctor->name,
+                    'status' => $doctor->status,
+                ]
+            ));
+
+            return response()->json([
+                'status' => true,
+                'Doctorstatus' => 'active',
+                'msg' => $doctor->name. ' Account Activated Succesfully'
+            ]);
+        }
+        
+    }
+
+    public function Delete (Request $request){
+        $id = $request->id;
+
+        $doctor = DoctorProfile::find($id);
+        $name = $doctor->name;
+
+        $dpath = public_path().'/Uploads/Doctor/Profile'. $doctor->profile_img;
+
+        if(File::exists($dpath)){
+ 
+         File::delete($dpath);
+        }
+ 
+ 
+        $dpath = public_path().'/Uploads/Doctor/Degree/'. $doctor->graduate_degree;
+ 
+        if(File::exists($dpath)){
+ 
+         File::delete($dpath);
+        }
+
+        Mail::to($doctor->email)->send(new DoctorDeleteMail(
+            [
+                'name' => $doctor->name,
+            ]
+        ));
+
+        $user = User::where('id',$id)->first();
+        $user->delete();
+
+        $doctor->delete();
+
+        return response()->json([
+            'status' => true,
+            'msg' => $name. " Account Deleted Succesfully"
+        ]);
+        
+        
     }
 
     public function request(){
@@ -235,6 +326,16 @@ class DoctorController extends Controller
             $doctor->role = 'doctor';
             $doctor->save();
 
+            $spath = public_path().'/Uploads/Doctor Request/Profile/'. $doctorRequest->profile_img;
+            $dpath = public_path().'/Uploads/Doctor/Profile/'.$doctorRequest->profile_img;
+
+            File::copy($spath,$dpath);
+
+            $spath = public_path().'/Uploads/Doctor Request/Degree/'. $doctorRequest->graduate_degree;
+            $dpath = public_path().'/Uploads/Doctor/Degree/'.$doctorRequest->graduate_degree;
+
+            File::copy($spath,$dpath);
+
             Mail::to($doctorRequest->email)->send(new DoctorRequestMail(
                 [
                     'name' => $doctorRequest->name,
@@ -267,5 +368,39 @@ class DoctorController extends Controller
                 'msg' => $doctorRequest->name.' Doctor Registration Request Rejected Successfully',
             ]);
         }
+    }
+
+    public function requestDelete(Request $request){
+
+       $doctorRequest = DoctorRequest::find($request->id);
+
+       $dpath = public_path().'/Uploads/Doctor Request/Profile/'. $doctorRequest->profile_img;
+
+       if(File::exists($dpath)){
+
+        File::delete($dpath);
+       }
+
+       $dpath = public_path().'/Uploads/Doctor Request/'. $doctorRequest->profile_img;
+
+       if(File::exists($dpath)){
+
+        File::delete($dpath);
+       }
+
+
+       $dpath = public_path().'/Uploads/Doctor Request/Degree/'. $doctorRequest->graduate_degree;
+
+       if(File::exists($dpath)){
+
+        File::delete($dpath);
+       }
+
+       $doctorRequest->delete();
+
+       return response()->json([
+        'status' => true,
+        'msg' => 'Doctor Request Deleted Succesfully',
+       ]);
     }
 }

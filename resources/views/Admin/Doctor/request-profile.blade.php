@@ -35,7 +35,7 @@
                                 <span class="job_post">{{ ucwords($doctorRequest->speciality) }}</span>
                                 <p>{{ ucwords($doctorRequest->address) }}</p>
                             </div>
-                            <div>
+                            <div id="button-container">
                                 @if ($doctorRequest->status == 'pending')
                                     <button class="btn btn-success btn-round" id="approve"
                                         data-id="{{ $doctorRequest->id }}">Approve</button>
@@ -85,7 +85,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane body active" id="about">
-                                <p>{{ $doctorRequest->bio }}.</p>
+                                <p>{{ ucwords($doctorRequest->bio) }}.</p>
                                 <h6>Qualifications</h6>
                                 <hr>
                                 <ul class="list-unstyled">
@@ -146,7 +146,7 @@
             $('#approve').prop('disabled', true);
 
             $.ajax({
-                url: "{{ route('Admin.doctor.ChangeStatus') }}",
+                url: "{{ route('Admin.doctor.RequestChangeStatus') }}",
                 type: "post",
                 data: {
 
@@ -156,6 +156,9 @@
                 dataType: "json",
                 success: function(response) {
                     $('#approve').prop('disabled', false);
+                    var html = `<button class="btn btn-danger btn-round" id="delete"
+                                        data-id="{{ $doctorRequest->id }}">Delete</button>`
+                    $('#button-container').html(html)
 
                     const Toast = Swal.mixin({
                         toast: true,
@@ -181,7 +184,7 @@
             $('#reject').prop('disabled', true);
 
             $.ajax({
-                url: "{{ route('Admin.doctor.ChangeStatus') }}",
+                url: "{{ route('Admin.doctor.RequestChangeStatus') }}",
                 type: "post",
                 data: {
 
@@ -191,7 +194,9 @@
                 dataType: "json",
                 success: function(response) {
                     $('#reject').prop('disabled', false);
-
+                    var html = `<button class="btn btn-danger btn-round" id="delete"
+                                        data-id="{{ $doctorRequest->id }}">Delete</button>`
+                    $('#button-container').html(html)
                     const Toast = Swal.mixin({
                         toast: true,
                         position: "top-end",
@@ -207,6 +212,29 @@
                         icon: "success",
                         title: response['msg'],
                     });
+                }
+            })
+
+        })
+        $('#delete').click(function() {
+            $('#delete').prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('Admin.doctor.RequestDelete') }}",
+                type: "delete",
+                data: {
+
+                    id: $(this).data('id'),
+
+                },
+                dataType: "json",
+                success: function(response) {
+                    $('#delete').prop('disabled', false);
+
+                    if (response['status'] == true) {
+
+                        window.location.href = "{{ route('Admin.doctor.request') }}"
+                    }
                 }
             })
 

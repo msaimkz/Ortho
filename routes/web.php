@@ -57,10 +57,13 @@ Route::get('/Ortho/Admin/Dashboard',[AdminController::class,'dashboard'])->name(
 Route::get('/Ortho/Admin/Profile',[AdminController::class,'Profile'])->name('Admin.profile');
 Route::get('/Ortho/Admin/Update-Profile',[AdminController::class,'EditProfile'])->name('Admin.profile.edit');
 Route::get('/Ortho/Admin/All-Doctors',[DoctorController::class,'doctor'])->name('Admin.doctor');
-Route::get('/Ortho/Admin/Doctor-Profile',[DoctorController::class,'profile'])->name('Admin.doctor.profile');
+Route::get('/Ortho/Admin/Doctor-Profile/{id}',[DoctorController::class,'profile'])->name('Admin.doctor.profile');
+Route::post('/Ortho/Admin/Doctor-Change-Status/',[DoctorController::class,'ChangeStatus'])->name('Admin.doctor.ChangeStatus');
+Route::delete('/Ortho/Admin/Doctor-Account-Delete/',[DoctorController::class,'Delete'])->name('Admin.doctor.DeleteAccount');
 Route::get('/Ortho/Admin/Doctor-Registration-Requests',[DoctorController::class,'request'])->name('Admin.doctor.request');
 Route::get('/Ortho/Admin/Doctor-Request-Profile/{id}',[DoctorController::class,'requestProfile'])->name('Admin.doctor.request-profile');
-Route::post('/Ortho/Admin/Doctor-Request-Status',[DoctorController::class,'requestProfileStatus'])->name('Admin.doctor.ChangeStatus');
+Route::post('/Ortho/Admin/Doctor-Request-Status',[DoctorController::class,'requestProfileStatus'])->name('Admin.doctor.RequestChangeStatus');
+Route::delete('/Ortho/Admin/Doctor-Request-Delete',[DoctorController::class,'requestDelete'])->name('Admin.doctor.RequestDelete');
 Route::get('/Ortho/Admin/All-Patients',[PatientController::class,'index'])->name('Admin.patients');
 Route::get('/Ortho/Admin/Patient-Profile/{id}',[PatientController::class,'profile'])->name('Admin.patients.profile');
 Route::get('/Ortho/Admin/Change-Patient-Status/{id}',[PatientController::class,'status'])->name('Admin.patients.statusChange');
