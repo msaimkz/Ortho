@@ -222,4 +222,9 @@ class AdminController extends Controller
        }
 
     }
+
+    public function notFound(){
+
+        return view('Admin.not-found');
+    }
 }

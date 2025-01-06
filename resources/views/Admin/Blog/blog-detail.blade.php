@@ -28,18 +28,24 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card single_post">
                     <div class="body">
-                        <h3 class="m-t-0 m-b-5"><a href="#">All photographs are accurate. None of them is the truth</a></h3>
+                        <h3 class="m-t-0 m-b-5"><a href="#">{{ ucwords($blog->title) }}</a></h3>
                         <ul class="meta">
-                            <li><a href="#"><i class="zmdi zmdi-account col-blue"></i>Posted By: John Smith</a></li>
+                            <li><a href="#"><i class="zmdi zmdi-account col-blue"></i>Posted By:{{ ucwords($blog->author) }}</a></li>
                             <li><a href="#"><i class="zmdi zmdi-comment-text col-blue"></i>Comments: 3</a></li>
                         </ul>
                     </div>                    
                     <div class="body">
                         <div class="img-post m-b-15">
-                            <img src="{{ asset('Assets/Dashboard/assets/images/blog/blog-page-1.jpg') }}" alt="Awesome Image">
+                            @if (isset($blog->thumbnail) && file_exists(public_path('Uploads/Blog/thumbnail/large/' . $blog->thumbnail)))
+                            <img src="{{ asset('Uploads/blog/'.$blog->thumbnail) }}"
+                            alt="Awesome Image">
+                            @else
+                            <img src="{{ asset('Assets/Dashboard/assets/images/blog/blog-page-3.jpg') }}"
+                            alt="Awesome Image">
+                            @endif
                            
                         </div>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</p>
+                        <p>{{ ucwords($blog->description) }}</p>
                     </div>
                 </div>
                 <div class="card">

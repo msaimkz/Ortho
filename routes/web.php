@@ -74,7 +74,7 @@ Route::get('/Ortho/Admin/Patient-Profile/{id}',[PatientController::class,'profil
 Route::get('/Ortho/Admin/Change-Patient-Status/{id}',[PatientController::class,'status'])->name('Admin.patients.statusChange');
 Route::delete('/Ortho/Admin/Delete-Patient/{id}',[PatientController::class,'delete'])->name('Admin.patients.DeletePatient');
 Route::get('/Ortho/Admin/All-Blogs',[BlogController::class,'blog'])->name('Admin.blog');
-Route::get('/Ortho/Admin/Blog-Detail',[BlogController::class,'detail'])->name('Admin.blog.detail');
+Route::get('/Ortho/Admin/Blog-Detail/{id}',[BlogController::class,'detail'])->name('Admin.blog.detail');
 Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');
 Route::get('/Ortho/Admin/Edit-Blog',[BlogController::class,'edit'])->name('Admin.blog.edit');
 Route::get('/Ortho/Admin/All-Services',[ServiceController::class,'index'])->name('Admin.service');
@@ -91,8 +91,12 @@ Route::get('/Ortho/Admin/Subscribe-Patients',[SubscriptionController::class,'sho
 Route::post('/Ortho/Admin/Change-Password',[AdminController::class,'ChangePassword'])->name('Admin.ChangePassword');
 Route::post('/Ortho/Admin/Edit-Profile',[AdminController::class,'UpdateProfile'])->name('Admin.UpdateProfile');
 Route::post('/Ortho/Admin/Edit-Profile-Image',[AdminController::class,'ProfileImg'])->name('Admin.UpdateProfileImage');
+Route::get('/Ortho/Admin/404-Not-Found',[AdminController::class,'notFound'])->name('Admin.notFound');
 
 
+//Admin Blog Routes
+
+Route::post('Ortho/Admin/Store-Blog',[BlogController::class,'store'])->name('Store-Blog');
 
 
 // Doctor Dashboard Routes
@@ -101,9 +105,6 @@ Route::get('/Ortho/Doctor/My-Profile',[DoctorsController::class,'profile'])->nam
 Route::get('/Ortho/Doctor/Edit-Profile',[DoctorsController::class,'Editprofile'])->name('doctor.profile.edit');
 
 
-// Blog Routes
-
-Route::post('Ortho/Store-Blog',[BlogController::class,'store'])->name('Store-Blog');
 
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
     ->middleware(['auth', 'signed'])

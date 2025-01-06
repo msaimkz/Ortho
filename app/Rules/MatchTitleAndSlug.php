@@ -16,7 +16,8 @@ class MatchTitleAndSlug implements ValidationRule
     {
         $title = request()->input('title');
 
-        if ($value !== $title) {
+       
+        if (ucwords(str_replace('-', ' ', $value) ) != ucwords($title)) {
             $fail('The :attribute must match the title.');
         }
     }

@@ -97,7 +97,7 @@
                                 <label for="">Short Descripion</label>
 
                                 <div class="form-group">
-                                    <textarea rows="4" class="form-control no-resize" placeholder="Please Write Short Descriptipn..."></textarea>
+                                    <textarea rows="4" class="form-control no-resize" name="short_description" id="short_description" placeholder="Please Write Short Descriptipn..."></textarea>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                 <label for="">Long Descripion</label>
 
                                 <div class="form-group">
-                                    <textarea rows="4" class="form-control no-resize" placeholder="Please Write Long Descriptipn..."></textarea>
+                                    <textarea rows="4" class="form-control no-resize" name="description" id="description" placeholder="Please Write Long Descriptipn..."></textarea>
                                     <span class="text-danger"></span>
 
                                 </div>
@@ -126,9 +126,9 @@
                             <div class="body">
 
 
-                                <div style="cursor: pointer" id="image" class="dropzone m-b-20 m-t-20"
-                                    method="post" enctype="multipart/form-data">
-                                    <div class="dz-message" >
+                                <div style="cursor: pointer" id="image" class="dropzone m-b-20 m-t-20" method="post"
+                                    enctype="multipart/form-data">
+                                    <div class="dz-message">
                                         <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
                                         <h3>Drop files here or click to upload.</h3>
                                         <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually
@@ -136,7 +136,7 @@
                                     </div>
 
                                 </div>
-                                <span class="text-danger"></span>
+                                <span class="text-danger" id="ImageInfo"></span>
 
                             </div>
                         </div>
@@ -228,6 +228,7 @@
         $('#BlogForm').submit(function(event) {
             event.preventDefault();
             var element = $(this);
+            $('button[type=submit]').prop('disabled', true)
 
             $.ajax({
                 url: "{{ route('Store-Blog') }}",
@@ -235,6 +236,50 @@
                 data: element.serializeArray(),
                 dataType: "json",
                 success: function(response) {
+                    $('button[type=submit]').prop('disabled', false)
+
+                    if (response['status'] == true) {
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+
+                        window.location.href = "{{ route('Admin.blog') }}"
+
+                    } else {
+                        var errors = response['errors'];
+
+
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('span.text-danger').html('');
+
+
+                        $.each(errors, function(key, value) {
+                            var field = $('#' + key);
+                            if (field.length) {
+                                field.addClass('is-invalid').siblings('span.text-danger')
+                                    .html(value);
+                            } else {
+
+                                if (key === 'thumbnail') {
+                                    $('#ImageInfo').html(value);
+                                }
+                                
+                            }
+                        });
+                    }
 
                 }
             })
