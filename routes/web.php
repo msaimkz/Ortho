@@ -74,9 +74,10 @@ Route::get('/Ortho/Admin/Patient-Profile/{id}',[PatientController::class,'profil
 Route::get('/Ortho/Admin/Change-Patient-Status/{id}',[PatientController::class,'status'])->name('Admin.patients.statusChange');
 Route::delete('/Ortho/Admin/Delete-Patient/{id}',[PatientController::class,'delete'])->name('Admin.patients.DeletePatient');
 Route::get('/Ortho/Admin/All-Blogs',[BlogController::class,'blog'])->name('Admin.blog');
-Route::get('/Ortho/Admin/Blog-Detail/{id}',[BlogController::class,'detail'])->name('Admin.blog.detail');
+Route::get('/Ortho/Admin/Blog-Detail/{slug}',[BlogController::class,'detail'])->name('Admin.blog.detail');
 Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');
-Route::get('/Ortho/Admin/Edit-Blog',[BlogController::class,'edit'])->name('Admin.blog.edit');
+Route::get('/Ortho/Admin/Edit-Blog/{slug}',[BlogController::class,'edit'])->name('Admin.blog.edit');
+Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');
 Route::get('/Ortho/Admin/All-Services',[ServiceController::class,'index'])->name('Admin.service');
 Route::get('/Ortho/Admin/Service-Detail',[ServiceController::class,'show'])->name('Admin.service.detail');
 Route::get('/Ortho/Admin/Create-Service',[ServiceController::class,'create'])->name('Admin.service.create');
@@ -97,6 +98,8 @@ Route::get('/Ortho/Admin/404-Not-Found',[AdminController::class,'notFound'])->na
 //Admin Blog Routes
 
 Route::post('Ortho/Admin/Store-Blog',[BlogController::class,'store'])->name('Store-Blog');
+Route::post('Ortho/Admin/Update-Blog/{id}',[BlogController::class,'update'])->name('Update-Blog');
+Route::delete('Ortho/Admin/Delete-Blog',[BlogController::class,'delete'])->name('Delete-Blog');
 
 
 // Doctor Dashboard Routes

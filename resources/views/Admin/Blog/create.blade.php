@@ -153,6 +153,7 @@
                             <div class="body">
 
                                 <button type="submit" class="btn btn-primary btn-round waves-effect m-t-20">Post</button>
+                                <a href="{{ route('Admin.blog') }}" class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
                             </div>
                         </div>
                     </div>

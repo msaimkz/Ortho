@@ -1,4 +1,4 @@
-@extends('Admin.dashboard')
+@extends('Admin.master')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/plugins/bootstrap/css/bootstrap.min.css') }}">
