@@ -99,11 +99,11 @@
 @section('js')
     <script>
         $('.delete').click(function() {
-            if (confirm("Are you sure you want to Delete this FAQs ?"))
+            if (confirm("Are you sure you want to Delete this Contact Message ?"))
                 $('.delete').prop('disabled', true);
 
              $.ajax({
-                url: "{{ route('Admin.FAQ.delete') }}",
+                url: "{{ route('Admin.contact.delete') }}",
                 type: "delete",
                 data: {
 
@@ -119,7 +119,7 @@
                     if (response['status'] == true) {
 
                         
-                        $(`#FAQ-${response['id']}`).remove();
+                        $(`#contact-${response['id']}`).remove();
                         const Toast = Swal.mixin({
                             toast: true,
                             position: "top-end",

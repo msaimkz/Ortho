@@ -101,6 +101,8 @@ Route::post('/Ortho/Admin/Edit-Profile-Image',[AdminController::class,'ProfileIm
 Route::get('/Ortho/Admin/404-Not-Found',[AdminController::class,'notFound'])->name('Admin.notFound');
 Route::get('/Ortho/Admin/All-Contact-Messages',[ContactController::class,'index'])->name('Admin.contact.index');
 Route::get('/Ortho/Admin/Contact-Message/{id}',[ContactController::class,'show'])->name('Admin.contact.show');
+Route::post('/Ortho/Admin/Send-Reply-Message/',[ContactController::class,'sendReply'])->name('Admin.contact.sendReply');
+Route::delete('/Ortho/Admin/Delete-Contact-Message/',[ContactController::class,'delete'])->name('Admin.contact.delete');
 
 
 
