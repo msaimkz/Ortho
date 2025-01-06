@@ -25,7 +25,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="card">
                     <div class="body">
-                        <h3 class="number count-to m-b-0" data-from="0" data-to="3218" data-speed="2500" data-fresh-interval="1000">3218 <i class="zmdi zmdi-trending-up float-right"></i></h3>
+                        <h3 class="number count-to m-b-0" data-from="0" data-to="{{ $doctorCounts }}" data-speed="2500" data-fresh-interval="1000">{{ $doctorCounts }} <i class="zmdi zmdi-trending-up float-right"></i></h3>
                         <p class="text-muted">New Doctors</p>
                        
                     </div>
@@ -34,8 +34,8 @@
             <div class="col-lg-4 col-md-12">
                 <div class="card">
                     <div class="body">
-                        <h3 class="number count-to m-b-0" data-from="0" data-to="284" data-speed="2500" data-fresh-interval="1000">284 <i class="zmdi zmdi-trending-up float-right"></i></h3>
-                        <p class="text-muted">New Bookings <i class="zmdi zmdi-mood"></i></p>
+                        <h3 class="number count-to m-b-0" data-from="0" data-to="{{ $doctorRequestCount }}" data-speed="2500" data-fresh-interval="1000">{{ $doctorRequestCount }} <i class="zmdi zmdi-trending-up float-right"></i></h3>
+                        <p class="text-muted">New Doctor Registrations <i class="zmdi zmdi-mood"></i></p>
                         
                     </div>
                 </div>

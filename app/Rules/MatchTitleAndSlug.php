@@ -9,15 +9,23 @@ class MatchTitleAndSlug implements ValidationRule
 {
     /**
      * Run the validation rule.
+     * 
      *
      * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
+
+     public $element;
+
+     public function __construct($element)
+     {
+         $this->element = $element; 
+     }
+
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $title = request()->input('title');
-
+      
        
-        if (ucwords(str_replace('-', ' ', $value) ) != ucwords($title)) {
+        if (ucwords(str_replace('-', ' ', $value) ) != ucwords($this->element)) {
             $fail('The :attribute must match the title.');
         }
     }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Admin\DoctorRequest;
 use App\Models\Admin\AdminProfile;
 use App\Rules\ValidDateOfBirth;
 use Illuminate\Support\Facades\File;
@@ -33,10 +34,14 @@ class AdminController extends Controller
         ->groupBy('city')
         ->get();
 
+        $doctorCounts = User::where('role','doctor')->count();
+        $doctorRequestCount = DoctorRequest::where('status','pending')->count();
+        
+
        
 
      
-        return view('Admin.dashboard',compact('patientCounts','patients','patientsCityCount'));
+        return view('Admin.dashboard',compact('patientCounts','patients','patientsCityCount','doctorCounts','doctorRequestCount'));
     }
 
     public function Profile(){

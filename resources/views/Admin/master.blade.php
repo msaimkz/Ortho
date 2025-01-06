@@ -135,10 +135,10 @@
                             </ul>
                         </li>
                         <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-copy"></i><span>Projects</span> </a>
+                                    class="zmdi zmdi-copy"></i><span>FAQs</span> </a>
                             <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.project') }}">All Projects</a></li>
-                                <li><a href="{{ route('Admin.project.create') }}">Add Projects</a></li>
+                                <li><a href="{{ route('Admin.FAQ') }}">All FAQs</a></li>
+                                <li><a href="{{ route('Admin.FAQ.create') }}">Add FAQ</a></li>
 
                             </ul>
                         </li>
