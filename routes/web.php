@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\FAQs\FAQController;
 use App\Http\Controllers\Admin\Subscription\SubscriptionController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\UserAuthController;
@@ -53,6 +54,7 @@ Route::get('/Ortho/Dashboard',[DashboardController::class,'dashboard'])->name('U
 Route::get('/Ortho/Dashboard/My-Profile',[DashboardController::class,'profile'])->name('User.dashboard.profile');
 Route::get('/Ortho/Dashboard/Update-Profile',[DashboardController::class,'Editprofile'])->name('User.dashboard.edit-profile');
 Route::get('/Ortho/Dashboard/My-Appointment',[DashboardController::class,'appoinment'])->name('User.dashboard.appoinment');
+Route::post('/Ortho/Send-Contact-Message',[ContactController::class,'store'])->name('User.contact.send');
 
 
 
@@ -97,6 +99,9 @@ Route::post('/Ortho/Admin/Change-Password',[AdminController::class,'ChangePasswo
 Route::post('/Ortho/Admin/Edit-Profile',[AdminController::class,'UpdateProfile'])->name('Admin.UpdateProfile');
 Route::post('/Ortho/Admin/Edit-Profile-Image',[AdminController::class,'ProfileImg'])->name('Admin.UpdateProfileImage');
 Route::get('/Ortho/Admin/404-Not-Found',[AdminController::class,'notFound'])->name('Admin.notFound');
+Route::get('/Ortho/Admin/All-Contact-Messages',[ContactController::class,'index'])->name('Admin.contact.index');
+Route::get('/Ortho/Admin/Contact-Message/{id}',[ContactController::class,'show'])->name('Admin.contact.show');
+
 
 
 //Admin Blog Routes

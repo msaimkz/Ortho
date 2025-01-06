@@ -28,7 +28,7 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card single_post">
                     <div class="body">
-                        <h3 class="m-t-0 m-b-5"><a href="#">{{ ucwords($FAQ->question) }}</a></h3>
+                        <h3 class="m-t-0 m-b-5">{{ ucwords($FAQ->question) }}</h3>
                     </div>                    
                     <div class="body">
                         
