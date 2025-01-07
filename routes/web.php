@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\FAQs\FAQController;
 use App\Http\Controllers\Admin\Subscription\SubscriptionController;
+use App\Http\Controllers\Admin\Course\CourseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -106,6 +107,11 @@ Route::get('/Ortho/Admin/All-Contact-Messages',[ContactController::class,'index'
 Route::get('/Ortho/Admin/Contact-Message/{id}',[ContactController::class,'show'])->name('Admin.contact.show');
 Route::post('/Ortho/Admin/Send-Reply-Message/',[ContactController::class,'sendReply'])->name('Admin.contact.sendReply');
 Route::delete('/Ortho/Admin/Delete-Contact-Message/',[ContactController::class,'delete'])->name('Admin.contact.delete');
+Route::get('/Ortho/Admin/All-Courses',[CourseController::class,'index'])->name('Admin.course');
+Route::get('/Ortho/Admin/Create-Course',[CourseController::class,'create'])->name('Admin.course.create');
+Route::post('/Ortho/Admin/Store-Course',[CourseController::class,'store'])->name('Admin.course.store');
+Route::get('/Ortho/Admin/Edit-Course/{slug}',[CourseController::class,'edit'])->name('Admin.course.edit');
+Route::post('/Ortho/Admin/Update-Course/{id}',[CourseController::class,'update'])->name('Admin.course.update');
 
 
 

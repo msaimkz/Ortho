@@ -75,124 +75,131 @@
                         <li>
                             <div class="user-info">
                                 <div class="image"><a href="{{ route('Admin.profile') }}">
-                                    @if (Auth::user()->profile_photo_path != null)
-                                    <img
-                                    src="{{ asset('Uploads/Admin/ProfileImages/'. Auth::user()->profile_photo_path) }}"
-                                    alt="User" class="Profile-Image"></a></div>
-                                    @else
-                                    <img
-                                    src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                    alt="User" class="Profile-Image"></a></div>
-                                    @endif
-                                    
-                                <div class="detail">
-                                    <h4 class="user-name">{{ Auth::user()->name }}</h4>
-                                    <small>Admin</small>
-                                </div>
+                                        @if (Auth::user()->profile_photo_path != null)
+                                            <img src="{{ asset('Uploads/Admin/ProfileImages/' . Auth::user()->profile_photo_path) }}"
+                                                alt="User" class="Profile-Image">
+                                    </a></div>
+                            @else
+                                <img src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}" alt="User"
+                                    class="Profile-Image"></a>
                             </div>
-                        </li>
-                        <li class="header">MAIN</li>
-                        <li class="active open"><a href="{{ route('Admin.dashboard') }}"><i
-                                    class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-account-o"></i><span>Doctors</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.doctor') }}">All Doctors</a></li>
-                                <li><a href="{{ route('Admin.doctor.request') }}">All Doctor Request</a></li>
+                            @endif
 
-                            </ul>
-                        </li>
-                        <li><a href="{{ route('Admin.patients') }}"><i
-                                    class="zmdi zmdi-account-add"></i><span>Patients</span> </a></li>
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-balance-wallet
-                                    "></i><span>Subscribtion</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.subscripion') }}">All Subscribtion</a></li>
-                                <li><a href="{{ route('Admin.subscripion.create') }}">Add Subscribtion</a></li>
-                                <li><a href="{{ route('Admin.subscripion.subscriber') }}">Subscribe Patients</a></li>
-
-                            </ul>
-                        </li>
-
-                        <li class="header">Social Content</li>
-
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-blogger"></i><span>Blogs</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.blog') }}">All Blogs</a></li>
-                                <li><a href="{{ route('Admin.blog.create') }}">Add Blogs</a></li>
-
-                            </ul>
-                        </li>
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-delicious"></i><span>Services</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.service') }}">All Services</a></li>
-                                <li><a href="{{ route('Admin.service.create') }}">Add Services</a></li>
-
-                            </ul>
-                        </li>
-                        <li><a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-copy"></i><span>FAQs</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.FAQ') }}">All FAQs</a></li>
-                                <li><a href="{{ route('Admin.FAQ.create') }}">Add FAQ</a></li>
-
-                            </ul>
-                        </li>
-                        <li><a href="{{ route('Admin.contact.index') }}"><i
-                            class="zmdi zmdi-email"></i><span>Contact Messages</span> </a></li>
-
+                            <div class="detail">
+                                <h4 class="user-name">{{ Auth::user()->name }}</h4>
+                                <small>Admin</small>
+                            </div>
+                </div>
+                </li>
+                <li class="header">MAIN</li>
+                <li class="active open"><a href="{{ route('Admin.dashboard') }}"><i
+                            class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+                <li><a href="javascript:void(0);" class="menu-toggle"><i
+                            class="zmdi zmdi-account-o"></i><span>Doctors</span> </a>
+                    <ul class="ml-menu">
+                        <li><a href="{{ route('Admin.doctor') }}">All Doctors</a></li>
+                        <li><a href="{{ route('Admin.doctor.request') }}">All Doctor Request</a></li>
 
                     </ul>
-                </div>
-            </div>
-            <div class="tab-pane stretchLeft" id="user">
-                <div class="menu">
-                    <ul class="list">
-                        <li>
-                            <div class="user-info m-b-20 p-b-15">
-                                <div class="image">
-                                  <a href="{{ route('Admin.profile') }}">
-                                    @if (Auth::user()->profile_photo_path != null)
-                                    <img
-                                    src="{{ asset('Uploads/Admin/ProfileImages/'. Auth::user()->profile_photo_path) }}"
-                                    alt="User" class="Profile-Image">
-                                    @else
-                                    <img
-                                    src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                    alt="User" class="Profile-Image">
-                                    @endif
-                                  </a>
-                                </div>
-                                <div class="detail">
-                                    <h4 class="user-name">{{ Auth::user()->name }}</h4>
+                </li>
+                <li><a href="{{ route('Admin.patients') }}"><i class="zmdi zmdi-account-add"></i><span>Patients</span>
+                    </a></li>
+                <li><a href="javascript:void(0);" class="menu-toggle"><i
+                            class="zmdi zmdi-balance-wallet
+                                    "></i><span>Subscribtion</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li><a href="{{ route('Admin.subscripion') }}">All Subscribtion</a></li>
+                        <li><a href="{{ route('Admin.subscripion.create') }}">Add Subscribtion</a></li>
+                        <li><a href="{{ route('Admin.subscripion.subscriber') }}">Subscribe Patients</a></li>
 
-                                </div>
+                    </ul>
+                </li>
+
+                <li class="header">Social Content</li>
+
+                <li><a href="javascript:void(0);" class="menu-toggle"><i
+                            class="zmdi zmdi-book"></i><span>Courses</span> </a>
+                    <ul class="ml-menu">
+                        <li><a href="{{ route('Admin.course') }}">All Courses</a></li>
+                        <li><a href="{{ route('Admin.course.create') }}">Add Course</a></li>
+
+                    </ul>
+                </li>
+
+                <li><a href="javascript:void(0);" class="menu-toggle"><i
+                            class="zmdi zmdi-blogger"></i><span>Blogs</span> </a>
+                    <ul class="ml-menu">
+                        <li><a href="{{ route('Admin.blog') }}">All Blogs</a></li>
+                        <li><a href="{{ route('Admin.blog.create') }}">Add Blogs</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="javascript:void(0);" class="menu-toggle"><i
+                            class="zmdi zmdi-delicious"></i><span>Services</span> </a>
+                    <ul class="ml-menu">
+                        <li><a href="{{ route('Admin.service') }}">All Services</a></li>
+                        <li><a href="{{ route('Admin.service.create') }}">Add Services</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-copy"></i><span>FAQs</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li><a href="{{ route('Admin.FAQ') }}">All FAQs</a></li>
+                        <li><a href="{{ route('Admin.FAQ.create') }}">Add FAQ</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="{{ route('Admin.contact.index') }}"><i class="zmdi zmdi-email"></i><span>Contact
+                            Messages</span> </a></li>
+
+
+                </ul>
+            </div>
+        </div>
+        <div class="tab-pane stretchLeft" id="user">
+            <div class="menu">
+                <ul class="list">
+                    <li>
+                        <div class="user-info m-b-20 p-b-15">
+                            <div class="image">
+                                <a href="{{ route('Admin.profile') }}">
+                                    @if (Auth::user()->profile_photo_path != null)
+                                        <img src="{{ asset('Uploads/Admin/ProfileImages/' . Auth::user()->profile_photo_path) }}"
+                                            alt="User" class="Profile-Image">
+                                    @else
+                                        <img src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                            alt="User" class="Profile-Image">
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="detail">
+                                <h4 class="user-name">{{ Auth::user()->name }}</h4>
 
                             </div>
-                        </li>
-                        <li>
-                            @if (!empty($profile->address))
+
+                        </div>
+                    </li>
+                    <li>
+                        @if (!empty($profile->address))
                             <small class="text-muted">Location: </small>
                             <p class="user-location">{{ $profile->address }}</p>
                             <hr>
-                            @endif
-                           
-                            <small class="text-muted">Email address: </small>
-                            <p>{{ Auth::user()->email }}</p>
-                            <hr>
-                            <small class="text-muted">Phone: </small>
-                            <p>{{ Auth::user()->phone }}</p>
-                            <hr>
+                        @endif
+
+                        <small class="text-muted">Email address: </small>
+                        <p>{{ Auth::user()->email }}</p>
+                        <hr>
+                        <small class="text-muted">Phone: </small>
+                        <p>{{ Auth::user()->phone }}</p>
+                        <hr>
 
 
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+                </ul>
             </div>
+        </div>
         </div>
     </aside>
     <!-- Right Sidebar -->
