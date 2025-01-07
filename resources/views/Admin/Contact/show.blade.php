@@ -78,32 +78,45 @@
                             </div>
 
                         </div>
-                        <div class="col-md-12">
-                            <form name="ReplyForm" id="ReplyForm">
+                        <div class="col-md-12" id="reply-container">
+                            @if ($Contact->reply == null)
+                                <form name="ReplyForm" id="ReplyForm">
 
-                                <div class="card">
-                                    <div class="body">
-                                        <label for="reply">Reply</label>
+                                    <div class="card">
+                                        <div class="body">
+                                            <label for="reply">Reply</label>
 
-                                        <div class="form-group">
-                                            <textarea rows="4" name="reply" id="reply" class="form-control no-resize"
-                                                placeholder="Please Write  Reply Message..."></textarea>
-                                            <span class="text-danger"></span>
+                                            <div class="form-group">
+                                                <textarea rows="4" name="reply" id="reply" class="form-control no-resize"
+                                                    placeholder="Please Write  Reply Message..."></textarea>
+                                                <span class="text-danger"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card">
-                                    <div class="body">
-                                        <button type="submit"
-                                            class="btn btn-primary btn-round waves-effect m-t-20">Send</button>
+                                    <div class="card">
+                                        <div class="body">
+                                            <button type="submit"
+                                                class="btn btn-primary btn-round waves-effect m-t-20">Send</button>
 
-                                        <a href="{{ route('Admin.contact.index') }}"
-                                            class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
+                                            <a href="{{ route('Admin.contact.index') }}"
+                                                class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            @else
+                                <div class="card single_post">
+                                    <div class="body">
+                                        <h3 class="m-t-0 m-b-5">Reply Message</h3>
+
+                                        <p>{{ ucwords($Contact->reply) }}</p>
                                     </div>
                                 </div>
-                            </form>
+                            @endif
 
                         </div>
+
+
+
 
 
                     </div>
@@ -137,10 +150,20 @@
 
                     if (response['status'] == true) {
 
-                         $('#ReplyForm')[0].reset();
+                        $('#ReplyForm')[0].reset();
 
                         $('.is-invalid').removeClass('is-invalid');
                         $('span.text-danger').html('');
+
+                        var html = ` <div class="card single_post">
+                                    <div class="body">
+                                        <h3 class="m-t-0 m-b-5">Reply Message</h3>
+
+                                        <p>${response['replyMsg']}</p>
+                                    </div>
+                                </div>`;
+
+                        $("#reply-container").html(html)
 
                         const Toast = Swal.mixin({
                             toast: true,

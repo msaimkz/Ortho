@@ -111,6 +111,7 @@ class ContactController extends Controller
 
             return response()->json([
                 'status' => true,
+                'replyMsg' => $request->reply,
                 'msg' => 'Contact Reply Message Send Successfully'
             ]);
 

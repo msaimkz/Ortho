@@ -83,6 +83,7 @@ Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('A
 Route::get('/Ortho/Admin/All-Services',[ServiceController::class,'index'])->name('Admin.service');
 Route::get('/Ortho/Admin/Service-Detail',[ServiceController::class,'show'])->name('Admin.service.detail');
 Route::get('/Ortho/Admin/Create-Service',[ServiceController::class,'create'])->name('Admin.service.create');
+Route::post('/Ortho/Admin/Store-Service',[ServiceController::class,'store'])->name('Admin.service.store');
 Route::get('/Ortho/Admin/Edit-Service',[ServiceController::class,'edit'])->name('Admin.service.edit');
 Route::get('/Ortho/Admin/All-FAQs',[FAQController::class,'index'])->name('Admin.FAQ');
 Route::get('/Ortho/Admin/Create-FAQ',[FAQController::class,'create'])->name('Admin.FAQ.create');
