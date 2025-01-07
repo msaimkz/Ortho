@@ -81,10 +81,12 @@ Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('A
 Route::get('/Ortho/Admin/Edit-Blog/{slug}',[BlogController::class,'edit'])->name('Admin.blog.edit');
 Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');
 Route::get('/Ortho/Admin/All-Services',[ServiceController::class,'index'])->name('Admin.service');
-Route::get('/Ortho/Admin/Service-Detail',[ServiceController::class,'show'])->name('Admin.service.detail');
+Route::get('/Ortho/Admin/Service-Detail/{slug}',[ServiceController::class,'show'])->name('Admin.service.detail');
 Route::get('/Ortho/Admin/Create-Service',[ServiceController::class,'create'])->name('Admin.service.create');
 Route::post('/Ortho/Admin/Store-Service',[ServiceController::class,'store'])->name('Admin.service.store');
-Route::get('/Ortho/Admin/Edit-Service',[ServiceController::class,'edit'])->name('Admin.service.edit');
+Route::get('/Ortho/Admin/Edit-Service/{slug}',[ServiceController::class,'edit'])->name('Admin.service.edit');
+Route::post('/Ortho/Admin/Update-Service/{id}',[ServiceController::class,'update'])->name('Admin.service.update');
+Route::delete('/Ortho/Admin/Delete-Service',[ServiceController::class,'destroy'])->name('Admin.service.delete');
 Route::get('/Ortho/Admin/All-FAQs',[FAQController::class,'index'])->name('Admin.FAQ');
 Route::get('/Ortho/Admin/Create-FAQ',[FAQController::class,'create'])->name('Admin.FAQ.create');
 Route::post('/Ortho/Admin/Store-FAQ',[FAQController::class,'store'])->name('Admin.FAQ.store');
