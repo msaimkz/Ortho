@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\FAQs\FAQController;
 use App\Http\Controllers\Admin\Subscription\SubscriptionController;
 use App\Http\Controllers\Admin\Course\CourseController;
 use App\Http\Controllers\Admin\Course\ChapterController;
+use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -57,6 +58,7 @@ Route::get('/Ortho/Dashboard/My-Profile',[DashboardController::class,'profile'])
 Route::get('/Ortho/Dashboard/Update-Profile',[DashboardController::class,'Editprofile'])->name('User.dashboard.edit-profile');
 Route::get('/Ortho/Dashboard/My-Appointment',[DashboardController::class,'appoinment'])->name('User.dashboard.appoinment');
 Route::post('/Ortho/Send-Contact-Message',[ContactController::class,'store'])->name('User.contact.send');
+Route::post('/Ortho/Send-NewsLetter-Email',[NewsLetterController::class,'store'])->name('User.newsletter.send');
 
 
 

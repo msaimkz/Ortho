@@ -111,10 +111,12 @@
                                             <li>
                                                 <form action="{{ route('logout') }}" method="POST" id="logout-form">
                                                     @csrf
-                                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
+                                                    <a href="#"
+                                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign
+                                                        Out</a>
                                                 </form>
                                             </li>
-                                            
+
 
                                         </ul>
                                     </li>
@@ -169,29 +171,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="cs_footer_col">
-                    <div class="cs_footer_widget">
-                        <h2 class="cs_footer_widget_title">Service</h2>
-                        <ul class="cs_footer_widget_nav_list cs_mp_0">
-                            <li><a href="#">Why choose us</a></li>
-                            <li><a href="#">Our solutions</a></li>
-                            <li><a href="#">Partners</a></li>
-                            <li><a href="#">Core values</a></li>
-                            <li><a href="#">Our projects</a></li>
-                        </ul>
-                    </div>
-                </div>
+
                 <div class="cs_footer_col">
                     <div class="cs_footer_widget">
                         <h2 class="cs_footer_widget_title">Quick Link</h2>
                         <ul class="cs_footer_widget_nav_list cs_mp_0">
-                            <li><a href="#">Residents</a></li>
-                            <li><a href="#">Business</a></li>
-                            <li><a href="#">Online Service</a></li>
-                            <li><a href="#">Visiting</a></li>
-                            <li><a href="#">Employment</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Contact Information</a></li>
                         </ul>
                     </div>
+                </div>
+
+                <div class="cs_footer_col"
+                    style=" display: flex; flex-direction: column; gap: 20px; justify-content: center">
+                    <p class="cs_footer_copyright mb-0">Stay updated with the latest news and exclusive courses –
+                        subscribe to our newsletter today!</p>
+                    <form name="NewsForm" id="NewsForm" style=" display: flex;">
+                        <div>
+                            <input type="email" name="email" required class="cs_form_field" id="email"
+                                placeholder="Email">
+                            <span class="error-message" style="color: red"></span>
+                        </div>
+                        <button type="submit" class="btn btn-info  mx-3">Sumbit</button>
+                    </form>
+
+
                 </div>
 
             </div>
@@ -199,12 +204,12 @@
         <div class="cs_footer_bottom cs_primary_bg">
             <div class="container">
                 <div class="cs_footer_bottom_in">
-                    <p class="cs_footer_copyright mb-0">Copyright © 2024 Medilo, All Rights Reserved.</p>
+                    <p class="cs_footer_copyright mb-0">Copyright © 2024 Ortho, All Rights Reserved.</p>
                     <ul class="cs_footer_menu cs_mp_0">
-                        <li><a href='about.html'>About Us</a></li>
-                        <li><a href="#">Events</a></li>
-                        <li><a href='blog.html'>News</a></li>
-                        <li><a href='service.html'>Service</a></li>
+                        <li><a href='{{ route('User.about') }}'>About Us</a></li>
+                        <li><a href="{{ route('User.project') }}">Course</a></li>
+                        <li><a href='{{ route('User.blog') }}'>News</a></li>
+                        <li><a href='{{ route('User.service') }}'>Service</a></li>
                     </ul>
                 </div>
             </div>
@@ -221,7 +226,7 @@
     <!-- End Scroll Up Button -->
 
     <!-- Script -->
-    
+
     <script src="{{ asset('Assets/User/assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('Assets/User/assets/js/wow.min.js') }}"></script>
     <script src="{{ asset('Assets/User/assets/js/jquery.slick.min.js') }}"></script>
@@ -235,7 +240,85 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $('#NewsForm').submit(function(event) {
+            event.preventDefault();
+            var element = $(this);
+            $('button[type=submit]').prop('disabled', true)
+
+            $.ajax({
+                url: "{{ route('User.newsletter.send') }}",
+                type: "post",
+                data: element.serializeArray(),
+                dataType: "json",
+                success: function(response) {
+                    $('button[type=submit]').prop('disabled', false)
+
+                    if (response['status'] == true) {
+
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('.error-message').html('');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+
+
+
+                    } else {
+
+                        if (response['isLogin'] == false) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
+
+
+                        }
+
+                       
+                        var errors = response['errors'];
+
+
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('.error-message').html('');
+
+
+                        $.each(errors, function(key, value) {
+                            var field = $('#' + key);
+                            if (field.length) {
+                                field.addClass('is-invalid').siblings('span.error-message')
+                                    .html(value);
+                            }
+                        });
+                    }
+                }
+            })
+        })
     </script>
+
     @yield('js')
 
 </body>
