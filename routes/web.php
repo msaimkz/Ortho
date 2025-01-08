@@ -122,6 +122,7 @@ Route::post('/Ortho/Admin/Course/Add-Chapter/{id}',[ChapterController::class,'st
 Route::get('/Ortho/Admin/Course/Edit-Chapter/{slug}',[ChapterController::class,'edit'])->name('Admin.course.chapter.edit');
 Route::post('/Ortho/Admin/Course/Update-Chapter/{id}',[ChapterController::class,'update'])->name('Admin.course.chapter.update');
 Route::delete('/Ortho/Admin/Course/Delete-Chapter/',[ChapterController::class,'destroy'])->name('Admin.course.chapter.delete');
+Route::get('/Ortho/Admin/All-NewsLetter-Emails',[NewsLetterController::class,'index'])->name('Admin.newsletter');
 
 
 

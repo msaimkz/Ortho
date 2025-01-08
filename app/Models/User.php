@@ -46,6 +46,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_secret',
     ];
 
+    public function newsletter()
+    {
+        return $this->hasOne(Newsletter::class);
+    }
+
     /**
      * The accessors to append to the model's array form.
      *

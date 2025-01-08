@@ -257,6 +257,7 @@
                     if (response['status'] == true) {
 
                         $('.is-invalid').removeClass('is-invalid');
+                        $('.cs_form_field').val('');
                         $('.error-message').html('');
                         const Toast = Swal.mixin({
                             toast: true,

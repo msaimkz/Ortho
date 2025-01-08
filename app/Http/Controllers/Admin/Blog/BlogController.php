@@ -13,6 +13,9 @@ use App\Rules\MatchTitleAndSlug;
 use App\Models\Blog;
 use App\Models\User;
 use App\Models\TempImage;
+use App\Jobs\SendEmailsToNewsletterSubscribers;
+use App\Models\NewsletterEmail;
+
 
 class BlogController extends Controller
 {
@@ -114,6 +117,15 @@ class BlogController extends Controller
                 
 
               }
+
+              $emails = NewsletterEmail::pluck('email')->toArray();
+              $names = NewsletterEmail::with('user')->get()->map(function ($newsletter) {
+                return $newsletter->user->name;
+             })->toArray();
+
+
+              
+              SendEmailsToNewsletterSubscribers::dispatch($emails, 'Blog', $blog->title,$names);
 
               return response()->json([
                 'status' => true,
