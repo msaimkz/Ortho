@@ -16,11 +16,7 @@ class NewsLetterController extends Controller
      */
     public function index()
     {
-        
-        
-
-
-             
+       
         $newsletters = NewsletterEmail::latest()->with('user')->get();
 
         return view('Admin.Newsletter.newsletter',compact('newsletters'));

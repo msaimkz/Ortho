@@ -125,7 +125,7 @@ class BlogController extends Controller
 
 
               
-              SendEmailsToNewsletterSubscribers::dispatch($emails, 'Blog', $blog->title,$names);
+              SendEmailsToNewsletterSubscribers::dispatch($emails, 'Blog', $blog->title, $names);
 
               return response()->json([
                 'status' => true,

@@ -87,7 +87,10 @@
 
         <!-- Main Content Section -->
         <div class="email-content">
-            <h2>Hello {{ $name }},</h2>
+            @foreach ($name as $nam)
+            <h2>Hello {{ $nam }},</h2>
+            @endforeach
+          
             <p>
                 We are excited to share with you that a new {{ $type }} has been added to our platform. Here are the details:
             </p>
