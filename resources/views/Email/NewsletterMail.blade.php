@@ -99,7 +99,6 @@
             <p>
                 Click the button below to explore this {{ strtolower($type) }} on our website:
             </p>
-            <a href="{{ route('User.about') }}" target="_blank">View Now</a>
         </div>
 
         <!-- Footer Section -->
