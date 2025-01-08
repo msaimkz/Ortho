@@ -16,7 +16,7 @@
                     <ul class="breadcrumb float-md-right">
                         <li class="breadcrumb-item"><a href="{{ route('Admin.dashboard') }}"><i class="zmdi zmdi-home"></i>
                                 Ortho</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('Admin.blog') }}">Course</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('Admin.course') }}">Course</a></li>
                         <li class="breadcrumb-item active">All Courses</li>
                     </ul>
                 </div>
@@ -87,8 +87,8 @@
                                             
                                             <a href="{{ route('Admin.course.edit', $course->slug) }}" title="edit course"
                                                 class="btn btn-round btn-primary">Edit</a>
-                                            <button type="button" title="delete course" class="btn btn-round btn-danger"
-                                                data-id="{{ $course->id }}" id="delete">Delete</button>
+                                            <button type="button" title="delete course" class="btn btn-round btn-danger delete"
+                                                data-id="{{ $course->id }}" >Delete</button>
 
 
                                         </div>
@@ -106,12 +106,12 @@
 
 @section('js')
     <script>
-        $('#delete').click(function() {
-            if (confirm("Are you sure you want to Delete this Blog ?"))
-                $('#delete').prop('disabled', true);
+        $('.delete').click(function() {
+            if (confirm("Are you sure you want to Delete this Course ?"))
+                $('.delete').prop('disabled', true);
 
             $.ajax({
-                url: "{{ route('Delete-Blog') }}",
+                url: "{{ route('Admin.course.delete') }}",
                 type: "delete",
                 data: {
 
@@ -120,13 +120,13 @@
                 },
                 dataType: "json",
                 success: function(response) {
-                    $('#delete').prop('disabled', false);
+                    $('.delete').prop('disabled', false);
 
 
 
                     if (response['status'] == true) {
 
-                        $(`#blog-card-${response['id']}`).remove();
+                        $(`#course-card-${response['id']}`).remove();
                         const Toast = Swal.mixin({
                             toast: true,
                             position: "top-end",

@@ -114,10 +114,12 @@ Route::post('/Ortho/Admin/Store-Course',[CourseController::class,'store'])->name
 Route::get('/Ortho/Admin/Show-Course/{slug}',[CourseController::class,'show'])->name('Admin.course.show');
 Route::get('/Ortho/Admin/Edit-Course/{slug}',[CourseController::class,'edit'])->name('Admin.course.edit');
 Route::post('/Ortho/Admin/Update-Course/{id}',[CourseController::class,'update'])->name('Admin.course.update');
+Route::delete('/Ortho/Admin/Delete-Course',[CourseController::class,'destroy'])->name('Admin.course.delete');
 Route::get('/Ortho/Admin/Course/Add-Chapter/{slug}',[ChapterController::class,'create'])->name('Admin.course.chapter.create');
 Route::post('/Ortho/Admin/Course/Add-Chapter/{id}',[ChapterController::class,'store'])->name('Admin.course.chapter.store');
 Route::get('/Ortho/Admin/Course/Edit-Chapter/{slug}',[ChapterController::class,'edit'])->name('Admin.course.chapter.edit');
 Route::post('/Ortho/Admin/Course/Update-Chapter/{id}',[ChapterController::class,'update'])->name('Admin.course.chapter.update');
+Route::delete('/Ortho/Admin/Course/Delete-Chapter/',[ChapterController::class,'destroy'])->name('Admin.course.chapter.delete');
 
 
 

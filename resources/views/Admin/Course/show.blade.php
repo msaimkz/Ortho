@@ -49,28 +49,31 @@
                     </div>
                     <div class="card">
                         <div class="header">
-                            <h2><strong>Chapters</strong> {{ $chapterCount }}</h2>
+                            <h2><strong>Chapters</strong> <span class="chapter-counter"> {{ $chapterCount }}</span></h2>
                         </div>
                         <div class="body">
                             <ul class="comment-reply list-unstyled">
                                 @if ($course->chapters != null)
-                                 @foreach ($course->chapters as $chapter)
-                                 <li class="row mb-5">
-                                    <div class="text-box col-md-10 col-8 p-l-0 p-r0">
-                                        <h5 class="m-b-0">Chapter 0{{ $chapter->sequence }}: {{ ucwords($chapter->title) }} </h5>
-                                        <p>{{ ucwords($chapter->content) }}</p>
-                                        <ul class="list-inline">
-                                            <li><a href="{{ route('Admin.course.chapter.edit',$chapter->slug) }}" class="btn btn-info">Edit</a></li>
-                                            <li><button type="button" class="btn btn-danger delete" data-id="{{ $chapter->id }}" >Delete</button></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <hr>
-                                 @endforeach
-
+                                    @foreach ($course->chapters as $chapter)
+                                        <li class="row mb-5" id="chapter-{{ $chapter->id }}">
+                                            <div class="text-box col-md-10 col-8 p-l-0 p-r0">
+                                                <h5 class="m-b-0">Chapter 0<span
+                                                        class="chapter-number">{{ $chapter->sequence }}</span>:
+                                                    {{ ucwords($chapter->title) }} </h5>
+                                                <p>{{ ucwords($chapter->content) }}</p>
+                                                <ul class="list-inline">
+                                                    <li><a href="{{ route('Admin.course.chapter.edit', $chapter->slug) }}"
+                                                            class="btn btn-info">Edit</a></li>
+                                                    <li><button type="button" class="btn btn-danger delete"
+                                                            data-id="{{ $chapter->id }}">Delete</button></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <hr>
+                                    @endforeach
                                 @endif
-                              
-                               
+
+
                             </ul>
                         </div>
                     </div>
@@ -80,4 +83,85 @@
             </div>
         </div>
     </section>
+@endsection
+
+
+@section('js')
+    <script>
+        $('.delete').click(function() {
+            if (confirm("Are you sure you want to Delete this Chapter ?"))
+                $('.delete').prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('Admin.course.chapter.delete') }}",
+                type: "delete",
+                data: {
+
+                    id: $(this).data('id'),
+
+                },
+                dataType: "json",
+                success: function(response) {
+                    $('.delete').prop('disabled', false);
+
+
+
+                    if (response['status'] == true) {
+
+                        $(`#chapter-${response['id']}`).remove();
+                        const deletedChapterNumber = response['deletedChapterNumber'];
+
+                      
+                        $('.chapter-number').each(function() {
+                            const currentNumber = parseInt($(this).text());
+
+                            
+                            if (currentNumber > deletedChapterNumber) {
+                                $(this).text(currentNumber - 1);
+                            }
+                        });
+
+                         var chapterNumber= parseInt($('.chapter-counter').text());
+                         chapterNumber--
+                         $('.chapter-counter').text(chapterNumber)
+                         
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+                    } else {
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['error'],
+                        });
+                    }
+
+                }
+            })
+
+        })
+    </script>
 @endsection

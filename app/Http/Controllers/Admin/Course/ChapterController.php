@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Rules\MatchTitleAndSlug;
 use App\Models\Admin\Course;
 use App\Models\Admin\CourseChapter;
@@ -48,7 +49,10 @@ class ChapterController extends Controller
 
         $validator = Validator::make($request->all(),[
             'title' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:course_chapters',new MatchTitleAndSlug($request->title)],
+            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/', 
+            Rule::unique('course_chapters')->where(function ($query) use ($course) {
+                return $query->where('course_id', $course->id);
+            }),new MatchTitleAndSlug($request->title)],
             'content' => ['required','min:10'],
         ]);
 
@@ -154,7 +158,11 @@ class ChapterController extends Controller
 
         $validator = Validator::make($request->all(),[
             'title' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:course_chapters,slug,'.$chapter->id.',id',new MatchTitleAndSlug($request->title)],
+            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/',
+            Rule::unique('course_chapters')->where(function ($query) use ($course) {
+                return $query->where('course_id', $course->id);
+            }),
+            new MatchTitleAndSlug($request->title)],
             'content' => ['required','min:10'],
         ]);
 
@@ -190,8 +198,50 @@ class ChapterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+
+        $chapter = CourseChapter::find($request->id);
+
+        
+        if($chapter == null){
+
+            return response()->json([
+                'status' => false,
+                 'error' => 'Chapter Not Found',
+            ]);
+        }
+
+
+        $course = Course::find($chapter->course_id);
+
+        if($course == null){
+
+            return response()->json([
+                'status' => false,
+                 'error' => 'Course Not Found',
+            ]);
+        }
+
+        $deletedSequence = $chapter->sequence;
+
+        $chapter->delete();
+
+        CourseChapter::where('course_id', $course->id)
+        ->where('sequence', '>', $deletedSequence)
+        ->decrement('sequence');
+
+
+        return response()->json([
+            'status' => true,
+            'id' => $request->id,
+            'deletedChapterNumber' => $deletedSequence,
+            'msg' => "Chapter Deleted Successfully",
+        ]);
+
+
+
+
+        
     }
 }

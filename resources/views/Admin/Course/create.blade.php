@@ -22,7 +22,7 @@
                     <ul class="breadcrumb float-md-right">
                         <li class="breadcrumb-item"><a href="{{ route('Admin.dashboard') }}"><i class="zmdi zmdi-home"></i>
                                 Ortho</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('Admin.blog') }}">Course</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('Admin.course') }}">Course</a></li>
                         <li class="breadcrumb-item active">New Course</li>
                     </ul>
                 </div>

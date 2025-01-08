@@ -196,7 +196,9 @@ class CourseController extends Controller
 
         if($validator->passes()){
 
-            if($request->status == 'active'){
+            $chapters = CourseChapter::where('course_id',$course->id)->count();
+
+            if($chapters == 0){
 
                 return response()->json([
                     'status' => false,
@@ -294,8 +296,38 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $course = Course::find($request->id);
+
+        if($course == null){
+            return response()->json([
+                'status' => false,
+                'IsNotFound' => true,
+                'error' => 'Course Not Found'
+            ]);
+        }
+        if(File::exists(public_path().'/Uploads/Course/'.$course->thumbnail)){
+
+            File::delete(public_path().'/Uploads/Course/'.$course->thumbnail);
+        }
+
+        if(File::exists(public_path().'/Uploads/Course/thumbnail/small/'.$course->thumbnail)){
+
+            File::delete(public_path().'/Uploads/Course/thumbnail/small/'.$course->thumbnail);
+        }
+
+        if(File::exists(public_path().'/Uploads/Course/thumbnail/large/'.$course->thumbnail)){
+
+            File::delete(public_path().'/Uploads/Course/thumbnail/large/'.$course->thumbnail);
+        }
+
+        $course->delete();
+
+        return response()->json([
+            'status' => true,
+            'id' => $request->id,
+            'msg' => "Course Deleted Successfully",
+        ]);
     }
 }
