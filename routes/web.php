@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\FAQs\FAQController;
 use App\Http\Controllers\Admin\Subscription\SubscriptionController;
 use App\Http\Controllers\Admin\Course\CourseController;
+use App\Http\Controllers\Admin\Course\ChapterController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -110,8 +111,13 @@ Route::delete('/Ortho/Admin/Delete-Contact-Message/',[ContactController::class,'
 Route::get('/Ortho/Admin/All-Courses',[CourseController::class,'index'])->name('Admin.course');
 Route::get('/Ortho/Admin/Create-Course',[CourseController::class,'create'])->name('Admin.course.create');
 Route::post('/Ortho/Admin/Store-Course',[CourseController::class,'store'])->name('Admin.course.store');
+Route::get('/Ortho/Admin/Show-Course/{slug}',[CourseController::class,'show'])->name('Admin.course.show');
 Route::get('/Ortho/Admin/Edit-Course/{slug}',[CourseController::class,'edit'])->name('Admin.course.edit');
 Route::post('/Ortho/Admin/Update-Course/{id}',[CourseController::class,'update'])->name('Admin.course.update');
+Route::get('/Ortho/Admin/Course/Add-Chapter/{slug}',[ChapterController::class,'create'])->name('Admin.course.chapter.create');
+Route::post('/Ortho/Admin/Course/Add-Chapter/{id}',[ChapterController::class,'store'])->name('Admin.course.chapter.store');
+Route::get('/Ortho/Admin/Course/Edit-Chapter/{slug}',[ChapterController::class,'edit'])->name('Admin.course.chapter.edit');
+Route::post('/Ortho/Admin/Course/Update-Chapter/{id}',[ChapterController::class,'update'])->name('Admin.course.chapter.update');
 
 
 

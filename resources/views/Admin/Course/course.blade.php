@@ -29,16 +29,20 @@
                     <div class="row clearfix">
                         @if (!empty($courses))
                             @foreach ($courses as $course)
+                              @php
+                                  $chapterCount = $course->chapters->count();
+                              @endphp
                                 <div class="col-lg-6 col-md-12" id="course-card-{{ $course->id }}">
                                     <div class="card single_post">
                                         <div class="body">
-                                            <h3 class="m-t-0 m-b-5"><a href="{{ route('Admin.blog.detail', $course->slug) }}">
+                                            <h3 class="m-t-0 m-b-5"><a
+                                                    href="{{ route('Admin.blog.detail', $course->slug) }}">
                                                     {{ ucwords($course->title) }}</a></h3>
                                             <ul class="meta">
-                                                <li><a href="#"><i
-                                                    class="zmdi zmdi-money col-blue"></i>Price: ${{ number_format($course->price,2) }}</a></li>
-                                                <li><a href="#"><i
-                                                            class="zmdi zmdi-book col-blue"></i>Chapter: 3</a></li>
+                                                <li><a href="#"><i class="zmdi zmdi-money col-blue"></i>Price:
+                                                        ${{ number_format($course->price, 2) }}</a></li>
+                                                <li><a href="#"><i class="zmdi zmdi-book col-blue"></i>Chapter: {{ $chapterCount }}</a>
+                                                </li>
                                             </ul>
                                             <ul class="meta" style="margin-top: 10px ">
                                                 <li><a href="#">Status:
@@ -74,8 +78,13 @@
 
                                             </div>
                                             <p>{{ ucwords($course->description) }}</p>
-                                            <a href="{{ route('Admin.blog.detail', $course->slug) }}" title="read more"
+                                            <a href="{{ route('Admin.course.show', $course->slug) }}" title="read more"
                                                 class="btn btn-round btn-info">Read More</a>
+                                                @if ($chapterCount < 5)
+                                                <a href="{{ route('Admin.course.chapter.create', $course->slug) }}" title="Add Chapter"
+                                                    class="btn btn-round btn-info">Add Chapter</a>
+                                                @endif
+                                            
                                             <a href="{{ route('Admin.course.edit', $course->slug) }}" title="edit course"
                                                 class="btn btn-round btn-primary">Edit</a>
                                             <button type="button" title="delete course" class="btn btn-round btn-danger"
@@ -113,7 +122,7 @@
                 success: function(response) {
                     $('#delete').prop('disabled', false);
 
-                    
+
 
                     if (response['status'] == true) {
 
@@ -133,8 +142,7 @@
                             icon: "success",
                             title: response['msg'],
                         });
-                    }
-                    else{
+                    } else {
 
                         const Toast = Swal.mixin({
                             toast: true,

@@ -11,6 +11,7 @@ use Intervention\Image\Drivers\GD\Driver;
 use Illuminate\Http\Request;
 use App\Rules\MatchTitleAndSlug;
 use App\Models\Admin\Course;
+use App\Models\Admin\CourseChapter;
 use App\Models\TempImage;
 
 class CourseController extends Controller
@@ -21,6 +22,10 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::latest()->get();
+
+       
+
+
 
         return view('Admin.Course.course',compact('courses'));
     }
@@ -131,9 +136,19 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        //
+        $course = Course::where('slug',$slug)->with('chapters')->first();
+
+
+        if($course == null){
+
+            return redirect()->route('Admin.notFound');
+        }
+
+        $chapterCount = CourseChapter::where('course_id',$course->id)->count();  
+
+        return view('Admin.Course.show',compact('course','chapterCount'));
     }
 
     /**
