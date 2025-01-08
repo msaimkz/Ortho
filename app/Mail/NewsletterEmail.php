@@ -25,6 +25,8 @@ class NewsletterEmail extends Mailable
         $this->type = $type;
         $this->title = $title;
         $this->name = $name;
+
+        
     }
 
     /**

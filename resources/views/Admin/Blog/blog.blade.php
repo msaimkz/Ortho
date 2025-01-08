@@ -78,8 +78,8 @@
                                                 class="btn btn-round btn-info">Read More</a>
                                             <a href="{{ route('Admin.blog.edit', $blog->slug) }}" title="edit blog"
                                                 class="btn btn-round btn-primary">Edit</a>
-                                            <button type="button" title="delete blog" class="btn btn-round btn-danger"
-                                                data-id="{{ $blog->id }}" id="delete">Delete</button>
+                                            <button type="button" title="delete blog" class="btn btn-round btn-danger delete"
+                                                data-id="{{ $blog->id }}">Delete</button>
 
 
                                         </div>
@@ -97,9 +97,9 @@
 
 @section('js')
     <script>
-        $('#delete').click(function() {
+        $('.delete').click(function() {
             if (confirm("Are you sure you want to Delete this Blog ?"))
-                $('#delete').prop('disabled', true);
+                $('.delete').prop('disabled', true);
 
             $.ajax({
                 url: "{{ route('Delete-Blog') }}",
@@ -111,7 +111,7 @@
                 },
                 dataType: "json",
                 success: function(response) {
-                    $('#delete').prop('disabled', false);
+                    $('.delete').prop('disabled', false);
 
                     
 

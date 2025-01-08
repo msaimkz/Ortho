@@ -87,9 +87,7 @@
 
         <!-- Main Content Section -->
         <div class="email-content">
-            @foreach ($name as $nam)
-            <h2>Hello {{ $nam }},</h2>
-            @endforeach
+            <h2>Hello {{ $name }},</h2>
           
             <p>
                 We are excited to share with you that a new {{ $type }} has been added to our platform. Here are the details:
@@ -101,7 +99,7 @@
             <p>
                 Click the button below to explore this {{ strtolower($type) }} on our website:
             </p>
-            <a href={{ route('User.index') }}}}" target="_blank">View Now</a>
+            <a href="{{ route('User.about') }}" target="_blank">View Now</a>
         </div>
 
         <!-- Footer Section -->

@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Rules\MatchTitleAndSlug;
 use App\Models\Admin\Course;
 use App\Models\Admin\CourseChapter;
+use App\Jobs\SendEmailsToNewsletterSubscribers;
+use App\Models\NewsletterEmail;
 use App\Models\TempImage;
 
 class CourseController extends Controller
@@ -274,6 +276,21 @@ class CourseController extends Controller
                 }
 
                
+            }
+
+            if($course->status == 'active'){
+
+                $users = NewsletterEmail::with('user')->get()->map(function ($newsletter) {
+                    return [
+                       'email' => $newsletter->email,
+                       'name' => $newsletter->user->name
+                    ];
+                 });
+                    
+    
+    
+                  
+                  SendEmailsToNewsletterSubscribers::dispatch($users, 'Course', $course->title);
             }
 
             return response()->json([

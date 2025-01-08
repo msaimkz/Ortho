@@ -118,14 +118,18 @@ class BlogController extends Controller
 
               }
 
-              $emails = NewsletterEmail::pluck('email')->toArray();
-              $names = NewsletterEmail::with('user')->get()->map(function ($newsletter) {
-                return $newsletter->user->name;
-             })->toArray();
+           
+              $users = NewsletterEmail::with('user')->get()->map(function ($newsletter) {
+                return [
+                   'email' => $newsletter->email,
+                   'name' => $newsletter->user->name
+                ];
+             });
+                
 
 
               
-              SendEmailsToNewsletterSubscribers::dispatch($emails, 'Blog', $blog->title, $names);
+              SendEmailsToNewsletterSubscribers::dispatch($users, 'Blog', $blog->title);
 
               return response()->json([
                 'status' => true,
