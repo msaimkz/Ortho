@@ -47,7 +47,12 @@
             <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a>
             </li>
             <li class="float-right">
-                <a href="sign-in.html" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
+                <form action="{{ route('logout') }}" method="post" id="logout-form">
+                    @csrf
+                </form>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
+
             </li>
 
 
