@@ -68,11 +68,18 @@
                     <ul class="list">
                         <li>
                             <div class="user-info">
-                                <div class="image"><a href="{{ route('doctor.profile') }}"><img
-                                            src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                            alt="User"></a></div>
+                                <div class="image"><a href="{{ route('doctor.profile') }}">
+
+                                        @if (isset( Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path)))
+                                            <img src="{{ asset('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path) }}"
+                                                alt="profile-image">
+                                        @else
+                                            <img src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
+                                                alt="profile-image">
+                                        @endif
+                                    </a></div>
                                 <div class="detail">
-                                    <h4>Dr. Charlotte</h4>
+                                    <h4>Dr. {{ ucwords(Auth::user()->name) }}</h4>
                                     <small>Doctor</small>
                                 </div>
                             </div>
@@ -95,7 +102,7 @@
 
                             </ul>
                         </li>
-                       
+
 
 
                     </ul>
@@ -106,25 +113,29 @@
                     <ul class="list">
                         <li>
                             <div class="user-info m-b-20 p-b-15">
-                                <div class="image"><a href="{{ route('doctor.profile') }}"><img
-                                            src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                            alt="User"></a></div>
+                                <div class="image"><a href="{{ route('doctor.profile') }}">
+                                        @if (isset(Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path)))
+                                            <img src="{{ asset('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path) }}"
+                                                alt="profile-image">
+                                        @else
+                                            <img src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
+                                                alt="profile-image">
+                                        @endif
+                                    </a></div>
                                 <div class="detail">
-                                    <h4>Dr. Charlotte</h4>
+                                    <h4>Dr. {{ ucwords(Auth::user()->name) }}</h4>
 
                                 </div>
 
                             </div>
                         </li>
                         <li>
-                            <small class="text-muted">Location: </small>
-                            <p>795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>
-                            <hr>
+                           
                             <small class="text-muted">Email address: </small>
-                            <p>Charlotte@example.com</p>
+                            <p>{{ Auth::user()->email }}</p>
                             <hr>
                             <small class="text-muted">Phone: </small>
-                            <p>+ 202-555-0191</p>
+                            <p>{{ Auth::user()->phone }}</p>
                             <hr>
 
 

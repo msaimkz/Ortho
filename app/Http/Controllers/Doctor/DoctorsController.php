@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\DoctorProfile;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorsController extends Controller
 {
@@ -14,7 +16,9 @@ class DoctorsController extends Controller
 
     public function profile(){
 
-        return view('Doctor.profile');
+       $profile = DoctorProfile::where('user_id',Auth::user()->id)->first();
+ 
+        return view('Doctor.profile',compact('profile'));
     }
 
     public function Editprofile(){
