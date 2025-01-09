@@ -100,6 +100,7 @@ Route::post('/Ortho/Admin/Update-FAQ/{id}',[FAQController::class,'update'])->nam
 Route::delete('/Ortho/Admin/Delete-FAQ',[FAQController::class,'destroy'])->name('Admin.FAQ.delete');
 Route::get('/Ortho/Admin/All-Subscriptions',[SubscriptionController::class,'index'])->name('Admin.subscripion');
 Route::get('/Ortho/Admin/Create-Subscription',[SubscriptionController::class,'create'])->name('Admin.subscripion.create');
+Route::post('/Ortho/Admin/Store-Subscription',[SubscriptionController::class,'store'])->name('Admin.subscripion.store');
 Route::get('/Ortho/Admin/Edit-Subscription',[SubscriptionController::class,'edit'])->name('Admin.subscripion.edit');
 Route::get('/Ortho/Admin/Subscribe-Patients',[SubscriptionController::class,'show'])->name('Admin.subscripion.subscriber');
 Route::post('/Ortho/Admin/Change-Password',[AdminController::class,'ChangePassword'])->name('Admin.ChangePassword');

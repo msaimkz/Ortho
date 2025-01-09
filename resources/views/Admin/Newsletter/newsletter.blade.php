@@ -59,8 +59,7 @@
                                                         <td>{{ ucwords($newsletter->email) }}</td>
                                                         <td>
                                                             <a href="{{ route('Admin.patients.profile', $newsletter->user_id) }}" class="btn btn-info">View Profile</a>
-                                                            <button type="button" class="btn btn-danger delete"
-                                                                data-id="{{ $newsletter->id }}">Delete</button>
+                                                           
 
                                                         </td>
                                                     </tr>
@@ -81,67 +80,3 @@
     </section>
 @endsection
 
-@section('js')
-    <script>
-        $('.delete').click(function() {
-            if (confirm("Are you sure you want to Delete this FAQs ?"))
-                $('.delete').prop('disabled', true);
-
-             $.ajax({
-                url: "{{ route('Admin.FAQ.delete') }}",
-                type: "delete",
-                data: {
-
-                    id: $(this).data('id'),
-
-                },
-                dataType: "json",
-                success: function(response) {
-                    $('.delete').prop('disabled', false);
-
-
-
-                    if (response['status'] == true) {
-
-                        
-                        $(`#FAQ-${response['id']}`).remove();
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: response['msg'],
-                        });
-                    } else {
-
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response['error'],
-                        });
-                    }
-
-                }
-            })
-
-        })
-    </script>
-@endsection
