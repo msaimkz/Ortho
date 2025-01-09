@@ -54,24 +54,22 @@
                                         <tbody>
                                             @if ($subscriptions != null)
                                                 @foreach ($subscriptions as $subscription)
-                                                    <tr>
+                                                    <tr id="subscription-{{ $subscription->id }}">
 
                                                         <td><span class="list-name">{{ $subscription->id }}</span></td>
                                                         <td>{{ ucwords($subscription->name) }}</td>
                                                         <td>{{ ucwords($subscription->plan) }} Plan</td>
                                                         @if ($subscription->plan == 'free')
-                                                            <td>{{ number_format(0,2) }}</td>
-                                                            <td>{{ number_format(0,2) }}</td>
+                                                            <td>${{ number_format(0,2) }}</td>
+                                                            <td>${{ number_format(0,2) }}</td>
                                                         @else
-                                                            <td>{{ number_format($subscription->monthly_price, 2) }}</td>
-                                                            <td>{{ number_format($subscription->annual_price, 2) }}</td>
+                                                            <td>${{ number_format($subscription->monthly_price, 2) }}</td>
+                                                            <td>${{ number_format($subscription->annual_price, 2) }}</td>
                                                         @endif
 
                                                         <td>
-                                                            <a href="{{ route('Admin.subscripion.edit') }}"><span
-                                                                    class="badge badge-info">Edit</span></a>
-                                                            <a href=""><span
-                                                                    class="badge badge-danger">Delete</span></a>
+                                                            <a href="{{ route('Admin.subscripion.edit',$subscription->slug) }}" class="btn btn-info">Edit</a>
+                                                            <button type="submit" data-id="{{ $subscription->id  }}" class="btn btn-danger delete">Delete</button>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -89,4 +87,68 @@
             </div>
         </div>
     </section>
+@endsection
+@section('js')
+    <script>
+        $('.delete').click(function() {
+            if (confirm("Are you sure you want to Delete this Subscription Plan ?"))
+                $('.delete').prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('Admin.subscripion.delete') }}",
+                type: "delete",
+                data: {
+
+                    id: $(this).data('id'),
+
+                },
+                dataType: "json",
+                success: function(response) {
+                    $('.delete').prop('disabled', false);
+
+                    
+
+                    if (response['status'] == true) {
+
+                        $(`#subscription-${response['id']}`).remove();
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+                    }
+                    else{
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['error'],
+                        });
+                    }
+
+                }
+            })
+
+        })
+    </script>
 @endsection
