@@ -140,6 +140,9 @@ Route::delete('Ortho/Admin/Delete-Blog',[BlogController::class,'delete'])->name(
 Route::get('/Ortho/Doctor/Dashboard',[DoctorsController::class,'index'])->name('doctor.dashboard');
 Route::get('/Ortho/Doctor/My-Profile',[DoctorsController::class,'profile'])->name('doctor.profile');
 Route::get('/Ortho/Doctor/Edit-Profile',[DoctorsController::class,'Editprofile'])->name('doctor.profile.edit');
+Route::post('/Ortho/Doctor/Update-Profile',[DoctorsController::class,'UpdateProfile'])->name('doctor.profile.update');
+Route::post('/Ortho/Doctor/Update-Profile-Image',[DoctorsController::class,'UpdateProfileImg'])->name('doctor.profile.update.img');
+Route::post('/Ortho/Doctor/Change-Password',[DoctorsController::class,'ChangePassword'])->name('doctor.ChangePassword');
 
 
 

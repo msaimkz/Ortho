@@ -113,7 +113,7 @@
 
                                             <input type="text" name="date_of_birth" id="DOB"
                                                 class="form-control datetimepicker" placeholder="Date Of Birth"
-                                                value="{{ $profile->age != null ? \Carbon\Carbon::parse($profile->date_of_birth)->format('d D M Y') : '' }}">
+                                                value="{{ $profile->date_of_birth != null ? \Carbon\Carbon::parse($profile->date_of_birth)->format('d D M Y') : '' }}">
                                             <div>
                                                 <p style="color: red"></p>
 

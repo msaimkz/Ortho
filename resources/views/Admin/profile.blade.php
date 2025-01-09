@@ -127,9 +127,9 @@
                                     </div>
                                     <button class="btn btn-info btn-round" id="btn">Save Changes</button>
                                     <hr>
+                                </form>
 
                             </div>
-                            </form>
                         </div>
                     </div>
 

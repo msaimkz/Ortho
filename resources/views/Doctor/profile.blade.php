@@ -136,18 +136,25 @@
 
                             </div>
                             <div class="tab-pane body" id="Account">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Current Password">
-                                    <span style="color: red"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="New Password">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Confirm Password">
-                                </div>
-                                <button class="btn btn-info btn-round">Save Changes</button>
-                                <hr>
+                                <form id="ChangePasswordForm">
+
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" name="Currentpassword"
+                                            id="Currentpassword" placeholder="Current Password">
+                                        <span style="color: red"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" name="password" id="password"
+                                            placeholder="New Password">
+                                        <span style="color: red"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" name="password_confirmation"
+                                            id="password_confirmation" placeholder="Confirm Password">
+                                    </div>
+                                    <button class="btn btn-info btn-round" id="btn">Save Changes</button>
+                                    <hr>
+                                </form>
 
                             </div>
                         </div>
@@ -157,4 +164,86 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $('#ChangePasswordForm').submit(function(event) {
+            $('#btn').prop('disabled', true);
+            event.preventDefault();
+            var element = $(this);
+
+            $.ajax({
+                url: "{{ route('doctor.ChangePassword') }}",
+                type: 'post',
+                data: element.serializeArray(),
+                dataType: 'json',
+                success: function(response) {
+                    
+                    $('#Currentpassword').val('')
+                    $('#password').val('')
+                    $('#password_confirmation').val('')
+
+                    $('#btn').prop('disabled', false);
+                    if (response['status'] == true) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+                    } else {
+
+                        if (response['IsPasswordMatch'] == false) {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['msg'],
+                            });
+
+
+
+                        }
+
+                        var errors = response['errors']
+                        if (errors['password']) {
+                            $('#password').addClass('is-invalid').siblings('span').html(errors[
+                                'password'])
+                        } else {
+                            $('#password').RemoveClass('is-invalid').siblings('span').html('')
+
+                        }
+                        if (errors['Currentpassword']) {
+                            $('#Currentpassword').addClass('is-invalid').siblings('span').html(errors[
+                                'Currentpassword'])
+                        } else {
+                            $('#Currentpassword').RemoveClass('is-invalid').siblings('span').html('')
+
+                        }
+                    }
+
+                }
+            })
+        })
+    </script>
 @endsection

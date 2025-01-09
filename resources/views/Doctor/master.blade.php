@@ -19,6 +19,8 @@
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/color_skins.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body class="theme-cyan">
@@ -76,15 +78,15 @@
                                 <div class="image"><a href="{{ route('doctor.profile') }}">
 
                                         @if (isset( Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path)))
-                                            <img src="{{ asset('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path) }}"
+                                            <img class="Profile-Image" src="{{ asset('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path) }}"
                                                 alt="profile-image">
                                         @else
-                                            <img src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
+                                            <img class="Profile-Image" src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
                                                 alt="profile-image">
                                         @endif
                                     </a></div>
                                 <div class="detail">
-                                    <h4>Dr. {{ ucwords(Auth::user()->name) }}</h4>
+                                    <h4>Dr. <span class="doctorname">{{ ucwords(Auth::user()->name) }}</span></h4>
                                     <small>Doctor</small>
                                 </div>
                             </div>
@@ -120,15 +122,15 @@
                             <div class="user-info m-b-20 p-b-15">
                                 <div class="image"><a href="{{ route('doctor.profile') }}">
                                         @if (isset(Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path)))
-                                            <img src="{{ asset('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path) }}"
+                                            <img class="Profile-Image" src="{{ asset('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path) }}"
                                                 alt="profile-image">
                                         @else
-                                            <img src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
+                                            <img class="Profile-Image" src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
                                                 alt="profile-image">
                                         @endif
                                     </a></div>
                                 <div class="detail">
-                                    <h4>Dr. {{ ucwords(Auth::user()->name) }}</h4>
+                                    <h4>Dr. <span class="doctorname">{{ ucwords(Auth::user()->name) }}</span></h4>
 
                                 </div>
 
@@ -137,10 +139,10 @@
                         <li>
                            
                             <small class="text-muted">Email address: </small>
-                            <p>{{ Auth::user()->email }}</p>
+                            <p class="doctoremail">{{ Auth::user()->email }}</p>
                             <hr>
                             <small class="text-muted">Phone: </small>
-                            <p>{{ Auth::user()->phone }}</p>
+                            <p class="doctorphone">{{ Auth::user()->phone }}</p>
                             <hr>
 
 
@@ -162,6 +164,15 @@
     <script src="{{ asset('assets/Dashboard/assets/bundles/morrisscripts.bundle.js') }}"></script><!-- Morris Plugin Js -->
     <script src="{{ asset('assets/Dashboard/assets/bundles/jvectormap.bundle.js') }}"></script> <!-- JVectorMap Plugin Js -->
     <script src="{{ asset('assets/Dashboard/assets/bundles/knob.bundle.js') }}"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @yield('js')
 
