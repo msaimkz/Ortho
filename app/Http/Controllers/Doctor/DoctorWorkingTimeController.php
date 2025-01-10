@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Doctor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Doctor\DoctorWorkingTime;
+use App\Models\DoctorProfile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -97,7 +98,7 @@ class DoctorWorkingTimeController extends Controller
 
 
 
-          
+
             if ($startTime->diffInMinutes($endTime) != 120) {
                 return response()->json([
                     'status' => false,
@@ -107,26 +108,26 @@ class DoctorWorkingTimeController extends Controller
             }
 
             $overlapping = DoctorWorkingTime::where('doctor_id', $doctorId)
-            ->where('day', $day)
-            ->where(function ($query) use ($startTime, $endTime) {
-                $query->where(function ($q) use ($startTime, $endTime) {
-                  
-                    $q->whereTime('start_time', '<', $endTime)
-                        ->whereTime('end_time', '>', $startTime);
-                })
-                ->orWhere(function ($q) use ($startTime, $endTime) {
-                    
-                    $q->whereTime('end_time', '>', $startTime->subHours(2))
-                        ->whereTime('end_time', '<=', $startTime) 
-                        ->orWhere(function ($q2) use ($startTime, $endTime) {
-                            $q2->whereTime('start_time', '<', $endTime->addHours(2))
-                                ->whereTime('start_time', '>=', $endTime); 
+                ->where('day', $day)
+                ->where(function ($query) use ($startTime, $endTime) {
+                    $query->where(function ($q) use ($startTime, $endTime) {
+
+                        $q->whereTime('start_time', '<', $endTime)
+                            ->whereTime('end_time', '>', $startTime);
+                    })
+                        ->orWhere(function ($q) use ($startTime, $endTime) {
+
+                            $q->whereTime('end_time', '>', $startTime->subHours(2))
+                                ->whereTime('end_time', '<=', $startTime)
+                                ->orWhere(function ($q2) use ($startTime, $endTime) {
+                                    $q2->whereTime('start_time', '<', $endTime->addHours(2))
+                                        ->whereTime('start_time', '>=', $endTime);
+                                });
                         });
-                });
-            })
-            ->exists();
-            
-               
+                })
+                ->exists();
+
+
 
             if ($overlapping) {
                 return response()->json([
@@ -144,6 +145,16 @@ class DoctorWorkingTimeController extends Controller
                 'end_time' => $request->end_time,
                 'status' => $request->status,
             ]);
+
+            $doctor = DoctorProfile::where('user_id', Auth::user()->id)->first();
+
+
+            $Schedules = DoctorWorkingTime::where('doctor_id', Auth::user()->id)->where('status', 'active')->count();
+
+            if ($Schedules == 0) {
+                $doctor->DoctorStatus = 'inactive';
+                $doctor->save();
+            }
 
             return response()->json([
                 'status' => true,
@@ -173,12 +184,12 @@ class DoctorWorkingTimeController extends Controller
     {
         $Schedule = DoctorWorkingTime::find($id);
 
-        if($Schedule == null){
+        if ($Schedule == null) {
 
             return redirect()->route('doctor.notfound');
         }
 
-        return view('Doctor.Working Time.edit',compact('Schedule'));
+        return view('Doctor.Working Time.edit', compact('Schedule'));
     }
 
     /**
@@ -187,22 +198,22 @@ class DoctorWorkingTimeController extends Controller
     public function update(Request $request, string $id)
     {
         $Schedule = DoctorWorkingTime::find($id);
-        
-        if($Schedule == null){
 
-           return response()->json([
-            'status' => false,
-            'isNotFound' => true,
-            'error' => 'Schedule Not Found',
-           ]);
+        if ($Schedule == null) {
+
+            return response()->json([
+                'status' => false,
+                'isNotFound' => true,
+                'error' => 'Schedule Not Found',
+            ]);
         }
 
         $doctorId = Auth::user()->id;
 
         $validator = Validator::make($request->all(), [
             'day' => ['required', 'in:monday,tuesday,wednesday,thursday,friday,saturday,sunday'],
-            'start_time' => ['required', 'date_format:H:i'],
-            'end_time' => ['required', 'date_format:H:i'],
+            'start_time' => ['required'],
+            'end_time' => ['required'],
             'status' => ['required', 'in:active,inactive'],
         ]);
 
@@ -259,7 +270,7 @@ class DoctorWorkingTimeController extends Controller
 
 
 
-          
+
             if ($startTime->diffInMinutes($endTime) != 120) {
                 return response()->json([
                     'status' => false,
@@ -269,34 +280,34 @@ class DoctorWorkingTimeController extends Controller
             }
 
             $overlapping = DoctorWorkingTime::where('doctor_id', $doctorId)
-            ->where('day', $day)
-            ->where(function ($query) use ($startTime, $endTime) {
-                $query->where(function ($q) use ($startTime, $endTime) {
-                  
-                    $q->whereTime('start_time', '<', $endTime)
-                        ->whereTime('end_time', '>', $startTime);
-                })
-                ->orWhere(function ($q) use ($startTime, $endTime) {
-                    
-                    $q->whereTime('end_time', '>', $startTime->subHours(2))
-                        ->whereTime('end_time', '<=', $startTime) 
-                        ->orWhere(function ($q2) use ($startTime, $endTime) {
-                            $q2->whereTime('start_time', '<', $endTime->addHours(2))
-                                ->whereTime('start_time', '>=', $endTime); 
-                        });
-                });
-            })
-            ->exists();
-            
-               
+                ->where('day', $day)
+                ->where(function ($query) use ($startTime, $endTime) {
+                    $query->where(function ($q) use ($startTime, $endTime) {
 
-            if ($overlapping) {
-                return response()->json([
-                    'status' => false,
-                    'validate' => false,
-                    'error' => 'Working time conflicts with existing entries or does not meet the 2-hour gap requirement.',
-                ]);
-            }
+                        $q->whereTime('start_time', '<', $endTime)
+                            ->whereTime('end_time', '>', $startTime);
+                    })
+                        ->orWhere(function ($q) use ($startTime, $endTime) {
+
+                            $q->whereTime('end_time', '>', $startTime->subHours(2))
+                                ->whereTime('end_time', '<=', $startTime)
+                                ->orWhere(function ($q2) use ($startTime, $endTime) {
+                                    $q2->whereTime('start_time', '<', $endTime->addHours(2))
+                                        ->whereTime('start_time', '>=', $endTime);
+                                });
+                        });
+                })
+                ->exists();
+
+
+
+            // if ($overlapping) {
+            //     return response()->json([
+            //         'status' => false,
+            //         'validate' => false,
+            //         'error' => 'Working time conflicts with existing entries or does not meet the 2-hour gap requirement.',
+            //     ]);
+            // }
 
 
             $Schedule->update([
@@ -306,6 +317,16 @@ class DoctorWorkingTimeController extends Controller
                 'end_time' => $request->end_time,
                 'status' => $request->status,
             ]);
+
+            $doctor = DoctorProfile::where('user_id', Auth::user()->id)->first();
+
+
+            $Schedules = DoctorWorkingTime::where('doctor_id', Auth::user()->id)->where('status', 'active')->count();
+
+            if ($Schedules == 0) {
+                $doctor->DoctorStatus = 'inactive';
+                $doctor->save();
+            }
 
             return response()->json([
                 'status' => true,
@@ -318,7 +339,6 @@ class DoctorWorkingTimeController extends Controller
                 'errors' => $validator->errors(),
             ]);
         }
-
     }
 
     /**
@@ -327,14 +347,23 @@ class DoctorWorkingTimeController extends Controller
     public function destroy(Request $request)
     {
         $Schedule = DoctorWorkingTime::find($request->id);
-        
-        if($Schedule == null){
 
-           return response()->json([
-            'status' => false,
-            'isNotFound' => true,
-            'error' => 'Schedule Not Found',
-           ]);
+        $doctor = DoctorProfile::where('user_id', $Schedule->doctor_id)->first();
+
+        if ($Schedule == null) {
+
+            return response()->json([
+                'status' => false,
+                'isNotFound' => true,
+                'error' => 'Schedule Not Found',
+            ]);
+        }
+
+        $Schedules = DoctorWorkingTime::where('doctor_id', $Schedule->doctor_id)->where('status', 'active')->count();
+
+        if ($Schedules == 0) {
+            $doctor->DoctorStatus = 'inactive';
+            $doctor->save();
         }
 
         $Schedule->delete();
@@ -343,7 +372,6 @@ class DoctorWorkingTimeController extends Controller
             'status' => true,
             'id' => $request->id,
             'msg' => 'Schedule Deleted Successfully',
-           ]);
-
+        ]);
     }
 }

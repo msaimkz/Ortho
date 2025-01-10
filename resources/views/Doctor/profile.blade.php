@@ -50,6 +50,16 @@
                                 </p>
                             </div>
 
+                            <div>
+                                @if ($profile->DoctorStatus == 'active')
+                                    <button class="btn btn-danger Doctorstatus"
+                                        data-id="{{ $profile->id }}">Inactive</button>
+                                @else
+                                    <button class="btn btn-success Doctorstatus"
+                                        data-id="{{ $profile->id }}">Active</button>
+                                @endif
+                            </div>
+
 
                         </div>
                     </div>
@@ -57,12 +67,15 @@
                         <div class="body">
                             <div class="workingtime">
                                 <h6>Working Time</h6>
-                                <small class="text-muted">Tuesday</small>
-                                <p>06:00 AM - 07:00 AM</p>
-                                <hr>
-                                <small class="text-muted">Thursday</small>
-                                <p>06:00 AM - 07:00 AM</p>
-                                <hr>
+                                @if ($Schedules != null)
+                                    @foreach ($Schedules as $Schedule)
+                                        <small class="text-muted">{{ ucwords($Schedule->day) }}</small>
+                                        <p>{{ \Carbon\Carbon::parse($Schedule->start_time)->format('g:i A') }} -
+                                            {{ \Carbon\Carbon::parse($Schedule->end_time)->format('g:i A') }}</p>
+                                        <hr>
+                                    @endforeach
+                                @else
+                                @endif
                             </div>
 
                         </div>
@@ -84,12 +97,12 @@
                                 <hr>
                                 <ul class="list-unstyled">
                                     <li>
-                                        @if ($profile->status == 'active')
+                                        @if ($profile->DoctorStatus == 'active')
                                             <p><strong>Account Status:</strong> <span class="badge badge-success"
                                                     id="status-badge">Active</span></p>
                                         @else
                                             <p><strong>Account Status:</strong> <span class="badge badge-danger"
-                                                    id="status-badge">Blocked</span></p>
+                                                    id="status-badge">Inactive</span></p>
                                         @endif
 
                                     </li>
@@ -179,7 +192,7 @@
                 data: element.serializeArray(),
                 dataType: 'json',
                 success: function(response) {
-                    
+
                     $('#Currentpassword').val('')
                     $('#password').val('')
                     $('#password_confirmation').val('')
@@ -230,19 +243,97 @@
                             $('#password').addClass('is-invalid').siblings('span').html(errors[
                                 'password'])
                         } else {
-                            $('#password').RemoveClass('is-invalid').siblings('span').html('')
+                            $('#password').removeClass('is-invalid').siblings('span').html('')
 
                         }
                         if (errors['Currentpassword']) {
                             $('#Currentpassword').addClass('is-invalid').siblings('span').html(errors[
                                 'Currentpassword'])
                         } else {
-                            $('#Currentpassword').RemoveClass('is-invalid').siblings('span').html('')
+                            $('#Currentpassword').removeClass('is-invalid').siblings('span').html('')
 
                         }
                     }
 
                 }
+            })
+        })
+
+        $('.Doctorstatus').click(function() {
+
+            $('.Doctorstatus').prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('doctor.ChangeAccountStatus') }}",
+                type: "post",
+                data: {
+
+                    id: $(this).data('id'),
+
+                },
+                dataType: "json",
+                success: function(response) {
+                    $('.Doctorstatus').prop('disabled', false);
+                    if (response['status'] == true) {
+
+                        if (response['accountStatus'] == 'active') {
+
+                            $('.Doctorstatus').removeClass('btn-success').addClass('btn-danger').html(
+                                'Inactive')
+
+                            $('#status-badge').removeClass('badge-danger').addClass('badge-success')
+                                .html(
+                                    'Active')
+
+
+                        } else {
+
+                            $('.Doctorstatus').removeClass('btn-danger').addClass('btn-success').html(
+                                'Active')
+                            $('#status-badge').removeClass('badge-success').addClass('badge-danger')
+                                .html(
+                                    'Inactive')
+
+                        }
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+                    } else {
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['error'],
+                        });
+                    }
+
+                }
+
+
+
             })
         })
     </script>

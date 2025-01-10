@@ -145,6 +145,7 @@ Route::get('/Ortho/Doctor/Edit-Profile',[DoctorsController::class,'Editprofile']
 Route::post('/Ortho/Doctor/Update-Profile',[DoctorsController::class,'UpdateProfile'])->name('doctor.profile.update');
 Route::post('/Ortho/Doctor/Update-Profile-Image',[DoctorsController::class,'UpdateProfileImg'])->name('doctor.profile.update.img');
 Route::post('/Ortho/Doctor/Change-Password',[DoctorsController::class,'ChangePassword'])->name('doctor.ChangePassword');
+Route::post('/Ortho/Doctor/Change-Account-Status',[DoctorsController::class,'ChangeAccountStatus'])->name('doctor.ChangeAccountStatus');
 Route::get('/Ortho/Doctor/All-Schedules',[DoctorWorkingTimeController::class,'index'])->name('doctor.schedules');
 Route::get('/Ortho/Doctor/Add-Schedule',[DoctorWorkingTimeController::class,'create'])->name('doctor.schedules.create');
 Route::post('/Ortho/Doctor/Create-Schedule',[DoctorWorkingTimeController::class,'store'])->name('doctor.schedules.store');

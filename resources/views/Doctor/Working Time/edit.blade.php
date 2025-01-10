@@ -17,7 +17,7 @@
         <div class="block-header">
             <div class="row">
                 <div class="col-lg-7 col-md-5 col-sm-12">
-                    <h2>New Schedule
+                    <h2>Edit Schedule
                         <small>Welcome to Ortho</small>
                     </h2>
                 </div>
@@ -26,7 +26,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('doctor.dashboard') }}"><i class="zmdi zmdi-home"></i>
                                 Ortho</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('doctor.schedules') }}">Schedule</a></li>
-                        <li class="breadcrumb-item active">New Schedule</li>
+                        <li class="breadcrumb-item active">Edit Schedule</li>
                     </ul>
                 </div>
             </div>
@@ -108,7 +108,7 @@
 
                         <div class="card">
                             <div class="body">
-                                <button type="submit" class="btn btn-primary btn-round waves-effect m-t-20">Create</button>
+                                <button type="submit" class="btn btn-primary btn-round waves-effect m-t-20">Update</button>
 
                                 <a href="{{ route('doctor.schedules') }}"
                                     class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
