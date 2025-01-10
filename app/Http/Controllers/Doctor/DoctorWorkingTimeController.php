@@ -39,17 +39,29 @@ class DoctorWorkingTimeController extends Controller
 
         $validator = Validator::make($request->all(), [
             'day' => ['required', 'in:monday,tuesday,wednesday,thursday,friday,saturday,sunday'],
-            'start_time' => ['required'],
-            'end_time' => ['required'],
+            'start_time' => ['required', 'date_format:H:i'],
+            'end_time' => ['required', 'date_format:H:i'],
             'status' => ['required', 'in:active,inactive'],
         ]);
 
         if ($validator->passes()) {
 
             $day = $request->day;
-            $startTime = Carbon::createFromFormat('h:i A', $request->start_time);
-            $endTime = Carbon::createFromFormat('h:i A', $request->end_time);
-          
+            $startTime = Carbon::parse($request->start_time);
+            $endTime = Carbon::parse($request->end_time);
+
+            $morningStart = Carbon::createFromTime(7, 0, 0); // 7:00 AM
+            $nightEnd = Carbon::createFromTime(23, 59, 59);  // 12:00 AM
+
+            if ($startTime->lt($morningStart) || $startTime->gt($nightEnd)) {
+                return response()->json([
+                    'status' => false,
+                    'validate' => false,
+                    'error' => 'Start time must be between 7:00 AM and 12:00 AM.',
+                ]);
+            }
+
+
 
             $dailyCount = DoctorWorkingTime::where('doctor_id', $doctorId)
                 ->where('day', $day)
@@ -83,40 +95,53 @@ class DoctorWorkingTimeController extends Controller
                 ]);
             }
 
-           
-            
-            if ($endTime->diffInMinutes($startTime) > 120) {
+
+
+          
+            if ($startTime->diffInMinutes($endTime) != 120) {
                 return response()->json([
                     'status' => false,
                     'validate' => false,
                     'error' => 'A single working time can only be up to 2 hours.'
                 ]);
             }
-            
 
             $overlapping = DoctorWorkingTime::where('doctor_id', $doctorId)
-                ->where('day', $day)
-                ->where(function ($query) use ($startTime, $endTime) {
-                    $query->where(function ($q) use ($startTime, $endTime) {
-                        $q->whereTime('start_time', '<', $endTime)
-                            ->whereTime('end_time', '>', $startTime);
-                    });
+            ->where('day', $day)
+            ->where(function ($query) use ($startTime, $endTime) {
+                $query->where(function ($q) use ($startTime, $endTime) {
+                  
+                    $q->whereTime('start_time', '<', $endTime)
+                        ->whereTime('end_time', '>', $startTime);
                 })
-                ->exists();
+                ->orWhere(function ($q) use ($startTime, $endTime) {
+                    
+                    $q->whereTime('end_time', '>', $startTime->subHours(2))
+                        ->whereTime('end_time', '<=', $startTime) 
+                        ->orWhere(function ($q2) use ($startTime, $endTime) {
+                            $q2->whereTime('start_time', '<', $endTime->addHours(2))
+                                ->whereTime('start_time', '>=', $endTime); 
+                        });
+                });
+            })
+            ->exists();
+            
+               
 
             if ($overlapping) {
                 return response()->json([
                     'status' => false,
                     'validate' => false,
-                    'error' => 'There must be at least a 2-hour gap between working times.'
+                    'error' => 'Working time conflicts with existing entries or does not meet the 2-hour gap requirement.',
                 ]);
             }
+
 
             DoctorWorkingTime::create([
                 'doctor_id' => $doctorId,
                 'day' => $day,
-                'start_time' => $startTime,
-                'end_time' => $endTime,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
                 'status' => $request->status,
             ]);
 
@@ -146,7 +171,14 @@ class DoctorWorkingTimeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $Schedule = DoctorWorkingTime::find($id);
+
+        if($Schedule == null){
+
+            return redirect()->route('doctor.notfound');
+        }
+
+        return view('Doctor.Working Time.edit',compact('Schedule'));
     }
 
     /**
@@ -154,14 +186,164 @@ class DoctorWorkingTimeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $Schedule = DoctorWorkingTime::find($id);
+        
+        if($Schedule == null){
+
+           return response()->json([
+            'status' => false,
+            'isNotFound' => true,
+            'error' => 'Schedule Not Found',
+           ]);
+        }
+
+        $doctorId = Auth::user()->id;
+
+        $validator = Validator::make($request->all(), [
+            'day' => ['required', 'in:monday,tuesday,wednesday,thursday,friday,saturday,sunday'],
+            'start_time' => ['required', 'date_format:H:i'],
+            'end_time' => ['required', 'date_format:H:i'],
+            'status' => ['required', 'in:active,inactive'],
+        ]);
+
+        if ($validator->passes()) {
+
+            $day = $request->day;
+            $startTime = Carbon::parse($request->start_time);
+            $endTime = Carbon::parse($request->end_time);
+
+            $morningStart = Carbon::createFromTime(7, 0, 0); // 7:00 AM
+            $nightEnd = Carbon::createFromTime(23, 59, 59);  // 12:00 AM
+
+            if ($startTime->lt($morningStart) || $startTime->gt($nightEnd)) {
+                return response()->json([
+                    'status' => false,
+                    'validate' => false,
+                    'error' => 'Start time must be between 7:00 AM and 12:00 AM.',
+                ]);
+            }
+
+
+
+            $dailyCount = DoctorWorkingTime::where('doctor_id', $doctorId)
+                ->where('day', $day)
+                ->count();
+
+            if ($dailyCount >= 3) {
+                return response()->json([
+                    'status' => false,
+                    'validate' => false,
+                    'error' => 'You can only add up to 3 working times per day.'
+                ]);
+            }
+
+            $weeklyDays = DoctorWorkingTime::where('doctor_id', $doctorId)
+                ->distinct('day')
+                ->count();
+
+            if ($weeklyDays >= 4 && !DoctorWorkingTime::where('doctor_id', $doctorId)->where('day', $day)->exists()) {
+                return response()->json([
+                    'status' => false,
+                    'validate' => false,
+                    'error' => 'You can only add working times for 4 days in a week.'
+                ]);
+            }
+
+            if (!$startTime->lessThan($endTime)) {
+                return response()->json([
+                    'status' => false,
+                    'validate' => false,
+                    'error' => 'Start time must be earlier than end time.'
+                ]);
+            }
+
+
+
+          
+            if ($startTime->diffInMinutes($endTime) != 120) {
+                return response()->json([
+                    'status' => false,
+                    'validate' => false,
+                    'error' => 'A single working time can only be up to 2 hours.'
+                ]);
+            }
+
+            $overlapping = DoctorWorkingTime::where('doctor_id', $doctorId)
+            ->where('day', $day)
+            ->where(function ($query) use ($startTime, $endTime) {
+                $query->where(function ($q) use ($startTime, $endTime) {
+                  
+                    $q->whereTime('start_time', '<', $endTime)
+                        ->whereTime('end_time', '>', $startTime);
+                })
+                ->orWhere(function ($q) use ($startTime, $endTime) {
+                    
+                    $q->whereTime('end_time', '>', $startTime->subHours(2))
+                        ->whereTime('end_time', '<=', $startTime) 
+                        ->orWhere(function ($q2) use ($startTime, $endTime) {
+                            $q2->whereTime('start_time', '<', $endTime->addHours(2))
+                                ->whereTime('start_time', '>=', $endTime); 
+                        });
+                });
+            })
+            ->exists();
+            
+               
+
+            if ($overlapping) {
+                return response()->json([
+                    'status' => false,
+                    'validate' => false,
+                    'error' => 'Working time conflicts with existing entries or does not meet the 2-hour gap requirement.',
+                ]);
+            }
+
+
+            $Schedule->update([
+                'doctor_id' => $doctorId,
+                'day' => $day,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'status' => $request->status,
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'msg' => 'Schedule  Updated successfully.'
+            ]);
+        } else {
+
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors(),
+            ]);
+        }
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $Schedule = DoctorWorkingTime::find($request->id);
+        
+        if($Schedule == null){
+
+           return response()->json([
+            'status' => false,
+            'isNotFound' => true,
+            'error' => 'Schedule Not Found',
+           ]);
+        }
+
+        $Schedule->delete();
+
+        return response()->json([
+            'status' => true,
+            'id' => $request->id,
+            'msg' => 'Schedule Deleted Successfully',
+           ]);
+
     }
 }

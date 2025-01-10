@@ -138,6 +138,7 @@ Route::delete('Ortho/Admin/Delete-Blog',[BlogController::class,'delete'])->name(
 
 
 // Doctor Dashboard Routes
+Route::get('/Ortho/Doctor/404-Not-Found',[DoctorsController::class,'notFound'])->name('doctor.notfound');
 Route::get('/Ortho/Doctor/Dashboard',[DoctorsController::class,'index'])->name('doctor.dashboard');
 Route::get('/Ortho/Doctor/My-Profile',[DoctorsController::class,'profile'])->name('doctor.profile');
 Route::get('/Ortho/Doctor/Edit-Profile',[DoctorsController::class,'Editprofile'])->name('doctor.profile.edit');
@@ -147,6 +148,9 @@ Route::post('/Ortho/Doctor/Change-Password',[DoctorsController::class,'ChangePas
 Route::get('/Ortho/Doctor/All-Schedules',[DoctorWorkingTimeController::class,'index'])->name('doctor.schedules');
 Route::get('/Ortho/Doctor/Add-Schedule',[DoctorWorkingTimeController::class,'create'])->name('doctor.schedules.create');
 Route::post('/Ortho/Doctor/Create-Schedule',[DoctorWorkingTimeController::class,'store'])->name('doctor.schedules.store');
+Route::get('/Ortho/Doctor/Edit-Schedule/{id}',[DoctorWorkingTimeController::class,'edit'])->name('doctor.schedules.edit');
+Route::post('/Ortho/Doctor/Update-Schedule/{id}',[DoctorWorkingTimeController::class,'update'])->name('doctor.schedules.update');
+Route::delete('/Ortho/Doctor/Delete-Schedule',[DoctorWorkingTimeController::class,'destroy'])->name('doctor.schedules.delete');
 
 
 

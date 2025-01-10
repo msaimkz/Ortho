@@ -218,4 +218,9 @@ class DoctorsController extends Controller
         }
     }
 
+    public function notFound(){
+
+        return view('Doctor.notFound');
+    }
+
 }

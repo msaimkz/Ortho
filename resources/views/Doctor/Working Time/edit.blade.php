@@ -40,13 +40,13 @@
                                 <label for="day">Day</label>
                                 <select name="day" id="day" class="form-control show-tick">
                                     <option value="">Select a Day</option>
-                                    <option value="monday">Monday</option>
-                                    <option value="tuesday">Tuesday</option>
-                                    <option value="wednesday">Wednesday</option>
-                                    <option value="thursday">Thursday</option>
-                                    <option value="friday">Friday</option>
-                                    <option value="saturday">Saturday</option>
-                                    <option value="sunday">Sunday</option>
+                                    <option value="monday" {{ ($Schedule->day == 'monday') ? 'selected' : '' }}>Monday</option>
+                                    <option value="tuesday" {{ ($Schedule->day == 'tuesday') ? 'selected' : '' }}>Tuesday</option>
+                                    <option value="wednesday" {{ ($Schedule->day == 'wednesday') ? 'selected' : '' }}>Wednesday</option>
+                                    <option value="thursday" {{ ($Schedule->day == 'thursday') ? 'selected' : '' }}>Thursday</option>
+                                    <option value="friday" {{ ($Schedule->day == 'friday') ? 'selected' : '' }}>Friday</option>
+                                    <option value="saturday" {{ ($Schedule->day == 'saturday') ? 'selected' : '' }}>Saturday</option>
+                                    <option value="sunday" {{ ($Schedule->day == 'sunday') ? 'selected' : '' }}>Sunday</option>
 
                                 </select>
                                 <span class="text-danger" id="dayspan"></span>
@@ -62,7 +62,7 @@
                                     <label for="start_time">Enter Start Time</label>
 
                                     <input type="time" name="start_time" id="start_time" class="form-control"
-                                        placeholder="Enter Start Time" />
+                                        placeholder="Enter Start Time" value="{{ $Schedule->start_time }}" />
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label for="end_time">Enter End Time </label>
                                     <input type="time" name="end_time" id="end_time" class="form-control"
-                                        placeholder="Enter End Time" />
+                                        placeholder="Enter End Time"  value="{{ $Schedule->end_time }}" />
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -93,8 +93,8 @@
                             <div class="body">
                                 <label for="status">Status</label>
                                 <select name="status" id="status" class="form-control show-tick">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
+                                    <option value="active" {{ ($Schedule->status == 'active') ? 'selected' : '' }}>Active</option>
+                                    <option value="inactive" {{ ($Schedule->status == 'inactive') ? 'selected' : '' }}>Inactive</option>
 
                                 </select>
                                 <span class="text-danger"></span>
@@ -138,10 +138,10 @@
         $('#ScheduleForm').submit(function(event) {
             event.preventDefault();
             var element = $(this);
-            $('button[type=submit]').prop('disabled', false)
+            $('button[type=submit]').prop('disabled', true)
 
             $.ajax({
-                url: "{{ route('doctor.schedules.store') }}",
+                url: "{{ route('doctor.schedules.update',$Schedule->id) }}",
                 type: "post",
                 data: element.serializeArray(),
                 dataType: "json",

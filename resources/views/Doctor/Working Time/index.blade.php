@@ -57,7 +57,7 @@
 
                                                        
                                                         <td>{{ ucwords($workingTime->day) }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($workingTime->start_time)->format('H:i A')}} To {{  \Carbon\Carbon::parse($workingTime->end_time)->format('H:i A') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($workingTime->start_time)->format('g:i A')}} To {{  \Carbon\Carbon::parse($workingTime->end_time)->format('g:i A') }}</td>
                                                         <td>
                                                             @if ($workingTime->status == 'active')
                                                                 <span class="badge badge-success">Active</span>
@@ -68,7 +68,7 @@
                                                         </td>
                                                         <td>
                                                         
-                                                            <a href="{{ route('Admin.FAQ.edit', $workingTime->id) }}"
+                                                            <a href="{{ route('doctor.schedules.edit', $workingTime->id) }}"
                                                                 class="btn btn-info">Edit</a>
                                                             <button type="button" class="btn btn-danger delete"
                                                                 data-id="{{ $workingTime->id }}">Delete</button>
@@ -94,11 +94,11 @@
 @section('js')
     <script>
         $('.delete').click(function() {
-            if (confirm("Are you sure you want to Delete this FAQs ?"))
+            if (confirm("Are you sure you want to Delete this Schedule ?"))
                 $('.delete').prop('disabled', true);
 
              $.ajax({
-                url: "{{ route('Admin.FAQ.delete') }}",
+                url: "{{ route('doctor.schedules.delete') }}",
                 type: "delete",
                 data: {
 
@@ -114,7 +114,7 @@
                     if (response['status'] == true) {
 
                         
-                        $(`#FAQ-${response['id']}`).remove();
+                        $(`#working-time-${response['id']}`).remove();
                         const Toast = Swal.mixin({
                             toast: true,
                             position: "top-end",
