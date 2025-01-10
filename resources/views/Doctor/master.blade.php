@@ -104,8 +104,8 @@
                         <li><a href="javascript:void(0);" class="menu-toggle"><i
                                     class="zmdi zmdi-calendar-check"></i><span>Schedules</span> </a>
                             <ul class="ml-menu">
-                                <li><a href="{{ route('Admin.blog') }}">All Schedules</a></li>
-                                <li><a href="{{ route('Admin.blog.create') }}">Add Schedule</a></li>
+                                <li><a href="{{ route('doctor.schedules') }}">All Schedules</a></li>
+                                <li><a href="{{ route('doctor.schedules.create') }}">Add Schedule</a></li>
 
                             </ul>
                         </li>
