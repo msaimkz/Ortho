@@ -156,6 +156,8 @@ Route::get('/Ortho/Doctor/Edit-Schedule/{id}',[DoctorWorkingTimeController::clas
 Route::post('/Ortho/Doctor/Update-Schedule/{id}',[DoctorWorkingTimeController::class,'update'])->name('doctor.schedules.update');
 Route::delete('/Ortho/Doctor/Delete-Schedule',[DoctorWorkingTimeController::class,'destroy'])->name('doctor.schedules.delete');
 Route::get('/Ortho/Doctor/All-Appointments',[AppoinmentController::class,'index'])->name('doctor.Appointments');
+Route::get('/Ortho/Doctor/Appointment-Detail/{id}',[AppoinmentController::class,'show'])->name('doctor.Appointment.show');
+Route::post('/Ortho/Doctor/Change-Appointment-Status',[AppoinmentController::class,'changeStatus'])->name('doctor.Appointment.changeStatus');
 
 
 

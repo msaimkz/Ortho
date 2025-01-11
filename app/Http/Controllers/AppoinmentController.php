@@ -45,6 +45,7 @@ class AppoinmentController extends Controller
             'date' => ['required', 'date', 'after_or_equal:today'],
             'time' => ['required', 'numeric'],
             'report_id' => ['nullable', 'numeric'],
+            'illness' => ['required', 'min:10','max:350'],
         ]);
 
         if ($validator->passes()) {
@@ -138,6 +139,7 @@ class AppoinmentController extends Controller
             $appoinment->email = $request->email;
             $appoinment->date = $request->date;
             $appoinment->day = $request->day;
+            $appoinment->illness = $request->illness;
             $appoinment->start_time = $time->start_time;
             $appoinment->end_time = $time->end_time;
             $appoinment->save();
@@ -177,7 +179,17 @@ class AppoinmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
+    public function show(string $id) {
+
+        $appointment = Appoinment::find($id);
+
+        if($appointment == null){
+
+            return redirect()->route('doctor.notfound');
+        }
+
+        return view('Doctor.Appointment.show',compact('appointment'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -190,9 +202,33 @@ class AppoinmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function changeStatus(Request $request)
     {
-        //
+        $appointment = Appoinment::find($request->id);
+
+        if($appointment == null){
+
+            return response()->json([
+                'status' => false,
+                'error' => "Appointment Not Found"
+            ]);
+        }
+
+        if($request->status == 'approve'){
+
+            $appointment->status = 'approved';
+            $appointment->save();
+
+            $status = 'approved';
+        }
+        else{
+
+            $appointment->status = 'rejected';
+            $appointment->save();
+
+            $status = 'rejected';
+
+        }
     }
 
     /**

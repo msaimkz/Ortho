@@ -82,6 +82,10 @@
 
                     </div>
                     <div class="col-md-12">
+                        <textarea name="illness" class="cs_form_field" id="illness" cols="10" rows="3" placeholder="About your Illness"></textarea>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12">
                         <label for="">Report or X-ray (Optional (PDF))</label>
                         <div class="card">
                             <div class="container mt-5">
