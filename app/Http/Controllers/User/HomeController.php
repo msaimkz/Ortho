@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Doctor\DoctorWorkingTime;
+use App\Models\DoctorProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +12,9 @@ class HomeController extends Controller
 {
     public function index(){
 
-        return view('User.index');
+        $doctors = DoctorProfile::where('status','active')->where('DoctorStatus','active')->get();
+
+        return view('User.index',compact('doctors'));
     }
 
 
@@ -50,9 +54,16 @@ class HomeController extends Controller
         return view('User.doctor');
     }
 
-    public function doctorDetail(){
+    public function doctorDetail(string $id){
 
-        return view('User.doctor-detail');
+        $doctor = DoctorProfile::find($id);
+
+        if($doctor == null){
+
+            return redirect()->route('User.error');
+        }
+        $workingTimes = DoctorWorkingTime::where('doctor_id',$doctor->user_id)->where('status','active')->get();
+        return view('User.doctor-detail',compact('doctor','workingTimes'));
     }
 
     public function project(){
@@ -69,9 +80,23 @@ class HomeController extends Controller
         return view('User.error');
     }
 
-    public function apoinment(){
+    public function apoinment(string $id){
 
-        return view('User.apoinment');
+        if(Auth::check() == false){
+
+            return redirect()->route('login');
+        }
+
+        $doctor = DoctorProfile::find($id);
+
+        if($doctor == null){
+
+            return redirect()->route('User.error');
+        }
+
+        $workingTimes = DoctorWorkingTime::where('doctor_id',$doctor->user_id)->where('status','active')->get();
+     
+        return view('User.apoinment',compact('doctor','workingTimes'));
     }
 
     public function DoctorRegistration(){

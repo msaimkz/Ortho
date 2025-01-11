@@ -1,4 +1,4 @@
-@extends('Admin.master')
+@extends('Doctor.master')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/plugins/bootstrap/css/bootstrap.min.css') }}">
@@ -138,7 +138,7 @@
         $('#ScheduleForm').submit(function(event) {
             event.preventDefault();
             var element = $(this);
-            $('button[type=submit]').prop('disabled', false)
+            $('button[type=submit]').prop('disabled', true)
 
             $.ajax({
                 url: "{{ route('doctor.schedules.store') }}",

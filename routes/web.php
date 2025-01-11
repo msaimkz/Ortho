@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\Course\CourseController;
 use App\Http\Controllers\Admin\Course\ChapterController;
 use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\AppoinmentController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Doctor\DoctorWorkingTimeController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -43,12 +44,13 @@ Route::get('/Ortho/Our-Doctors',[HomeController::class,'doctor'])->name('User.do
 Route::get('/Ortho/Our-Projects',[HomeController::class,'project'])->name('User.project');
 Route::get('/Ortho/Our-TimeTable',[HomeController::class,'timetable'])->name('User.timetable');
 Route::get('/Ortho/Blog-Detail',[HomeController::class,'blogDetail'])->name('User.blogDetail');
-Route::get('/Ortho/Doctor-Detail',[HomeController::class,'DoctorDetail'])->name('User.DoctorDetail');
+Route::get('/Ortho/Doctor-Detail/{id}',[HomeController::class,'DoctorDetail'])->name('User.DoctorDetail');
 Route::get('/Ortho/Service-Detail',[HomeController::class,'serviceDetail'])->name('User.serviceDetail');
 Route::get('/Ortho/404',[HomeController::class,'error'])->name('User.error');
-Route::get('/Ortho/Booking-Appionment',[HomeController::class,'apoinment'])->name('User.apoinment');
+Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');
 Route::get('/Ortho/Doctor-Registration',[HomeController::class,'DoctorRegistration'])->name('User.doctorRegiestraion');
 Route::post('/Ortho/Send-Doctor-Registration-Request',[DoctorController::class,'DoctorRegiestration'])->name('User.DoctorRegiestrationRequest');
+Route::post('/Ortho/Get-Doctor-Appoinment-Time',[AppoinmentController::class,'GetTime'])->name('User.appoinment.GetTime');
 
 
 

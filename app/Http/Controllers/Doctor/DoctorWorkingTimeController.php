@@ -18,7 +18,7 @@ class DoctorWorkingTimeController extends Controller
      */
     public function index()
     {
-        $workingTimes = DoctorWorkingTime::latest()->get();
+        $workingTimes = DoctorWorkingTime::where('doctor_id',Auth::user()->id)->latest()->get();
         return view('Doctor.Working Time.index', compact('workingTimes'));
     }
 

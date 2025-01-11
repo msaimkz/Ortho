@@ -325,6 +325,7 @@ class DoctorController extends Controller
 
             $doctor = User::find($doctorRequest->user_id);
             $doctor->role = 'doctor';
+            $doctor->profile_photo_path = $doctorRequest->profile_img;
             $doctor->save();
 
             $spath = public_path().'/Uploads/Doctor Request/Profile/'. $doctorRequest->profile_img;
