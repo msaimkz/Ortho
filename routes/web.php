@@ -51,6 +51,7 @@ Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])
 Route::get('/Ortho/Doctor-Registration',[HomeController::class,'DoctorRegistration'])->name('User.doctorRegiestraion');
 Route::post('/Ortho/Send-Doctor-Registration-Request',[DoctorController::class,'DoctorRegiestration'])->name('User.DoctorRegiestrationRequest');
 Route::post('/Ortho/Get-Doctor-Appoinment-Time',[AppoinmentController::class,'GetTime'])->name('User.appoinment.GetTime');
+Route::post('/Ortho/Book-Doctor-Appoinment',[AppoinmentController::class,'Store'])->name('User.appoinment.book');
 
 
 
@@ -154,6 +155,7 @@ Route::post('/Ortho/Doctor/Create-Schedule',[DoctorWorkingTimeController::class,
 Route::get('/Ortho/Doctor/Edit-Schedule/{id}',[DoctorWorkingTimeController::class,'edit'])->name('doctor.schedules.edit');
 Route::post('/Ortho/Doctor/Update-Schedule/{id}',[DoctorWorkingTimeController::class,'update'])->name('doctor.schedules.update');
 Route::delete('/Ortho/Doctor/Delete-Schedule',[DoctorWorkingTimeController::class,'destroy'])->name('doctor.schedules.delete');
+Route::get('/Ortho/Doctor/All-Appointments',[AppoinmentController::class,'index'])->name('doctor.Appointments');
 
 
 
