@@ -82,8 +82,7 @@
 
                                                             <a href="{{ route('doctor.Appointment.show', $appointment->id) }}"
                                                                 class="btn btn-info">View More</a>
-                                                            <button type="button" class="btn btn-danger delete"
-                                                                data-id="{{ $appointment->id }}">Delete</button>
+                                                           
                                                         </td>
                                                     </tr>
                                                 @endforeach

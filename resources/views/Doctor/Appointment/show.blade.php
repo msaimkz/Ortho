@@ -2,6 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/blog.css') }}">
+    <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/plugins/bootstrap/css/bootstrap.min.css') }}">
 @endsection
 
 @section('content')
@@ -87,13 +88,13 @@
 
                                     <p>
                                         @if ($appointment->status == 'pending')
-                                            <span class="badge badge-danger">Pending</span>
+                                            <span id="statusbadge" class="badge badge-danger">Pending</span>
                                         @elseif($appointment->status == 'approved')
-                                            <span class="badge badge-success">Approved</span>
+                                            <span id="statusbadge" class="badge badge-success">Approved</span>
                                         @elseif($appointment->status == 'rejected')
-                                            <span class="badge badge-danger">Rejected</span>
+                                            <span id="statusbadge" class="badge badge-danger">Rejected</span>
                                         @else
-                                            <span class="badge badge-danger">Cancelled</span>
+                                            <span id="statusbadge" class="badge badge-danger">Cancelled</span>
                                         @endif
                                     </p>
                                 </div>
@@ -111,36 +112,46 @@
 
                         </div>
                         @if ($appointment->report != null)
-                        <div class="col-md-2">
-                            <div class="card">
-                                <div class="card-body">
-                                    <a href="{{ asset('Uploads/Appoinment/Report/' . $appointment->report) }}"
-                                        target="_blank">
-                                        <div class="icon">
-                                            <img src="{{ asset('Assets/User/assets/img/PDF.png') }}" class="img-fluid"
-                                                alt="">
-                                        </div>
-                                        <div class="file-name">
-                                            <p class="m-b-5 text-muted">Report.pdf</p>
-                                            <small><span
-                                                    class="date text-muted">{{ \Carbon\Carbon::parse($appointment->created_at)->format('M d Y') }}</span></small>
-                                        </div>
-                                    </a>
+                            <div class="col-md-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="{{ asset('Uploads/Appoinment/Report/' . $appointment->report) }}"
+                                            target="_blank">
+                                            <div class="icon">
+                                                <img src="{{ asset('Assets/User/assets/img/PDF.png') }}" class="img-fluid"
+                                                    alt="">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">Report.pdf</p>
+                                                <small><span
+                                                        class="date text-muted">{{ \Carbon\Carbon::parse($appointment->created_at)->format('M d Y') }}</span></small>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
-                       
+
                         <div class="col-md-12">
-                           
+
                             <div class="card single_post">
                                 <div class="body" id="btn-body">
+                                    @if ($appointment->status == 'pending')
+                                        <button class="btn btn-success status" data-status="approve"
+                                            data-id="{{ $appointment->id }}">Approve</button>
+                                        <button class="btn btn-danger status" data-status="reject"
+                                            data-id="{{ $appointment->id }}">Reject</button>
+                                    @elseif ($appointment->status == 'approved')
+                                        <button class="btn btn-danger cancel" data-toggle="modal"
+                                            data-target="#defaultModal" data-status="cancelled"
+                                            data-id="{{ $appointment->id }}">Cancelled</button>
+                                    @endif
 
-                                   <button class="btn btn-success status" data-status="approve"  data-id="{{ $appointment->id }}">Approve</button>
-                                   <button class="btn btn-danger status" data-status="reject" data-id="{{ $appointment->id }}">Reject</button>
+
                                 </div>
                             </div>
                         </div>
+
 
 
 
@@ -154,17 +165,61 @@
             </div>
         </div>
     </section>
+    {{-- Cancelled Modal --}}
+    <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="title" id="defaultModalLabel">Cancellation Reason</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="CancellForm" name="CancellForm">
+                        <input type="hidden" id="id" name="id" value="{{ $appointment->id }}">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="body">
+
+                                        <div class="form-group">
+                                            <textarea rows="4" class="form-control no-resize" name="doctor_cancellation_reason"
+                                                id="doctor_cancellation_reason" placeholder="Please Write Cancellation Reason..."></textarea>
+                                            <span class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger btn-round waves-effect" id="cancel">Cancel
+                                Appointment</button>
+                            <button type="button" class="btn btn-danger waves-effect"
+                                data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- Cancelled Modal --}}
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
     <script>
         $('.status').click(function() {
             if (confirm("Are you sure you want to Reply this Appointment?"))
                 $('.status').prop('disabled', true);
 
-             $.ajax({
-                url: "{{ route('Admin.FAQ.delete') }}",
-                type: "delete",
+            $.ajax({
+                url: "{{ route('doctor.Appointment.changeStatus') }}",
+                type: "post",
                 data: {
 
                     id: $(this).data('id'),
@@ -175,11 +230,24 @@
                 success: function(response) {
                     $('.status').prop('disabled', false);
 
-
-
                     if (response['status'] == true) {
 
-                        
+                        if (response['AppointmentStatus'] == 'approved') {
+
+                            var html = `<button class="btn btn-danger data-bs-toggle="modal" data-bs-target="#exampleModal" cancel" data-status="cancelled"
+                                        data-id="{{ $appointment->id }}">Cancelled</button>`;
+                            $('#btn-body').html(html)
+                            $('#statusbadge').removeClass('badge-danger').addClass('badge-success')
+                                .html('Approved')
+                        } else {
+
+                            $('#btn-body').html('')
+                            $('#statusbadge').html('Rejected')
+
+
+                        }
+
+
                         const Toast = Swal.mixin({
                             toast: true,
                             position: "top-end",
@@ -216,6 +284,88 @@
 
                 }
             })
+
+        })
+        $('#CancellForm').submit(function(event) {
+            event.preventDefault();
+
+            $('#cancel').prop('disabled', true);
+
+            var element = $(this);
+
+            $.ajax({
+                url: "{{ route('doctor.Appointment.Cancel') }}",
+                type: "post",
+                data: element.serializeArray(),
+                dataType: "json",
+                success: function(response) {
+                    $('#cancel').prop('disabled', false);
+
+
+                    if (response['status'] == true) {
+                        $('#defaultModal').modal('hide');
+
+                        $('#btn-body').html('')
+                        $('#statusbadge').removeClass('badge-success').addClass('badge-danger')
+                            .html('Cancelled')
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+
+
+                    } else {
+
+                        if(response['isNotFound'] == true){
+
+                            const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['error'],
+                        });
+                        }
+
+                        var errors = response['errors'];
+
+
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('span.text-danger').html('');
+
+
+                        $.each(errors, function(key, value) {
+                            var field = $('#' + key);
+                            if (field.length) {
+                                field.addClass('is-invalid').siblings('span.text-danger')
+                                    .html(value);
+
+                            }
+                        });
+                    }
+                }
+            })
+
 
         })
     </script>

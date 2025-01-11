@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AppointmentCancellMail;
+use App\Mail\AppointmentMail;
 use App\Models\Appoinment;
 use App\Models\Doctor\DoctorWorkingTime;
 use App\Models\DoctorProfile;
@@ -10,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AppoinmentController extends Controller
@@ -194,9 +197,60 @@ class AppoinmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function Cancel(Request $request)
     {
-        //
+        $appointment = Appoinment::find($request->id);
+
+        if($appointment == null){
+
+            return response()->json([
+                'status' => false,
+                'isNotFound' => true,
+                'error' => "Appointment Not Found",
+            ]);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'id' => ['required','numeric'],
+            'doctor_cancellation_reason' => ['required','min:10'],
+        ]);
+
+        if($validator->passes()){
+
+            $doctor = DoctorProfile::where('user_id',$appointment->doctor_id)->first();
+
+            $appointment->status = 'cancelled';
+            $appointment->doctor_cancellation_reason = $request->doctor_cancellation_reason;
+            $appointment->save();
+
+            Mail::to($appointment->email)->send(new AppointmentCancellMail(
+                [
+                   'patientName' => $appointment->name,
+                   'status' => $appointment->status,
+                   'appointmentDate' => $appointment->date,
+                   'appointmentStartTime' => $appointment->start_time,
+                   'appointmentEndTime' => $appointment->end_time,
+                   'doctorName' => $doctor->name,
+                   'Reason' => $appointment->doctor_cancellation_reason,
+                ]
+            ));
+
+            return response()->json([
+                'status' => true,
+                'AppointmentStatus' => $appointment->status,
+                'msg' =>  "Patient Appointemnt Cancelled Successfully",
+            ]);
+
+
+        }
+        else{
+
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors(),
+            ]);
+        }
+
     }
 
     /**
@@ -205,6 +259,8 @@ class AppoinmentController extends Controller
     public function changeStatus(Request $request)
     {
         $appointment = Appoinment::find($request->id);
+        $doctor = DoctorProfile::where('user_id',$appointment->doctor_id)->first();
+        $status = '';
 
         if($appointment == null){
 
@@ -220,6 +276,23 @@ class AppoinmentController extends Controller
             $appointment->save();
 
             $status = 'approved';
+
+            Mail::to($appointment->email)->send(new AppointmentMail(
+                [
+                   'patientName' => $appointment->name,
+                   'status' => $status,
+                   'appointmentDate' => $appointment->date,
+                   'appointmentStartTime' => $appointment->start_time,
+                   'appointmentEndTime' => $appointment->end_time,
+                   'doctorName' => $doctor->name,
+                ]
+            ));
+
+            return response()->json([
+                'status' => true,
+                'AppointmentStatus' => $status,
+                'msg' => 'Patient Appointment '.ucwords($status).' Successfully',
+            ]);
         }
         else{
 
@@ -227,8 +300,34 @@ class AppoinmentController extends Controller
             $appointment->save();
 
             $status = 'rejected';
+            $reason = 'The doctor is unavailable during the requested time.';
+
+            Mail::to($appointment->email)->send(new AppointmentMail(
+                [
+                   'patientName' => $appointment->name,
+                   'status' => $status,
+                   'appointmentDate' => $appointment->date,
+                   'appointmentStartTime' => $appointment->start_time,
+                   'appointmentEndTime' => $appointment->end_time,
+                   'doctorName' => $doctor->name,
+                   'rejectionReason' => $reason,
+                ]
+            ));
+
+            return response()->json([
+                'status' => true,
+                'AppointmentStatus' => $status,
+                'msg' => 'Patient Appointment '.ucwords($status).' Successfully',
+            ]);
 
         }
+
+       
+        return response()->json([
+            'status' => false,
+            'error' => "Unknown Appointment Status"
+        ]);
+       
     }
 
     /**
