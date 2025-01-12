@@ -200,7 +200,7 @@ class CourseController extends Controller
 
             $chapters = CourseChapter::where('course_id',$course->id)->count();
 
-            if($chapters == 0){
+            if($chapters == 0 && $request->status  == 'active'){
 
                 return response()->json([
                     'status' => false,

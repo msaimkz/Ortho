@@ -505,7 +505,8 @@
                                 <div class="cs_slide">
                                     <div class="cs_team cs_style_1 cs_blue_bg">
                                         <div class="cs_team_shape cs_accent_bg"></div>
-                                        <a class='cs_team_thumbnail' href='{{ route('User.DoctorDetail',$doctor->id) }}'>
+                                        <a class='cs_team_thumbnail'
+                                            href='{{ route('User.DoctorDetail', $doctor->id) }}'>
                                             @if (isset($doctor->profile_img) && file_exists(public_path('Uploads/Doctor/Profile/' . $doctor->profile_img)))
                                                 <img src="{{ asset('Uploads/Doctor/Profile/' . $doctor->profile_img) }}"
                                                     alt="profile-image">
@@ -513,10 +514,11 @@
                                                 <img src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
                                                     alt="profile-image">
                                             @endif
-                                            
+
                                         </a>
                                         <div class="cs_team_bio">
-                                            <h3 class="cs_team_title cs_extra_bold mb-0"><a href='{{ route('User.DoctorDetail',$doctor->id) }}'>Dr.
+                                            <h3 class="cs_team_title cs_extra_bold mb-0"><a
+                                                    href='{{ route('User.DoctorDetail', $doctor->id) }}'>Dr.
                                                     {{ ucwords($doctor->name) }}</a></h3>
                                             <p class="cs_team_subtitle"> {{ ucwords($doctor->speciality) }}</p>
                                             <div class="cs_social_btns cs_style_1">
@@ -1192,134 +1194,50 @@
                     data-variable-width="0" data-slides-per-view="responsive" data-xs-slides="1" data-sm-slides="2"
                     data-md-slides="3" data-lg-slides="3" data-add-slides="3">
                     <div class="cs_slider_wrapper">
-                        <div class="cs_slide">
-                            <article class="cs_post cs_style_1">
-                                <a class='cs_post_thumbnail position-relative' href='blog-details.html'>
-                                    <img src="{{ asset('Assets/User/assets/img/post_1.jpg') }}" alt="post Thumbnail">
-                                    <div class="cs_post_category position-absolute">Medical</div>
-                                </a>
-                                <div class="cs_post_content position-relative">
-                                    <div class="cs_post_meta_wrapper">
-                                        <div class="cs_posted_by cs_center position-absolute">May 02</div>
-                                        <div class="cs_post_meta_item">
-                                            <img src="{{ asset('Assets/User/assets/img/icons/post_user_icon.png') }}"
-                                                alt="Icon">
-                                            <span>By: Admin</span>
+                        @if (!empty($blogs))
+                            @foreach ($blogs as $blog)
+                                <div class="cs_slide">
+                                    <article class="cs_post cs_style_1">
+                                        <a class='cs_post_thumbnail position-relative' href='{{ route('User.blogDetail',$blog->slug) }}'>
+                                            @if (isset($blog->thumbnail) && file_exists(public_path('Uploads/Blog/' . $blog->thumbnail)))
+                                                <img src="{{ asset('Uploads/Blog/' . $blog->thumbnail) }}"
+                                                    alt="blog-thumbnail">
+                                            @else
+                                                <img src="{{ asset('Assets/User/assets/img/post_4.jpg') }}"
+                                                    alt="blog-thumbnail">
+                                            @endif
+                                            <div class="cs_post_category position-absolute">Medical</div>
+                                        </a>
+                                        <div class="cs_post_content position-relative">
+                                            <div class="cs_post_meta_wrapper">
+                                                <div class="cs_posted_by cs_center position-absolute">
+                                                    {{ \Carbon\Carbon::parse($blog->created_at)->format('D d') }}</div>
+                                                <div class="cs_post_meta_item">
+                                                    <img src="{{ asset('Assets/User/assets/img/icons/post_user_icon.png') }}"
+                                                        alt="Icon">
+                                                    <span>By: Admin</span>
+                                                </div>
+                                                <div class="cs_post_meta_item">
+                                                    <img src="{{ asset('Assets/User/assets/img/icons/post_comment_icon.png') }}"
+                                                        alt="Icon">
+                                                    <span>Comment</span>
+                                                </div>
+                                            </div>
+                                            <h3 class="cs_post_title"><a
+                                                    href='{{ route('User.blogDetail',$blog->slug) }}'>{{ ucwords($blog->title) }}</a></h3>
+                                            <p class="cs_post_subtitle">{{ ucwords($blog->short_description) }}.</p>
+                                            <a class='cs_post_btn' href='{{ route('User.blogDetail',$blog->slug) }}'>
+                                                <span>Read More</span>
+                                                <span><i class="fa-solid fa-angle-right"></i></span>
+                                            </a>
+                                            <div class="cs_post_shape position-absolute"></div>
                                         </div>
-                                        <div class="cs_post_meta_item">
-                                            <img src="{{ asset('Assets/User/assets/img/icons/post_comment_icon.png') }}"
-                                                alt="Icon">
-                                            <span>Comment</span>
-                                        </div>
-                                    </div>
-                                    <h3 class="cs_post_title"><a href='blog-details.html'>Medical Of This Working Health
-                                            Blog</a></h3>
-                                    <p class="cs_post_subtitle">Medical standard chunk ofI nibh velit auctor aliquet sollic
-                                        tudin.</p>
-                                    <a class='cs_post_btn' href='blog-details.html'>
-                                        <span>Read More</span>
-                                        <span><i class="fa-solid fa-angle-right"></i></span>
-                                    </a>
-                                    <div class="cs_post_shape position-absolute"></div>
+                                    </article>
                                 </div>
-                            </article>
-                        </div>
-                        <div class="cs_slide">
-                            <article class="cs_post cs_style_1">
-                                <a class='cs_post_thumbnail position-relative' href='blog-details.html'>
-                                    <img src="{{ asset('Assets/User/assets/img/post_2.jpg') }}" alt="post Thumbnail">
-                                    <div class="cs_post_category position-absolute">Medical</div>
-                                </a>
-                                <div class="cs_post_content position-relative">
-                                    <div class="cs_post_meta_wrapper">
-                                        <div class="cs_posted_by cs_center position-absolute">May 02</div>
-                                        <div class="cs_post_meta_item">
-                                            <img src="{{ asset('Assets/User/assets/img/icons/post_user_icon.png') }}"
-                                                alt="Icon">
-                                            <span>By: Admin</span>
-                                        </div>
-                                        <div class="cs_post_meta_item">
-                                            <img src="{{ asset('Assets/User/assets/img/icons/post_comment_icon.png') }}"
-                                                alt="Icon">
-                                            <span>Comment</span>
-                                        </div>
-                                    </div>
-                                    <h3 class="cs_post_title"><a href='blog-details.html'>There Is Only One Thing That Is
-                                            Hospital.</a></h3>
-                                    <p class="cs_post_subtitle">Medical standard chunk ofI nibh velit auctor aliquet sollic
-                                        tudin.</p>
-                                    <a class='cs_post_btn' href='blog-details.html'>
-                                        <span>Read More</span>
-                                        <span><i class="fa-solid fa-angle-right"></i></span>
-                                    </a>
-                                    <div class="cs_post_shape position-absolute"></div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="cs_slide">
-                            <article class="cs_post cs_style_1">
-                                <a class='cs_post_thumbnail position-relative' href='blog-details.html'>
-                                    <img src="{{ asset('Assets/User/assets/img/post_3.jpg') }}" alt="post Thumbnail">
-                                    <div class="cs_post_category position-absolute">Medical</div>
-                                </a>
-                                <div class="cs_post_content position-relative">
-                                    <div class="cs_post_meta_wrapper">
-                                        <div class="cs_posted_by cs_center position-absolute">May 02</div>
-                                        <div class="cs_post_meta_item">
-                                            <img src="{{ asset('Assets/User/assets/img/icons/post_user_icon.png') }}"
-                                                alt="Icon">
-                                            <span>By: Admin</span>
-                                        </div>
-                                        <div class="cs_post_meta_item">
-                                            <img src="{{ asset('Assets/User/assets/img/icons/post_comment_icon.png') }}"
-                                                alt="Icon">
-                                            <span>Comment</span>
-                                        </div>
-                                    </div>
-                                    <h3 class="cs_post_title"><a href='blog-details.html'>This Working World nd Infection
-                                            Prevention.</a></h3>
-                                    <p class="cs_post_subtitle">Medical standard chunk ofI nibh velit auctor aliquet sollic
-                                        tudin.</p>
-                                    <a class='cs_post_btn' href='blog-details.html'>
-                                        <span>Read More</span>
-                                        <span><i class="fa-solid fa-angle-right"></i></span>
-                                    </a>
-                                    <div class="cs_post_shape position-absolute"></div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="cs_slide">
-                            <article class="cs_post cs_style_1">
-                                <a class='cs_post_thumbnail position-relative' href='blog-details.html'>
-                                    <img src="{{ asset('Assets/User/assets/img/post_1.jpg') }}" alt="post Thumbnail">
-                                    <div class="cs_post_category position-absolute">Medical</div>
-                                </a>
-                                <div class="cs_post_content position-relative">
-                                    <div class="cs_post_meta_wrapper">
-                                        <div class="cs_posted_by cs_center position-absolute">May 02</div>
-                                        <div class="cs_post_meta_item">
-                                            <img src="{{ asset('Assets/User/assets/img/icons/post_user_icon.png') }}"
-                                                alt="Icon">
-                                            <span>By: Admin</span>
-                                        </div>
-                                        <div class="cs_post_meta_item">
-                                            <img src="{{ asset('Assets/User/assets/img/icons/post_comment_icon.png') }}"
-                                                alt="Icon">
-                                            <span>Comment</span>
-                                        </div>
-                                    </div>
-                                    <h3 class="cs_post_title"><a href='blog-details.html'>Medical Of This Working Health
-                                            Blog</a></h3>
-                                    <p class="cs_post_subtitle">Medical standard chunk ofI nibh velit auctor aliquet sollic
-                                        tudin.</p>
-                                    <a class='cs_post_btn' href='blog-details.html'>
-                                        <span>Read More</span>
-                                        <span><i class="fa-solid fa-angle-right"></i></span>
-                                    </a>
-                                    <div class="cs_post_shape position-absolute"></div>
-                                </div>
-                            </article>
-                        </div>
+                            @endforeach
+                        @endif
+
+
                     </div>
                 </div>
                 <div class="cs_pagination cs_style_2"></div>

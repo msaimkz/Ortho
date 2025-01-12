@@ -129,7 +129,7 @@ class BlogController extends Controller
 
 
               
-              SendEmailsToNewsletterSubscribers::dispatch($users, 'Blog', $blog->title);
+            //   SendEmailsToNewsletterSubscribers::dispatch($users, 'Blog', $blog->title);
 
               return response()->json([
                 'status' => true,
@@ -175,7 +175,7 @@ class BlogController extends Controller
        }
        $validator = Validator::make($request->all(),[
         'title' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-        'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:blogs,slug,'.$blog->id.',id',new MatchTitleAndSlug],
+        'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:blogs,slug,'.$blog->id.',id',new MatchTitleAndSlug($request->title)],
         'short_description' => ['required','min:10','max:250'],
         'description' => ['required','min:10'],
         'status' => ['required','in:active,inactive'],
