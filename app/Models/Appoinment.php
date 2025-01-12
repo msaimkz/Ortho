@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appoinment extends Model
 {
-    //
+    public function patient()
+    {
+        return $this->belongsTo(User::class, 'patient_id');
+    }
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'doctor_id');
+    }
 }

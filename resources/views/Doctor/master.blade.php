@@ -92,7 +92,7 @@
                             </div>
                         </li>
                         <li class="header">MAIN</li>
-                        <li class="active open"><a href="{{ route('Admin.dashboard') }}"><i
+                        <li class="active open"><a href="{{ route('doctor.dashboard') }}"><i
                                     class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
 
                         <li><a href="{{ route('Admin.patients') }}"><i

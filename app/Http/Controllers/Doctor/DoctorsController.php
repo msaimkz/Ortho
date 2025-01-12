@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AdminSendMail;
+use App\Models\Appoinment;
 use App\Models\Doctor\DoctorWorkingTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,7 @@ use App\Models\DoctorProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\GD\Driver;
 use Illuminate\Support\Facades\File;
@@ -23,7 +25,20 @@ class DoctorsController extends Controller
     public function index()
     {
 
-        return view('Doctor.dashboard');
+        $appointmentCount = Appoinment::where('doctor_id',Auth::user()->id)->where('status','pending')->count();
+        $patientCount = Appoinment::where('doctor_id',Auth::user()->id)->count();
+
+        $patientRecords = Appoinment::where('doctor_id',Auth::user()->id)->with('patient')->limit(5)->get();
+        
+        $patientsCityCount = User::select('city', DB::raw('count(*) as total'))
+        ->join('appoinments', 'users.id', '=', 'appoinments.patient_id') 
+        ->where('appoinments.doctor_id', Auth::user()->id) 
+        ->where('users.role', 'patients') 
+        ->groupBy('users.city') 
+        ->get();      
+
+
+        return view('Doctor.dashboard',compact('appointmentCount','patientCount','patientRecords','patientsCityCount'));
     }
 
     public function profile()
