@@ -31,9 +31,14 @@
                             <h4 class="m-t-10">{{ ucwords($patient->name) }}</h4>
                         </div>
                         <div class="member-img">
-                            <a href="patient-invoice.html">
-                                <img src="{{ asset('Assets/Dashboard/assets/images/sm/avatar2.jpg') }}"
-                                    class="rounded-circle" alt="profile-image">
+                            <a href="#">
+                                @if (isset($profile->profile_img) && file_exists(public_path('Uploads/Patient/Profile/' . $profile->profile_img)))
+                                    <img src="{{ asset('Uploads/Patient/Profile/' . $profile->profile_img) }}"
+                                        alt="Profile-Image" class="rounded-circle">
+                                @else
+                                    <img src="{{ asset('Assets/Dashboard/assets/images/sm/avatar1.jpg') }}" alt="Avatar"
+                                        class="rounded-circle">
+                                @endif
                             </a>
                         </div>
                         <div class="body">

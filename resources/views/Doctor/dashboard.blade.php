@@ -65,8 +65,17 @@
                                             @foreach ($patientRecords as $patientRecord)
                                                 <tr>
                                                     <td>{{ ++$count }}</td>
-                                                    <td><img src="http://via.placeholder.com/35x35" alt="Avatar"
-                                                            class="rounded-circle"></td>
+                                                    <td>
+                                                        @if (isset($patientRecord->patient->profile_photo_path) &&
+                                                                file_exists(public_path('Uploads/Patient/Profile/' . $patientRecord->patient->profile_photo_path)))
+                                                            <img src="{{ asset('Uploads/Patient/Profile/' . $patientRecord->patient->profile_photo_path) }}"
+                                                                alt="Profile-Image" class="rounded-circle">
+                                                        @else
+                                                            <img src="http://via.placeholder.com/35x35" alt="Avatar"
+                                                                class="rounded-circle">
+                                                        @endif
+                                                      
+                                                    </td>
                                                     <td>{{ ucwords($patientRecord->patient->name) }}</td>
                                                     <td>{{ $patientRecord->patient->email }}</td>
                                                     <td>{{ ucwords($patientRecord->patient->phone) }}</td>

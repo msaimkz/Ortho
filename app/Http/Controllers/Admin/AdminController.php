@@ -27,7 +27,7 @@ class AdminController extends Controller
 
         $patientCounts = User::where('role','patients')->count();
 
-        $patients = User::where('role','patients')->limit(4)->get();
+        $patients = User::where('role','patients')->latest()->limit(4)->get();
 
         $patientsCityCount = User::select('city', DB::raw('count(*) as total'))
         ->where('role', 'patients')

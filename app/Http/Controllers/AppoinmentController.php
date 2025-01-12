@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\AppointmentCancellMail;
 use App\Mail\AppointmentMail;
 use App\Mail\DoctorAppointmentInformMail;
+use App\Mail\UserAppointmentCancelMail;
 use App\Models\Appoinment;
 use App\Models\Doctor\DoctorWorkingTime;
 use App\Models\DoctorProfile;
@@ -174,7 +175,7 @@ class AppoinmentController extends Controller
                     'appointmentStartTime' => $appoinment->start_time,
                     'appointmentEndTime' => $appoinment->end_time,
                     'doctorName' => $doctor->name,
-                    
+
                 ]
             ));
 
@@ -223,10 +224,17 @@ class AppoinmentController extends Controller
             ]);
         }
 
-        $validator = Validator::make($request->all(), [
-            'id' => ['required', 'numeric'],
-            'doctor_cancellation_reason' => ['required', 'min:10'],
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id' => ['required', 'numeric'],
+                'doctor_cancellation_reason' => ['required', 'min:10'],
+            ],
+            [
+                'doctor_cancellation_reason.required' => "Cancellation Reason Field is Required",
+                'doctor_cancellation_reason.min' => "Cancellation Reason required minimum 10 letter"
+            ]
+        );
 
         if ($validator->passes()) {
 
@@ -337,13 +345,7 @@ class AppoinmentController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+   
 
     public function GetTime(Request $request)
     {
@@ -365,5 +367,65 @@ class AppoinmentController extends Controller
             'time' => $time,
             'msg' => 'Doctor Working Time Get Sucessfully',
         ]);
+    }
+
+    public function UserCancelAppointment(Request $request)
+    {
+
+        $appointment = Appoinment::find($request->id);
+
+        if ($appointment == null) {
+
+            return response()->json([
+                'status' => false,
+                'isNotFound' => true,
+                'error' => "Appointment Not Found",
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'numeric'],
+            'user_cancellation_reason' => ['required', 'min:10'],
+        ],
+        [
+            'user_cancellation_reason.required' => "Cancellation Reason Field is Required",
+            'user_cancellation_reason.min' => "Cancellation Reason required minimum 10 letter"
+        ]
+    );
+
+        if ($validator->passes()) {
+
+            $doctor = DoctorProfile::where('user_id', $appointment->doctor_id)->first();
+
+            $appointment->status = 'cancelled';
+            $appointment->user_cancelled = 'cancelled';
+            $appointment->user_cancellation_reason = $request->user_cancellation_reason;
+            $appointment->save();
+
+            Mail::to($doctor->email)->send(new UserAppointmentCancelMail(
+                [
+                    'patientName' => $appointment->name,
+                    'status' => $appointment->status,
+                    'appointmentDate' => $appointment->date,
+                    'appointmentStartTime' => $appointment->start_time,
+                    'appointmentEndTime' => $appointment->end_time,
+                    'doctorName' => $doctor->name,
+                    'Reason' => $appointment->user_cancellation_reason,
+                ]
+            ));
+
+            return response()->json([
+                'status' => true,
+                'AppointmentStatus' => $appointment->status,
+                'reason' => ucwords($appointment->user_cancellation_reason),
+                'msg' =>  "Your Appointment Cancelled Successfully",
+            ]);
+        } else {
+
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors(),
+            ]);
+        }
     }
 }

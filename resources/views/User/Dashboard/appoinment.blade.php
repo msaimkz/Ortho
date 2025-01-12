@@ -37,25 +37,46 @@
                                 <table class="table m-b-0 table-hover">
                                     <thead>
                                         <tr>                                       
-                                            <th>Patients ID</th>
-                                            <th>Name</th>
-                                            <th>Age</th>
-                                            <th>Address</th>
-                                            <th>Number</th>
-                                            <th>Last Visit</th>
+                                            <th>Doctor Name</th>
+                                            <th>Doctor Email</th>
+                                            <th>Date</th>
+                                            <th>Day</th>
+                                            <th>Time</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if($appointments != null)
+                                        @foreach ($appointments as $appointment)
                                         <tr>
-                                            <td><span class="list-name">KU 00598</span></td>
-                                            <td>Daniel</td>
-                                            <td>32</td>
-                                            <td>71 Pilgrim Avenue Chevy Chase, MD 20815</td>
-                                            <td>404-447-6013</td>
-                                            <td>11 Jan 2018</td>
-                                            <td><span class="badge badge-success">Approved</span></td>
+                                            <td>Dr. {{ ucwords($appointment->doctor->name) }}</td>
+                                            <td>{{ $appointment->doctor->email }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($appointment->date)->format('d-M-Y') }}</td>
+                                            <td>{{ ucwords($appointment->day) }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($appointment->start_time)->format('g:i A') }} To {{ \Carbon\Carbon::parse($appointment->end_time)->format('g:i A') }}</td>
+                                            <td>
+                                                @if ($appointment->status == 'pending')
+                                                    <span class="badge badge-danger">Pending</span>
+                                                @elseif($appointment->status == 'approved')
+                                                    <span class="badge badge-success">Approved</span>
+                                                @elseif($appointment->status == 'rejected')
+                                                    <span class="badge badge-danger">Rejected</span>
+                                                @else
+                                                    <span class="badge badge-danger">Cancelled</span>
+                                                @endif
+
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('User.dashboard.appoinment.show',$appointment->id) }}" class="btn btn-info">View More</a>
+                                            </td>
                                         </tr>
+                                        @endforeach
+
+                                        @else
+                                             <td>Record Not Found</td>
+                                        @endif
+                                      
                                         
                                     </tbody>
                                 </table>                            

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appoinment;
 use App\Models\Patient\PatientProfile;
 use App\Models\User;
 use App\Rules\ValidDateOfBirth;
@@ -198,6 +199,24 @@ class DashboardController extends Controller
     public function appoinment()
     {
 
-        return view('User.Dashboard.appoinment');
+        $appointments = Appoinment::where('patient_id',Auth::user()->id)->with('doctor')->latest()->get();
+        return view('User.Dashboard.appoinment',compact('appointments'));
+    }
+
+    public function AppoinmentDetail(string $id){
+
+        $appointment = Appoinment::find($id);
+
+        if($appointment == null){
+
+            return redirect()->route('User.dashboard.error');
+        }
+
+        return view('User.Dashboard.show-appointment',compact('appointment'));
+    }
+
+    public function error(){
+
+        return view('User.Dashboard.error');
     }
 }

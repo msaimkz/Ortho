@@ -1,4 +1,4 @@
-@extends('Doctor.master')
+@extends('User.Dashboard.Dashboard')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/blog.css') }}">
@@ -16,9 +16,10 @@
                 </div>
                 <div class="col-lg-5 col-md-7 col-sm-12">
                     <ul class="breadcrumb float-md-right">
-                        <li class="breadcrumb-item"><a href="{{ route('doctor.dashboard') }}"><i class="zmdi zmdi-home"></i>
+                        <li class="breadcrumb-item"><a href="{{ route('User.dashboard.dashboard') }}"><i
+                                    class="zmdi zmdi-home"></i>
                                 Ortho</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('doctor.Appointments') }}">Appointments</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('User.dashboard.appoinment') }}">Appointments</a></li>
                         <li class="breadcrumb-item active">Appointment Detail</li>
                     </ul>
                 </div>
@@ -32,9 +33,9 @@
                         <div class="col-md-6">
                             <div class="card single_post">
                                 <div class="body">
-                                    <h3 class="m-t-0 m-b-5">Name</h3>
+                                    <h3 class="m-t-0 m-b-5">Doctor Name</h3>
 
-                                    <p>{{ ucwords($appointment->name) }}</p>
+                                    <p>Dr: {{ ucwords($appointment->doctor->name) }}</p>
                                 </div>
                             </div>
 
@@ -42,9 +43,9 @@
                         <div class="col-md-6">
                             <div class="card single_post">
                                 <div class="body">
-                                    <h3 class="m-t-0 m-b-5">Email</h3>
+                                    <h3 class="m-t-0 m-b-5">Doctor Email</h3>
 
-                                    <p>{{ $appointment->email }}</p>
+                                    <p>{{ $appointment->doctor->email }}</p>
                                 </div>
                             </div>
 
@@ -136,12 +137,7 @@
 
                             <div class="card single_post">
                                 <div class="body" id="btn-body">
-                                    @if ($appointment->status == 'pending')
-                                        <button class="btn btn-success status" data-status="approve"
-                                            data-id="{{ $appointment->id }}">Approve</button>
-                                        <button class="btn btn-danger status" data-status="reject"
-                                            data-id="{{ $appointment->id }}">Reject</button>
-                                    @elseif ($appointment->status == 'approved')
+                                    @if ($appointment->status == 'approved')
                                         <button class="btn btn-danger cancel" data-toggle="modal"
                                             data-target="#defaultModal" data-status="cancelled"
                                             data-id="{{ $appointment->id }}">Cancelled</button>
@@ -191,8 +187,8 @@
                                     <div class="body">
 
                                         <div class="form-group">
-                                            <textarea rows="4" class="form-control no-resize" name="doctor_cancellation_reason"
-                                                id="doctor_cancellation_reason" placeholder="Please Write Cancellation Reason..."></textarea>
+                                            <textarea rows="4" class="form-control no-resize" name="user_cancellation_reason"
+                                                id="user_cancellation_reason" placeholder="Please Write Cancellation Reason..."></textarea>
                                             <span class="text-danger"></span>
 
                                         </div>
@@ -223,80 +219,6 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script>
-        $('.status').click(function() {
-            if (confirm("Are you sure you want to Reply this Appointment?"))
-                $('.status').prop('disabled', true);
-
-            $.ajax({
-                url: "{{ route('doctor.Appointment.changeStatus') }}",
-                type: "post",
-                data: {
-
-                    id: $(this).data('id'),
-                    status: $(this).data('status'),
-
-                },
-                dataType: "json",
-                success: function(response) {
-                    $('.status').prop('disabled', false);
-
-                    if (response['status'] == true) {
-
-                        if (response['AppointmentStatus'] == 'approved') {
-
-                            var html = `<button class="btn btn-danger cancel" data-toggle="modal"
-                                            data-target="#defaultModal" data-status="cancelled"
-                                        data-id="{{ $appointment->id }}">Cancelled</button>`;
-                            $('#btn-body').html(html)
-                            $('#statusbadge').removeClass('badge-danger').addClass('badge-success')
-                                .html('Approved')
-                        } else {
-
-                            $('#btn-body').html('')
-                            $('#statusbadge').html('Rejected')
-
-
-                        }
-
-
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: response['msg'],
-                        });
-                    } else {
-
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response['error'],
-                        });
-                    }
-
-                }
-            })
-
-        })
         $('#CancellForm').submit(function(event) {
             event.preventDefault();
 
@@ -305,7 +227,7 @@
             var element = $(this);
 
             $.ajax({
-                url: "{{ route('doctor.Appointment.Cancel') }}",
+                url: "{{ route('User.appointment.cancel') }}",
                 type: "post",
                 data: element.serializeArray(),
                 dataType: "json",
@@ -315,7 +237,7 @@
 
                     if (response['status'] == true) {
                         $('#defaultModal').modal('hide');
-                        var html = `  <h3 class="m-t-0 m-b-5">Doctor Cancellation Reason</h3>
+                        var html = `  <h3 class="m-t-0 m-b-5">Patient Cancellation Reason</h3>
                           <p>${response['reason']}</p>
                           `
 
