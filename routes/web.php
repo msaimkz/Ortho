@@ -64,6 +64,9 @@ Route::get('/Ortho/Dashboard/Update-Profile',[DashboardController::class,'Editpr
 Route::get('/Ortho/Dashboard/My-Appointment',[DashboardController::class,'appoinment'])->name('User.dashboard.appoinment');
 Route::post('/Ortho/Send-Contact-Message',[ContactController::class,'store'])->name('User.contact.send');
 Route::post('/Ortho/Send-NewsLetter-Email',[NewsLetterController::class,'store'])->name('User.newsletter.send');
+Route::post('/Ortho/Update-Profile',[DashboardController::class,'UpdateProfile'])->name('User.UpdateProfile');
+Route::post('/Ortho/Update-Profile-Image',[DashboardController::class,'UpdateProfileImg'])->name('User.UpdateProfileImage');
+Route::post('/Ortho/Change-Password',[DashboardController::class,'ChangePassword'])->name('User.ChangePassword');
 
 
 

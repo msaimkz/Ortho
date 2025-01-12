@@ -19,6 +19,8 @@
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/color_skins.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body class="theme-cyan">
@@ -46,6 +48,14 @@
             </li>
             <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a>
             </li>
+            <li class="float-right">
+                <form action="{{ route('logout') }}" method="post" id="logout-form">
+                    @csrf
+                </form>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
+
+            </li>
 
 
 
@@ -66,11 +76,21 @@
                     <ul class="list">
                         <li>
                             <div class="user-info">
-                                <div class="image"><a href="{{ route('User.dashboard.profile') }}"><img
-                                            src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                            alt="User"></a></div>
+                                <div class="image"><a href="{{ route('User.dashboard.profile') }}">
+                                    @if (isset(Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path)))
+                                    <img 
+                                       
+                                        src="{{ asset('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path) }}"
+                                        class="Profile-Image" alt="">
+                                @else
+                                    <img 
+                                       
+                                        src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                        class="Profile-Image" alt="">
+                                @endif
+                                        </a></div>
                                 <div class="detail">
-                                    <h4>Dr. Charlotte</h4>
+                                    <h4> <span class="username">{{ ucwords(Auth::user()->name) }}</span></h4>
                                     <small><a href="{{ route('User.index') }}">Back</a></small>
                                 </div>
                             </div>
@@ -80,8 +100,8 @@
                                     class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
                         <li><a href="{{ route('User.dashboard.appoinment') }}"><i
                                     class="zmdi zmdi-calendar-check"></i><span>Appointment</span> </a></li>
-                        <li><a href="book-appointment.html"><i
-                                    class="zmdi zmdi-folder"></i><span>Report</span> </a></li>
+                        <li><a href="book-appointment.html"><i class="zmdi zmdi-folder"></i><span>Report</span> </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -90,25 +110,34 @@
                     <ul class="list">
                         <li>
                             <div class="user-info m-b-20 p-b-15">
-                                <div class="image"><a href="{{ route('User.dashboard.profile') }}"><img
-                                            src="{{ asset('assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                            alt="User"></a></div>
+                                <div class="image"><a href="{{ route('User.dashboard.profile') }}">
+                                        @if (isset(Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path)))
+                                            <img 
+                                               
+                                                src="{{ asset('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path) }}"
+                                                class="Profile-Image" alt="">
+                                        @else
+                                            <img 
+                                               
+                                                src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                                class="Profile-Image" alt="">
+                                        @endif
+                                      
+                                    </a></div>
                                 <div class="detail">
-                                    <h4>Dr. Charlotte</h4>
+                                    <h4><span class="username">{{ ucwords(Auth::user()->name) }}</span></h4>
 
                                 </div>
 
                             </div>
                         </li>
                         <li>
-                            <small class="text-muted">Location: </small>
-                            <p>795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>
-                            <hr>
+
                             <small class="text-muted">Email address: </small>
-                            <p>Charlotte@example.com</p>
+                            <p class="useremail">{{ Auth::user()->email }}</p>
                             <hr>
                             <small class="text-muted">Phone: </small>
-                            <p>+ 202-555-0191</p>
+                            <p class="userphone">{{ Auth::user()->phone }}</p>
                             <hr>
 
 
@@ -130,7 +159,15 @@
     <script src="{{ asset('assets/Dashboard/assets/bundles/morrisscripts.bundle.js') }}"></script><!-- Morris Plugin Js -->
     <script src="{{ asset('assets/Dashboard/assets/bundles/jvectormap.bundle.js') }}"></script> <!-- JVectorMap Plugin Js -->
     <script src="{{ asset('assets/Dashboard/assets/bundles/knob.bundle.js') }}"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
- 
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @yield('js')
 
     <script src="{{ asset('assets/Dashboard/assets/bundles/mainscripts.bundle.js') }}"></script>
