@@ -24,6 +24,11 @@ class PatientController extends Controller
         $patient = User::find($id);
         $profile = PatientProfile::where('user_id',$id)->first();
 
+        if($patient == null){
+
+            return redirect()->route('Admin.notFound');
+        }
+
         return view('Admin.Patients.profile',compact('patient','profile'));
     }
 

@@ -145,6 +145,10 @@
                                         <button class="btn btn-danger cancel" data-toggle="modal"
                                             data-target="#defaultModal" data-status="cancelled"
                                             data-id="{{ $appointment->id }}">Cancelled</button>
+                                    @elseif ($appointment->status == 'cancelled')
+                                        <h3 class="m-t-0 m-b-5">Doctor Cancellation Reason</h3>
+
+                                        <p>{{ ucwords($appointment->doctor_cancellation_reason) }}</p>
                                     @endif
 
 
@@ -234,7 +238,8 @@
 
                         if (response['AppointmentStatus'] == 'approved') {
 
-                            var html = `<button class="btn btn-danger data-bs-toggle="modal" data-bs-target="#exampleModal" cancel" data-status="cancelled"
+                            var html = `<button class="btn btn-danger cancel" data-toggle="modal"
+                                            data-target="#defaultModal" data-status="cancelled"
                                         data-id="{{ $appointment->id }}">Cancelled</button>`;
                             $('#btn-body').html(html)
                             $('#statusbadge').removeClass('badge-danger').addClass('badge-success')
@@ -304,8 +309,11 @@
 
                     if (response['status'] == true) {
                         $('#defaultModal').modal('hide');
+                        var html = `  <h3 class="m-t-0 m-b-5">Doctor Cancellation Reason</h3>
+                          <p>${response['reason']}</p>
+                          `
 
-                        $('#btn-body').html('')
+                        $('#btn-body').html(html)
                         $('#statusbadge').removeClass('badge-success').addClass('badge-danger')
                             .html('Cancelled')
 
@@ -328,23 +336,23 @@
 
                     } else {
 
-                        if(response['isNotFound'] == true){
+                        if (response['isNotFound'] == true) {
 
                             const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response['error'],
-                        });
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
                         }
 
                         var errors = response['errors'];

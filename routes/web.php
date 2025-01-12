@@ -18,6 +18,7 @@ use App\Http\Controllers\AppoinmentController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Doctor\DoctorWorkingTimeController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Doctor\DoctorPatientController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\TempController;
 use Illuminate\Support\Str;
@@ -159,6 +160,8 @@ Route::get('/Ortho/Doctor/All-Appointments',[AppoinmentController::class,'index'
 Route::get('/Ortho/Doctor/Appointment-Detail/{id}',[AppoinmentController::class,'show'])->name('doctor.Appointment.show');
 Route::post('/Ortho/Doctor/Change-Appointment-Status',[AppoinmentController::class,'changeStatus'])->name('doctor.Appointment.changeStatus');
 Route::post('/Ortho/Doctor/Cancelled-Appointment',[AppoinmentController::class,'Cancel'])->name('doctor.Appointment.Cancel');
+Route::get('/Ortho/Doctor/All-Patients',[DoctorPatientController::class,'index'])->name('doctor.Patients');
+Route::get('/Ortho/Doctor/Patient-Profile/{id}',[DoctorPatientController::class,'profile'])->name('doctor.Patients.profile');
 
 
 

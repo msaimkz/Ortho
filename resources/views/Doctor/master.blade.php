@@ -95,7 +95,7 @@
                         <li class="active open"><a href="{{ route('doctor.dashboard') }}"><i
                                     class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
 
-                        <li><a href="{{ route('Admin.patients') }}"><i
+                        <li><a href="{{ route('doctor.Patients') }}"><i
                                     class="zmdi zmdi-account-add"></i><span>Patients</span> </a></li>
                         <li><a href="{{ route('doctor.Appointments') }}"><i
                                     class="zmdi zmdi-calendar-check"></i><span>Appointments</span> </a></li>
