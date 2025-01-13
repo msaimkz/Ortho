@@ -350,134 +350,42 @@
             </div>
             <div class="cs_height_50 cs_height_lg_50"></div>
             <div class="row cs_row_gap_30 cs_gap_y_30">
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="cs_iconbox cs_style_2 cs_radius_15 cs_hover_layer_2">
-                        <div class="cs_iconbox_overlay cs_bg_filed"
-                            data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
-                        <div class="cs_iconbox_shape"></div>
-                        <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
-                            <div class="cs_iconbox_icon cs_center">
-                                <img src="{{ asset('Assets/User/assets/img/icons/service_icon_1.png') }}"
-                                    alt="Service Icon">
+                @if (!empty($services))
+                    @php
+                        $count = 00;
+                    @endphp
+                    @foreach ($services as $service)
+                        <div class="col-xl-3 col-lg-4 col-sm-6">
+                            <div class="cs_iconbox cs_style_2 cs_radius_15 cs_hover_layer_2">
+                                <div class="cs_iconbox_overlay cs_bg_filed"
+                                    data-src="{{ isset($service->thumbnail) && file_exists(public_path('Uploads/Service/' . $service->thumbnail))
+                                        ? asset('Uploads/Service/' . $service->thumbnail)
+                                        : asset('Assets/User/assets/img/service_bg.jpg') }}">
+                                </div>
+                                <div class="cs_iconbox_shape"></div>
+                                <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
+                                    <div class="cs_iconbox_icon cs_center">
+                                        @if (isset($service->icon_img) && file_exists(public_path('Uploads/Service/' . $service->icon_img)))
+                                            <img src="{{ asset('Uploads/Service/' . $service->icon_img) }}"
+                                                alt="Service Icon">
+                                        @else
+                                            <img src="{{ asset('Assets/User/assets/img/icons/service_icon_1.png') }}"
+                                                alt="Service Icon">
+                                        @endif
+
+
+                                    </div>
+                                    <h3 class="iconbox_index">0{{ ++$count }}</h3>
+                                </div>
+                                <h3 class="cs_iconbox_title"><a
+                                        href='service-details.html'>{{ ucwords($service->title) }}</a></h3>
+                                <p class="cs_iconbox_subtitle m-0">{{ ucwords($service->short_description) }}</p>
                             </div>
-                            <h3 class="iconbox_index">01</h3>
                         </div>
-                        <h3 class="cs_iconbox_title"><a href='service-details.html'>Pharmacology</a></h3>
-                        <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="cs_iconbox cs_style_2 cs_radius_15">
-                        <div class="cs_iconbox_overlay cs_bg_filed"
-                            data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
-                        <div class="cs_iconbox_shape"></div>
-                        <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
-                            <div class="cs_iconbox_icon cs_center">
-                                <img src="{{ asset('Assets/User/assets/img/icons/service_icon_2.png') }}"
-                                    alt="Service Icon">
-                            </div>
-                            <h3 class="iconbox_index">02</h3>
-                        </div>
-                        <h3 class="cs_iconbox_title"><a href='service-details.html'>Orthopedic</a></h3>
-                        <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="cs_iconbox cs_style_2 cs_radius_15">
-                        <div class="cs_iconbox_overlay cs_bg_filed"
-                            data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
-                        <div class="cs_iconbox_shape"></div>
-                        <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
-                            <div class="cs_iconbox_icon cs_center">
-                                <img src="{{ asset('Assets/User/assets/img/icons/service_icon_3.png') }}"
-                                    alt="Service Icon">
-                            </div>
-                            <h3 class="iconbox_index">03</h3>
-                        </div>
-                        <h3 class="cs_iconbox_title"><a href='service-details.html'>Hematology</a></h3>
-                        <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="cs_iconbox cs_style_2 cs_radius_15">
-                        <div class="cs_iconbox_overlay cs_bg_filed"
-                            data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
-                        <div class="cs_iconbox_shape"></div>
-                        <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
-                            <div class="cs_iconbox_icon cs_center">
-                                <img src="{{ asset('Assets/User/assets/img/icons/service_icon_4.png') }}"
-                                    alt="Service Icon">
-                            </div>
-                            <h3 class="iconbox_index">04</h3>
-                        </div>
-                        <h3 class="cs_iconbox_title"><a href='service-details.html'>Plastic Surgery</a></h3>
-                        <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="cs_iconbox cs_style_2 cs_radius_15">
-                        <div class="cs_iconbox_overlay cs_bg_filed"
-                            data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
-                        <div class="cs_iconbox_shape"></div>
-                        <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
-                            <div class="cs_iconbox_icon cs_center">
-                                <img src="{{ asset('Assets/User/assets/img/icons/service_icon_5.png') }}"
-                                    alt="Service Icon">
-                            </div>
-                            <h3 class="iconbox_index">05</h3>
-                        </div>
-                        <h3 class="cs_iconbox_title"><a href='service-details.html'>Neurology</a></h3>
-                        <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="cs_iconbox cs_style_2 cs_radius_15">
-                        <div class="cs_iconbox_overlay cs_bg_filed"
-                            data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
-                        <div class="cs_iconbox_shape"></div>
-                        <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
-                            <div class="cs_iconbox_icon cs_center">
-                                <img src="{{ asset('Assets/User/assets/img/icons/service_icon_6.png') }}"
-                                    alt="Service Icon">
-                            </div>
-                            <h3 class="iconbox_index">06</h3>
-                        </div>
-                        <h3 class="cs_iconbox_title"><a href='service-details.html'>Ophthalmology</a></h3>
-                        <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="cs_iconbox cs_style_2 cs_radius_15">
-                        <div class="cs_iconbox_overlay cs_bg_filed"
-                            data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
-                        <div class="cs_iconbox_shape"></div>
-                        <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
-                            <div class="cs_iconbox_icon cs_center">
-                                <img src="{{ asset('Assets/User/assets/img/icons/service_icon_7.png') }}"
-                                    alt="Service Icon">
-                            </div>
-                            <h3 class="iconbox_index">07</h3>
-                        </div>
-                        <h3 class="cs_iconbox_title"><a href='service-details.html'>Dental Care</a></h3>
-                        <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="cs_iconbox cs_style_2 cs_radius_15">
-                        <div class="cs_iconbox_overlay cs_bg_filed"
-                            data-src="{{ asset('Assets/User/assets/img/service_bg.jpg') }}"></div>
-                        <div class="cs_iconbox_shape"></div>
-                        <div class="cs_iconbox_header d-flex align-items-center justify-content-between">
-                            <div class="cs_iconbox_icon cs_center">
-                                <img src="{{ asset('Assets/User/assets/img/icons/service_icon_8.png') }}"
-                                    alt="Service Icon">
-                            </div>
-                            <h3 class="iconbox_index">08</h3>
-                        </div>
-                        <h3 class="cs_iconbox_title"><a href='service-details.html'>Cardiology</a></h3>
-                        <p class="cs_iconbox_subtitle m-0">Medical competitor research startup to financial</p>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
+
+
             </div>
 
             <div class="cs_height_120 cs_height_lg_80"></div>
@@ -1198,7 +1106,8 @@
                             @foreach ($blogs as $blog)
                                 <div class="cs_slide">
                                     <article class="cs_post cs_style_1">
-                                        <a class='cs_post_thumbnail position-relative' href='{{ route('User.blogDetail',$blog->slug) }}'>
+                                        <a class='cs_post_thumbnail position-relative'
+                                            href='{{ route('User.blogDetail', $blog->slug) }}'>
                                             @if (isset($blog->thumbnail) && file_exists(public_path('Uploads/Blog/' . $blog->thumbnail)))
                                                 <img src="{{ asset('Uploads/Blog/' . $blog->thumbnail) }}"
                                                     alt="blog-thumbnail">
@@ -1224,9 +1133,10 @@
                                                 </div>
                                             </div>
                                             <h3 class="cs_post_title"><a
-                                                    href='{{ route('User.blogDetail',$blog->slug) }}'>{{ ucwords($blog->title) }}</a></h3>
+                                                    href='{{ route('User.blogDetail', $blog->slug) }}'>{{ ucwords($blog->title) }}</a>
+                                            </h3>
                                             <p class="cs_post_subtitle">{{ ucwords($blog->short_description) }}.</p>
-                                            <a class='cs_post_btn' href='{{ route('User.blogDetail',$blog->slug) }}'>
+                                            <a class='cs_post_btn' href='{{ route('User.blogDetail', $blog->slug) }}'>
                                                 <span>Read More</span>
                                                 <span><i class="fa-solid fa-angle-right"></i></span>
                                             </a>

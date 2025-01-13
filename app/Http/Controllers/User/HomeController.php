@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Service;
 use App\Models\Blog;
+use App\Models\BlogComment;
 use App\Models\Doctor\DoctorWorkingTime;
 use App\Models\DoctorProfile;
 use Illuminate\Http\Request;
@@ -17,7 +19,10 @@ class HomeController extends Controller
 
         $blogs = Blog::where('status','active')->where('IsHome','yes')->get();
 
-        return view('User.index',compact('doctors','blogs'));
+        $services = Service::where('status','active')->where('IsHome','yes')->get();
+
+
+        return view('User.index',compact('doctors','blogs','services'));
     }
 
 
@@ -48,12 +53,17 @@ class HomeController extends Controller
 
         $RecentBlogs = Blog::where('status','active')->latest()->limit(3)->get();
 
+        $blogComment = BlogComment::where('blog_id',$blog->id)->where('status','active')->with('user')->get();
+
+
+        $blog->increment('IsRead');
+
         if($blog == null){
 
             return redirect()->route('User.error');
         }
 
-        return view('User.blog-detail',compact('blog','RecentBlogs'));
+        return view('User.blog-detail',compact('blog','RecentBlogs','blogComment'));
     }
 
     public function blog(){

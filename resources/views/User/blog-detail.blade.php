@@ -40,43 +40,39 @@
                         <div class="cs_height_47 cs_height_lg_30"></div>
 
                         <div class="cs_height_70 cs_height_lg_40"></div>
-                        <h2 class="cs_reply_title mb-0">Comments (3)</h2>
+                        <h2 class="cs_reply_title mb-0">Comments ({{ $blogComment->count() }})</h2>
                         <ul class="cs_comment_list cs_mp0">
-                            <li class="cs_comment_body">
-                                <div class="cs_comment_thumbnail">
-                                    <img src="{{ asset('Assets/User/assets/img/avatar_2.png') }}" alt="Image"
-                                        class="cs_radius_5">
-                                </div>
-                                <div class="cs_comment_info">
-                                    <h3>Dr. Barat Mara</h3>
-                                    <p>Lorem ipsum is simply free textdolor sit amet, consectetur notted adipisicing elit
-                                        sed do iusmod
-                                        tempor incididu.</p>
-                                    <div class="cs_comment_meta_wrapper">
-                                        <div class="cs_comment_date"><span>June 14, 2023</span><span>12:00 AM</span></div>
-                                        <a href="#" class="cs_reply_btn cs_accent_color">Reply</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="cs_comment_body">
-                                <div class="cs_comment_thumbnail">
-                                    <img src="{{ asset('Assets/User/assets/img/avatar_3.png') }}" alt="Image"
-                                        class="cs_radius_5">
-                                </div>
-                                <div class="cs_comment_info">
-                                    <h3>Dr. Morat Kara</h3>
-                                    <p>Lorem ipsum is simply free textdolor sit amet, consectetur notted adipisicing elit
-                                        sed do iusmod
-                                        tempor incididu.</p>
-                                    <div class="cs_comment_meta_wrapper">
-                                        <div class="cs_comment_date"><span>June 14, 2023</span><span>12:00 AM</span></div>
-                                        <a href="#" class="cs_reply_btn cs_accent_color">Reply</a>
-                                    </div>
-                                </div>
-                            </li>
+                            @if (!empty($blogComment))
+                                @foreach ($blogComment as $Comment)
+                                    <li class="cs_comment_body">
+                                        <div class="cs_comment_thumbnail">
+                                            @if (isset($Comment->user->profile_photo_path) &&
+                                                    file_exists(public_path('Uploads/Patient/Profile/' . $Comment->user->profile_photo_path)))
+                                                <img src="{{ asset('Uploads/Patient/Profile/' . $Comment->user->profile_photo_path) }}"
+                                                    alt="Awesome Image" class="cs_radius_5">
+                                            @else
+                                                <img src="{{ asset('Assets/Dashboard/assets/images/blog/blog-page-3.jpg') }}"
+                                                    alt="Awesome Image" class="cs_radius_5">
+                                            @endif
+                                           
+                                        </div>
+                                        <div class="cs_comment_info">
+                                            <h3>{{ ucwords($Comment->name) }}</h3>
+                                            <p>{{ ucwords($Comment->comment) }}.</p>
+                                            <div class="cs_comment_meta_wrapper">
+                                                <div class="cs_comment_date">
+                                                    <span>{{ \Carbon\Carbon::parse($Comment->created_at)->format('M d, Y') }}</span><span> {{ \Carbon\Carbon::parse($Comment->created_at)->format('g:i A') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
+
+
                         </ul>
                         <div class="cs_height_90 cs_height_lg_60"></div>
-                        <h2 class="cs_reply_heading">Make an Appointment</h2>
+                        <h2 class="cs_reply_heading">Get a Comment</h2>
                         <form class="cs_reply_form row cs_row_gap_30 cs_gap_y_30" id="CommentForm" name="CommentForm">
                             <input type="hidden" name="blog_id" id="blog_id" value="{{ $blog->id }}">
                             <div class="col-md-6">
@@ -186,23 +182,23 @@
 
                     } else {
 
-                        if(response['isError'] == true){
+                        if (response['isError'] == true) {
 
                             const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response['error'],
-                        });
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
 
                         }
                         var errors = response['errors'];

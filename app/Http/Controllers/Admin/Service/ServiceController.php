@@ -290,7 +290,7 @@ class ServiceController extends Controller
 
               }
 
-              if($request->icon_img != null){
+              if($request->icon_img != null && $request->icon_img != $service->id){
 
                 $Imageid = $request->icon_img;
                 $temp = TempImage::find($Imageid);

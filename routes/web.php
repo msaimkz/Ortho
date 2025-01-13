@@ -146,6 +146,8 @@ Route::get('/Ortho/Admin/All-NewsLetter-Emails',[NewsLetterController::class,'in
 Route::post('Ortho/Admin/Store-Blog',[BlogController::class,'store'])->name('Store-Blog');
 Route::post('Ortho/Admin/Update-Blog/{id}',[BlogController::class,'update'])->name('Update-Blog');
 Route::delete('Ortho/Admin/Delete-Blog',[BlogController::class,'delete'])->name('Delete-Blog');
+Route::post('Ortho/Admin/Change-Blog-Comment-Status',[BlogController::class,'BlogCommentStatus'])->name('Blog.comment.status');
+Route::delete('Ortho/Admin/Delete-Blog-Comment',[BlogController::class,'BlogCommentDelete'])->name('Blog.comment.delete');
 
 
 // Doctor Dashboard Routes
