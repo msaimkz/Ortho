@@ -14,6 +14,7 @@ use App\Models\Blog;
 use App\Models\User;
 use App\Models\TempImage;
 use App\Jobs\SendEmailsToNewsletterSubscribers;
+use App\Models\BlogComment;
 use App\Models\NewsletterEmail;
 
 
@@ -326,5 +327,58 @@ class BlogController extends Controller
             'id' => $request->id,
             'msg' => 'Blog Deleted Succesfully',
         ]);
+    }
+
+    public function StoreBlogComment(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'name' => ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
+            'email' => ['required','email','max:30'],
+            'comment' => ['required','min:10'],
+            'blog_id' => ['required','numeric']
+         ]);
+
+         if($validator->passes()){
+
+            if(Auth::check() == false){
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => "Access Denied: Please log in to your account to continue"
+                ]);
+            }
+
+            $blog = Blog::find($request->blog_id);
+
+            if($blog == null){
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => "Blog Not Found"
+                ]);
+            }
+
+            $BLogComment = New BlogComment();
+            $BLogComment->user_id = Auth::user()->id;
+            $BLogComment->blog_id = $request->blog_id;
+            $BLogComment->name = $request->name;
+            $BLogComment->email = $request->email;
+            $BLogComment->comment = $request->comment;
+            $BLogComment->save();
+
+            return response()->json([
+                'status' => true,
+                'msg' => 'Thank you! Your Comment has been successfully sent. We will get back to you shortly'
+            ]);
+         }
+         else{
+
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors(),
+            ]);
+         }
     }
 }

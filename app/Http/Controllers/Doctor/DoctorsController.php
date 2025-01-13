@@ -182,7 +182,7 @@ class DoctorsController extends Controller
 
             $manager = new ImageManager(new Driver());
             $ImageManager = $manager->read($sPath);
-            $ImageManager->cover(300, 300);
+            $ImageManager->cover(380, 520);
             $ImageManager->save($dPath);
 
 

@@ -220,7 +220,7 @@ class CourseController extends Controller
 
              $oldImgName =  $course->thumbnail;
 
-              if($request->thumbnail != null){
+              if($request->thumbnail != null && $request->thumbnail != $course->id){
 
                 $Imageid = $request->thumbnail;
                 $temp = TempImage::find($Imageid);
@@ -290,7 +290,7 @@ class CourseController extends Controller
     
     
                   
-                  SendEmailsToNewsletterSubscribers::dispatch($users, 'Course', $course->title);
+                //   SendEmailsToNewsletterSubscribers::dispatch($users, 'Course', $course->title);
             }
 
             return response()->json([

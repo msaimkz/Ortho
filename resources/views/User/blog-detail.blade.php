@@ -77,35 +77,27 @@
                         </ul>
                         <div class="cs_height_90 cs_height_lg_60"></div>
                         <h2 class="cs_reply_heading">Make an Appointment</h2>
-                        <form class="cs_reply_form row cs_row_gap_30 cs_gap_y_30" id="comment">
+                        <form class="cs_reply_form row cs_row_gap_30 cs_gap_y_30" id="CommentForm" name="CommentForm">
+                            <input type="hidden" name="blog_id" id="blog_id" value="{{ $blog->id }}">
                             <div class="col-md-6">
-                                <input type="text" name="name" placeholder="Your Name" class="cs_form_field">
+                                <input type="text" name="name" id="name" placeholder="Your Name"
+                                    class="cs_form_field">
+                                <span class="text-danger"></span>
+
                             </div>
                             <div class="col-md-6">
-                                <input type="email" name="email" placeholder="Your Email" class="cs_form_field">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" name="phone" placeholder="Your Phone" class="cs_form_field">
-                            </div>
-                            <div class="col-md-6">
-                                <select class="cs_form_field" name="survice">
-                                    <option value="choose-service">Choose Service</option>
-                                    <option value="crutches">Crutches</option>
-                                    <option value="x-Ray">X-Ray</option>
-                                    <option value="pulmonary">Pulmonary</option>
-                                    <option value="cardiology">Cardiology</option>
-                                    <option value="dental-care">Dental Care</option>
-                                    <option value="neurology">Neurology</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" name="address" placeholder="Office Address" class="cs_form_field">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="date" name="date" class="cs_form_field">
+                                <input type="email" name="email" id="email" placeholder="Your Email"
+                                    class="cs_form_field">
+                                <span class="text-danger"></span>
+
                             </div>
                             <div class="col-md-12">
-                                <button type="submit" class="cs_btn cs_style_1 cs_color_1">Contact Now</button>
+                                <textarea name="comment" class="cs_form_field" id="comment" cols="10" rows="3"
+                                    placeholder="Give your Comment"></textarea>
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="cs_btn cs_style_1 cs_color_1">Submit Now</button>
                             </div>
                         </form>
                     </div>
@@ -120,7 +112,7 @@
                             @if (!empty($RecentBlogs))
                                 @foreach ($RecentBlogs as $RecentBlog)
                                     <div class="cs_post cs_style_2">
-                                        <a href="{{ route('User.blogDetail',$RecentBlog->slug) }}"
+                                        <a href="{{ route('User.blogDetail', $RecentBlog->slug) }}"
                                             class="cs_post_thumb_thumbnail cs_type_2 cs_zoom">
                                             @if (isset($RecentBlog->thumbnail) && file_exists(public_path('Uploads/Blog/' . $RecentBlog->thumbnail)))
                                                 <img src="{{ asset('Uploads/Blog/' . $RecentBlog->thumbnail) }}"
@@ -129,20 +121,20 @@
                                                 <img src="{{ asset('Assets/User/assets/img/post_4.jpg') }}"
                                                     alt="blog-thumbnail" class="cs_zoom_in">
                                             @endif
-                                            
+
                                         </a>
                                         <div class="cs_post_info">
                                             <div class="cs_post_meta"><i class="fa-regular fa-calendar-days"></i>
                                                 {{ \Carbon\Carbon::parse($RecentBlog->created_at)->format('M-d-Y') }}</div>
                                             <h3 class="cs_post_title mb-0"><a
-                                                    href='{{ route('User.blogDetail',$RecentBlog->slug) }}'>{{ ucwords($RecentBlog->title) }}.</a>
+                                                    href='{{ route('User.blogDetail', $RecentBlog->slug) }}'>{{ ucwords($RecentBlog->title) }}.</a>
                                             </h3>
                                         </div>
                                     </div>
                                 @endforeach
                             @endif
 
-                        
+
                         </div>
 
 
@@ -153,4 +145,83 @@
         <div class="cs_height_120 cs_height_lg_80"></div>
     </section>
     <!-- End Blog Details Section -->
+@endsection
+
+@section('js')
+    <script>
+        $('#CommentForm').submit(function(event) {
+            event.preventDefault();
+            var element = $(this);
+            $('button[type=submit]').prop('disabled', true)
+
+            $.ajax({
+                url: "{{ route('User.blog.comment.store') }}",
+                type: "post",
+                data: element.serializeArray(),
+                dataType: "json",
+                success: function(response) {
+                    $('button[type=submit]').prop('disabled', false)
+
+                    if (response['status'] == true) {
+
+                        $('#CommentForm')[0].reset();
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('span.text-danger').html('');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+
+
+                    } else {
+
+                        if(response['isError'] == true){
+
+                            const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['error'],
+                        });
+
+                        }
+                        var errors = response['errors'];
+
+
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('span.text-danger').html('');
+
+
+                        $.each(errors, function(key, value) {
+                            var field = $('#' + key);
+                            if (field.length) {
+                                field.addClass('is-invalid').siblings('span.text-danger')
+                                    .html(value);
+                            }
+                        });
+                    }
+                }
+            })
+        })
+    </script>
 @endsection
