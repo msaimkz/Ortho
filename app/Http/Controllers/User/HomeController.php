@@ -20,9 +20,10 @@ class HomeController extends Controller
         $blogs = Blog::where('status','active')->where('IsHome','yes')->get();
 
         $services = Service::where('status','active')->where('IsHome','yes')->get();
+        $bestServices = Service::where('status','active')->limit(4)->get();
 
 
-        return view('User.index',compact('doctors','blogs','services'));
+        return view('User.index',compact('doctors','blogs','services','bestServices'));
     }
 
 
@@ -39,12 +40,25 @@ class HomeController extends Controller
 
     public function service(){
 
-        return view('User.servive');
+        $services = Service::where('status','active')->get();
+
+
+        return view('User.servive',compact('services'));
     }
 
-    public function serviceDetail(){
+    public function serviceDetail(string $slug)
+    {
 
-        return view('User.service-detail');
+        $service = Service::where('slug',$slug)->first();
+        $serviceLists = Service::where('status','active')->limit(5)->get();
+        $BestServices = Service::where('status','active')->latest()->limit(2)->get();
+
+        if($service == null){
+
+            return redirect()->route('User.error');
+        }
+
+        return view('User.service-detail',compact('service','BestServices','serviceLists'));
     }
 
     public function blogDetail(string $slug){

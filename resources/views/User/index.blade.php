@@ -378,7 +378,8 @@
                                     <h3 class="iconbox_index">0{{ ++$count }}</h3>
                                 </div>
                                 <h3 class="cs_iconbox_title"><a
-                                        href='service-details.html'>{{ ucwords($service->title) }}</a></h3>
+                                        href='{{ route('User.serviceDetail', $service->slug) }}'>{{ ucwords($service->title) }}</a>
+                                </h3>
                                 <p class="cs_iconbox_subtitle m-0">{{ ucwords($service->short_description) }}</p>
                             </div>
                         </div>
@@ -878,205 +879,66 @@
             <div class="cs_height_50 cs_height_lg_50"></div>
             <div class="cs_tabs">
                 <ul class="cs_tab_links cs_style_1 cs_bold">
-                    <li class="active">
-                        <a href="#brain_althim">
-                            <span class="cs_tab_link_icon cs_center"><img
-                                    src="{{ asset('Assets/User/assets/img/icons/tab_link_icon_1.png') }}"
-                                    alt="Icon"></span>
-                            <span>Modern Technology</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#emergency">
-                            <span class="cs_tab_link_icon cs_center"><img
-                                    src="{{ asset('Assets/User/assets/img/icons/tab_link_icon_2.png') }}"
-                                    alt="Icon"></span>
-                            <span>Success of Treatment</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#heart_beat">
-                            <span class="cs_tab_link_icon cs_center"><img
-                                    src="{{ asset('Assets/User/assets/img/icons/tab_link_icon_3.png') }}"
-                                    alt="Icon"></span>
-                            <span>Certified Doctors</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#blood_test">
-                            <span class="cs_tab_link_icon cs_center"><img
-                                    src="{{ asset('Assets/User/assets/img/icons/tab_link_icon_4.png') }}"
-                                    alt="Icon"></span>
-                            <span>Medical Advice</span>
-                        </a>
-                    </li>
+                    @if (!empty($bestServices))
+                        @php
+                            $counts = 0;
+                        @endphp
+                        @foreach ($bestServices as $bestService)
+                            <li class="{{ ++$counts == 1 ? 'active' : '' }}">
+                                <a href="#{{ str_replace([' ', '-'], '_', $bestService->slug) }}">
+                                    <span class="cs_tab_link_icon cs_center"></span>
+                                    <span>{{ ucwords($bestService->title) }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
+
+
                 </ul>
                 <div class="cs_height_50 cs_height_lg_50"></div>
                 <div class="tab-content">
-                    <div id="brain_althim" class="cs_tab active">
-                        <div class="cs_card cs_style_2">
-                            <div class="row cs_gap_y_30 align-items-xl-center">
-                                <div class="col-lg-6">
-                                    <div class="cs_card_thumb cs_radius_5">
-                                        <img src="{{ asset('Assets/User/assets/img/offerings03.jpg') }}"
-                                            alt="Department Image">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="cs_card_text">
-                                        <h2 class="cs_card_title">We are here to hear and heal your</h2>
-                                        <p class="cs_card_subtitle">We are privileged to work with hundreds of
-                                            future-thinking medial, including many of the world’s top hardware, software,
-                                            and brands , feel safe and comfortable in establishing.
-                                        </p>
-                                        <ul class="cs_list cs_style_1 cs_mp0">
-                                            <li>
-                                                <i><img src="{{ asset('Assets/User/assets/img/icons/check_icon_1.png') }}"
-                                                        alt="Icon"></i>
-                                                Medical sint occaecat cupidatat non proident, sunt in culpa officia deserunt
-                                                mollit anim id est laborum.
-                                            </li>
-                                            <li>
-                                                <i><img src="{{ asset('Assets/User/assets/img/icons/check_icon_1.png') }}"
-                                                        alt="Icon"></i>
-                                                We are occaecat cupidatat non proident, sunt in culpa officia deserunt
-                                                mollit anim id est healty.
-                                            </li>
+                    @if (!empty($bestServices))
+                        @php
+                            $tabCount = 0;
+                        @endphp
+                        @foreach ($bestServices as $bestService)
+                            <div id="{{ str_replace([' ', '-'], '_', $bestService->slug) }}"
+                                class="cs_tab {{ ++$tabCount == 1 ? 'active' : '' }}">
+                                <div class="cs_card cs_style_2">
+                                    <div class="row cs_gap_y_30 align-items-xl-center">
+                                        <div class="col-lg-6">
+                                            <div class="cs_card_thumb cs_radius_5">
+                                                @if (isset($bestService->thumbnail) && file_exists(public_path('Uploads/Service/thumbnail/Small/' . $bestService->thumbnail)))
+                                                    <img src="{{ asset('Uploads/Service/thumbnail/Small/' . $bestService->thumbnail) }}"
+                                                        alt="Service Icon">
+                                                @else
+                                                    <img src="{{ asset('Assets/User/assets/img/offerings03.jpg') }}"
+                                                        alt="Service Icon">
+                                                @endif
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="cs_card_text">
+                                                <h2 class="cs_card_title">{{ ucwords($bestService->title) }}</h2>
+                                                <p class="cs_card_subtitle">{{ ucwords($bestService->description) }}</p>
 
-                                        </ul>
 
-                                        <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
-                                            <span>Read More </span>
-                                            <i class="fa-solid fa-angles-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="emergency" class="cs_tab">
-                        <div class="cs_card cs_style_2">
-                            <div class="row cs_gap_y_30 align-items-xl-center">
-                                <div class="col-lg-6">
-                                    <div class="cs_card_thumb cs_radius_5">
-                                        <img src="{{ asset('Assets/User/assets/img/offerings02.jpg') }}"
-                                            alt="Department Image">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="cs_card_text">
-                                        <h2 class="cs_card_title">Treatment patients in primary care</h2>
-                                        <p class="cs_card_subtitle">We are privileged to work with hundreds of
-                                            future-thinking medial, including many of the world’s top hardware, software,
-                                            and brands.
-                                        </p>
-                                        <ul class="cs_list cs_style_1 cs_mp0">
-                                            <li>
-                                                <i><img src="{{ asset('Assets/User/assets/img/icons/check_icon_1.png') }}"
-                                                        alt="Icon"></i>
-                                                Medical sint occaecat cupidatat non proident, sunt in culpa officia deserunt
-                                                mollit anim id est laborum.
-                                            </li>
-                                            <li>
-                                                <i><img src="{{ asset('Assets/User/assets/img/icons/check_icon_1.png') }}"
-                                                        alt="Icon"></i>
-                                                We are occaecat cupidatat non proident, sunt in culpa officia deserunt
-                                                mollit anim id est healty.
-                                            </li>
-
-                                        </ul>
-
-                                        <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
-                                            <span>Read More </span>
-                                            <i class="fa-solid fa-angles-right"></i>
-                                        </a>
+                                                <a class='cs_btn cs_style_1 cs_color_1'
+                                                    href='{{ route('User.serviceDetail', $bestService->slug) }}'>
+                                                    <span>Read More </span>
+                                                    <i class="fa-solid fa-angles-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="heart_beat" class="cs_tab">
-                        <div class="cs_card cs_style_2">
-                            <div class="row cs_gap_y_30 align-items-xl-center">
-                                <div class="col-lg-6">
-                                    <div class="cs_card_thumb cs_radius_5">
-                                        <img src="{{ asset('Assets/User/assets/img/offerings01.jpg') }}"
-                                            alt="Department Image">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="cs_card_text">
-                                        <h2 class="cs_card_title">Accreditation within a given specialty</h2>
-                                        <p class="cs_card_subtitle">We are privileged to work with hundreds of
-                                            future-thinking medial, including many of the world’s top hardware, software,
-                                            and brands , feel safe and comfortable in establishing.
-                                        </p>
-                                        <ul class="cs_list cs_style_1 cs_mp0">
-                                            <li>
-                                                <i><img src="{{ asset('Assets/User/assets/img/icons/check_icon_1.png') }}"
-                                                        alt="Icon"></i>
-                                                Medical sint occaecat cupidatat non proident, sunt in culpa officia deserunt
-                                                mollit anim id est laborum.
-                                            </li>
-                                            <li>
-                                                <i><img src="{{ asset('Assets/User/assets/img/icons/check_icon_1.png') }}"
-                                                        alt="Icon"></i>
-                                                We are occaecat cupidatat non proident, sunt in culpa officia deserunt
-                                                mollit anim id est healty.
-                                            </li>
+                        @endforeach
+                    @endif
 
-                                        </ul>
 
-                                        <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
-                                            <span>Read More </span>
-                                            <i class="fa-solid fa-angles-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="blood_test" class="cs_tab">
-                        <div class="cs_card cs_style_2">
-                            <div class="row cs_gap_y_30 align-items-xl-center">
-                                <div class="col-lg-6">
-                                    <div class="cs_card_thumb cs_radius_5">
-                                        <img src="{{ asset('Assets/User/assets/img/offerings04.jpg') }}"
-                                            alt="Department Image">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="cs_card_text">
-                                        <h2 class="cs_card_title">Better Health While Aging health</h2>
-                                        <p class="cs_card_subtitle">We are privileged to work with hundreds of
-                                            future-thinking medial, including many of the world’s top hardware, software,
-                                            and brands , feel safe and comfortable in establishing.
-                                        </p>
-                                        <ul class="cs_list cs_style_1 cs_mp0">
-                                            <li>
-                                                <i><img src="{{ asset('Assets/User/assets/img/icons/check_icon_1.png') }}"
-                                                        alt="Icon"></i>
-                                                Medical sint occaecat cupidatat non proident, sunt in culpa officia deserunt
-                                                mollit anim id est laborum.
-                                            </li>
-                                            <li>
-                                                <i><img src="{{ asset('Assets/User/assets/img/icons/check_icon_1.png') }}"
-                                                        alt="Icon"></i>
-                                                We are occaecat cupidatat non proident, sunt in culpa officia deserunt
-                                                mollit anim id est healty.
-                                            </li>
 
-                                        </ul>
-
-                                        <a class='cs_btn cs_style_1 cs_color_1' href='{{ route('User.contact') }}'>
-                                            <span>Read More </span>
-                                            <i class="fa-solid fa-angles-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

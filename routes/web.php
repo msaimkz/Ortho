@@ -46,7 +46,7 @@ Route::get('/Ortho/Our-Projects',[HomeController::class,'project'])->name('User.
 Route::get('/Ortho/Our-TimeTable',[HomeController::class,'timetable'])->name('User.timetable');
 Route::get('/Ortho/Blog-Detail/{slug}',[HomeController::class,'blogDetail'])->name('User.blogDetail');
 Route::get('/Ortho/Doctor-Detail/{id}',[HomeController::class,'DoctorDetail'])->name('User.DoctorDetail');
-Route::get('/Ortho/Service-Detail',[HomeController::class,'serviceDetail'])->name('User.serviceDetail');
+Route::get('/Ortho/Service-Detail/{slug}',[HomeController::class,'serviceDetail'])->name('User.serviceDetail');
 Route::get('/Ortho/404',[HomeController::class,'error'])->name('User.error');
 Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');
 Route::get('/Ortho/Doctor-Registration',[HomeController::class,'DoctorRegistration'])->name('User.doctorRegiestraion');
