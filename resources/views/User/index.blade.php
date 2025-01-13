@@ -596,18 +596,13 @@
             <div class="cs_section_heading cs_style_1 cs_type_1">
                 <div class="cs_section_heading_left">
                     <p class="cs_section_subtitle cs_accent_color wow fadeInLeft" data-wow-duration="0.9s"
-                        data-wow-delay="0.25s"><span class="cs_shape_left"></span>OUR PORTFOLIO</p>
+                        data-wow-delay="0.25s"><span class="cs_shape_left"></span>OUR COURSES</p>
                     <h2 class="cs_section_title">All The Great Work That We Done</h2>
                 </div>
                 <div class="cs_section_heading_right">
                     <p class="mb-0">We are privileged to work with hundreds of future-thinking medial,including many of
                         the world’s top hardware, software, and brands , feel safe and comfortable in establishing.</p>
-                    <ul class="cs_tab_links cs_style_3 cs_mp_0">
-                        <li class="active"><a href="#dental">Dental</a></li>
-                        <li><a href="#cardiology">Cardiology</a></li>
-                        <li><a href="#neurology">Neurology</a></li>
-                        <li><a href="#medical">Medical</a></li>
-                    </ul>
+
                 </div>
             </div>
             <div class="cs_height_50 cs_height_lg_50"></div>
@@ -615,212 +610,43 @@
         <div class="cs_tab_body">
             <div class="container-fluide cs_tab active" id="dental">
                 <div class="row cs_gap_y_30">
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_1.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Medical Of Working</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
+                    @if (!empty($courses))
+                        @php
+                            $courseCount = 0;
+                        @endphp
+                        @foreach ($courses as $course)
+                            <div class="col-lg-4">
+                                <div class="cs_card cs_style_1">
+                                    <a href="{{ route('User.CourseDetail',$course->slug) }}" class="cs_card_thumbnail d-block">
+                                        @if (isset($course->thumbnail) &&
+                                                file_exists(public_path('Uploads/Course/thumbnail/Small/' . $course->thumbnail)))
+                                            <img src="{{ asset('Uploads/Course/thumbnail/Small/' . $course->thumbnail) }}"
+                                                alt="Course Thumbnail" class="w-100">
+                                        @else
+                                            <img src="{{ asset('Assets/User/assets/img/project_1.jpg') }}"
+                                                alt="Course Thumbnail" class="w-100">
+                                        @endif
+
+
+                                    </a>
+                                    <div class="cs_card_info_wrapper">
+                                        <div class="cs_card_text">
+                                            <h3 class="cs_card_title"><a href="{{ route('User.CourseDetail',$course->slug) }}">{{ ucwords($course->title) }}</a>
+                                            </h3>
+                                            <p class="cs_card_subtitle mb-0">{{ ucwords($course->description) }}.</p>
+                                            <p class="cs_card_subtitle mb-0"><strong>Price: ${{ number_format($course->price,2) }}</strong>.</p>
+                                        </div>
+                                        <div class="cs_card_index cs_center rounded-circle">0{{ ++$courseCount }}</div>
+                                    </div>
                                 </div>
-                                <div class="cs_card_index cs_center rounded-circle">01</div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_2.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Medical Of Dental</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">02</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_3.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Laboratory Technologist</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">03</div>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endif
+
+
                 </div>
             </div>
-            <div class="container-fluide cs_tab" id="cardiology">
-                <div class="row cs_gap_y_30">
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_3.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Laboratory Technologist</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">03</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_1.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Medical Of Working</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">01</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_2.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Medical Of Dental</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">02</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluide cs_tab" id="neurology">
-                <div class="row cs_gap_y_30">
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_2.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Medical Of Dental</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">02</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_3.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Laboratory Technologist</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">03</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_1.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Medical Of Working</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">01</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluide cs_tab" id="medical">
-                <div class="row cs_gap_y_30">
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_3.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Laboratory Technologist</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">03</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_2.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Medical Of Dental</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">02</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="cs_card cs_style_1">
-                            <a href="#" class="cs_card_thumbnail d-block">
-                                <img src="{{ asset('Assets/User/assets/img/project_1.jpg') }}" alt="Project Image"
-                                    class="w-100">
-                            </a>
-                            <div class="cs_card_info_wrapper">
-                                <div class="cs_card_text">
-                                    <h3 class="cs_card_title"><a href="#">Medical Of Working</a></h3>
-                                    <p class="cs_card_subtitle mb-0">We businesss standard chunk of Ipsum used since is
-                                        Agency & Star tup.</p>
-                                </div>
-                                <div class="cs_card_index cs_center rounded-circle">01</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <div class="cs_height_90 cs_height_lg_50"></div>
         <hr>
@@ -908,14 +734,15 @@
                                     <div class="row cs_gap_y_30 align-items-xl-center">
                                         <div class="col-lg-6">
                                             <div class="cs_card_thumb cs_radius_5">
-                                                @if (isset($bestService->thumbnail) && file_exists(public_path('Uploads/Service/thumbnail/Small/' . $bestService->thumbnail)))
+                                                @if (isset($bestService->thumbnail) &&
+                                                        file_exists(public_path('Uploads/Service/thumbnail/Small/' . $bestService->thumbnail)))
                                                     <img src="{{ asset('Uploads/Service/thumbnail/Small/' . $bestService->thumbnail) }}"
                                                         alt="Service Icon">
                                                 @else
                                                     <img src="{{ asset('Assets/User/assets/img/offerings03.jpg') }}"
                                                         alt="Service Icon">
                                                 @endif
-                                                
+
                                             </div>
                                         </div>
                                         <div class="col-lg-6">

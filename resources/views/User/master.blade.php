@@ -99,7 +99,7 @@
                                     <ul>
                                         <li><a href='{{ route('User.doctor') }}'>Doctors</a></li>
                                         <li><a href='{{ route('User.timetable') }}'>Timetable</a></li>
-                                        <li><a href='{{ route('User.project') }}'>Projects</a></li>
+                                        <li><a href='{{ route('User.project') }}'>Courses</a></li>
                                     </ul>
                                 </li>
                                 <li><a href='{{ route('User.contact') }}'>Contact</a></li>
@@ -176,9 +176,9 @@
                     <div class="cs_footer_widget">
                         <h2 class="cs_footer_widget_title">Quick Link</h2>
                         <ul class="cs_footer_widget_nav_list cs_mp_0">
-                            <li><a href="#">FAQs</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Contact Information</a></li>
+                            <li><a href="{{ route('User.faq') }}">FAQs</a></li>
+                            <li><a href="{{ route('User.privacy') }}">Privacy Policy</a></li>
+                            <li><a href="{{ route('User.contact') }}">Contact Information</a></li>
                         </ul>
                     </div>
                 </div>

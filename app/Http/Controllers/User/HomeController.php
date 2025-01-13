@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Course;
+use App\Models\Admin\Faq;
 use App\Models\Admin\Service;
 use App\Models\Blog;
 use App\Models\BlogComment;
@@ -22,14 +24,19 @@ class HomeController extends Controller
         $services = Service::where('status','active')->where('IsHome','yes')->get();
         $bestServices = Service::where('status','active')->limit(4)->get();
 
+        $courses = Course::where('status','active')->where('IsHome','yes')->get();
 
-        return view('User.index',compact('doctors','blogs','services','bestServices'));
+
+        return view('User.index',compact('doctors','blogs','services','bestServices','courses'));
     }
 
 
     public function about(){
 
-        return view('User.about');
+        $doctors = DoctorProfile::where('status','active')->where('DoctorStatus','active')->get();
+
+
+        return view('User.about',compact('doctors'));
     }
 
 
@@ -89,7 +96,10 @@ class HomeController extends Controller
 
     public function doctor(){
 
-        return view('User.doctor');
+        $doctors = DoctorProfile::where('status','active')->where('DoctorStatus','active')->get();
+
+
+        return view('User.doctor',compact('doctors'));
     }
 
     public function doctorDetail(string $id){
@@ -106,7 +116,22 @@ class HomeController extends Controller
 
     public function project(){
 
-        return view('User.project');
+        $courses = Course::where('status','active')->get();
+
+        return view('User.project',compact('courses'));
+    }
+
+    public function CourseDetail(string $slug){
+
+        $course = Course::where('slug',$slug)->first();
+
+        if($course == null){
+
+            return redirect()->route('User.error');
+        }
+
+        return view('User.CourseDetail',compact('course'));
+
     }
 
     public function timetable(){
@@ -145,5 +170,17 @@ class HomeController extends Controller
         }
 
         return view('User.doctor-regiestraion');
+    }
+
+    public function faq(){
+
+        $faqs = Faq::where('status','visible')->get();
+
+        return view('User.faq',compact('faqs'));
+    }
+
+    public function privacy(){
+
+        return view('User.privacy');
     }
 }
