@@ -11,6 +11,10 @@ class UserAuthController extends Controller
     public function statusblockError(){
         return view('error.account');
     }
+    public function accessBlock(){
+
+        return view('error.access');
+    }
 
     public function index(){
         if(Auth::user()->status != 'active'){

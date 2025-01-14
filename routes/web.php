@@ -51,15 +51,12 @@ Route::get('/Ortho/Course-Detail/{slug}',[HomeController::class,'CourseDetail'])
 Route::get('/Ortho/FAQs',[HomeController::class,'faq'])->name('User.faq');
 Route::get('/Ortho/Privacy-Policy',[HomeController::class,'privacy'])->name('User.privacy');
 Route::get('/Ortho/404',[HomeController::class,'error'])->name('User.error');
-Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');
-Route::get('/Ortho/Doctor-Registration',[HomeController::class,'DoctorRegistration'])->name('User.doctorRegiestraion');
-Route::post('/Ortho/Send-Doctor-Registration-Request',[DoctorController::class,'DoctorRegiestration'])->name('User.DoctorRegiestrationRequest');
-Route::post('/Ortho/Get-Doctor-Appoinment-Time',[AppoinmentController::class,'GetTime'])->name('User.appoinment.GetTime');
-Route::post('/Ortho/Book-Doctor-Appoinment',[AppoinmentController::class,'Store'])->name('User.appoinment.book');
+
 
 
 
 // User Dashboard Routes
+Route::middleware(['auth','patient'])->group(function(){
 
 Route::get('/Ortho/Dashboard',[DashboardController::class,'dashboard'])->name('User.dashboard.dashboard');
 Route::get('/Ortho/Dashboard/My-Profile',[DashboardController::class,'profile'])->name('User.dashboard.profile');
@@ -74,11 +71,17 @@ Route::post('/Ortho/Change-Password',[DashboardController::class,'ChangePassword
 Route::get('/Ortho/404-Not-Found',[DashboardController::class,'error'])->name('User.dashboard.error');
 Route::post('/Ortho/User-Cancelled-Appointment',[AppoinmentController::class,'UserCancelAppointment'])->name('User.appointment.cancel');
 Route::post('/Ortho/Send-Blog-Comment',[BlogController::class,'StoreBlogComment'])->name('User.blog.comment.store');
-
+Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');
+Route::get('/Ortho/Doctor-Registration',[HomeController::class,'DoctorRegistration'])->name('User.doctorRegiestraion');
+Route::post('/Ortho/Send-Doctor-Registration-Request',[DoctorController::class,'DoctorRegiestration'])->name('User.DoctorRegiestrationRequest');
+Route::post('/Ortho/Get-Doctor-Appoinment-Time',[AppoinmentController::class,'GetTime'])->name('User.appoinment.GetTime');
+Route::post('/Ortho/Book-Doctor-Appoinment',[AppoinmentController::class,'Store'])->name('User.appoinment.book');
+});
 
 
 
 // Admin Dashboard Routes
+Route::middleware(['auth','admin'])->group(function(){
 Route::get('/Ortho/Admin/Dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
 Route::get('/Ortho/Admin/Profile',[AdminController::class,'Profile'])->name('Admin.profile');
 Route::get('/Ortho/Admin/Update-Profile',[AdminController::class,'EditProfile'])->name('Admin.profile.edit');
@@ -152,8 +155,12 @@ Route::delete('Ortho/Admin/Delete-Blog',[BlogController::class,'delete'])->name(
 Route::post('Ortho/Admin/Change-Blog-Comment-Status',[BlogController::class,'BlogCommentStatus'])->name('Blog.comment.status');
 Route::delete('Ortho/Admin/Delete-Blog-Comment',[BlogController::class,'BlogCommentDelete'])->name('Blog.comment.delete');
 
+});
+
 
 // Doctor Dashboard Routes
+Route::middleware(['auth','doctor'])->group(function(){
+
 Route::get('/Ortho/Doctor/404-Not-Found',[DoctorsController::class,'notFound'])->name('doctor.notfound');
 Route::get('/Ortho/Doctor/Dashboard',[DoctorsController::class,'index'])->name('doctor.dashboard');
 Route::get('/Ortho/Doctor/My-Profile',[DoctorsController::class,'profile'])->name('doctor.profile');
@@ -174,7 +181,7 @@ Route::post('/Ortho/Doctor/Change-Appointment-Status',[AppoinmentController::cla
 Route::post('/Ortho/Doctor/Cancelled-Appointment',[AppoinmentController::class,'Cancel'])->name('doctor.Appointment.Cancel');
 Route::get('/Ortho/Doctor/All-Patients',[DoctorPatientController::class,'index'])->name('doctor.Patients');
 Route::get('/Ortho/Doctor/Patient-Profile/{id}',[DoctorPatientController::class,'profile'])->name('doctor.Patients.profile');
-
+});
 
 
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
@@ -194,7 +201,8 @@ Route::middleware([
 
 // Other Routes
 Route::get('/home',[UserAuthController::class,'index'])->middleware(['auth']);
-Route::get('/Ortho/403-Forbidden',[UserAuthController::class,'statusblockError'])->name('statusblockError');
+Route::get('/Ortho/403-Forbidden/Accout-Block',[UserAuthController::class,'statusblockError'])->name('statusblockError');
+Route::get('/Ortho/403-Forbidden',[UserAuthController::class,'accessBlock'])->name('accessBlock');
 Route::post('/Ortho/Temp-Images',[TempController::class,'image'])->name('TempImages');
 Route::post('/Ortho/Temp-Files',[TempController::class,'file'])->name('TempFiles');
 

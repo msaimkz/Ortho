@@ -107,7 +107,13 @@
                                     <li class="menu-item-has-children">
                                         <a href="#">{{ Auth::user()->name }}</a>
                                         <ul>
+                                            @if (Auth::user()->role == 'patients')
                                             <li><a href='{{ route('User.dashboard.dashboard') }}'>Dashboard</a></li>
+                                            @elseif (Auth::user()->role == 'doctor')
+                                            <li><a href='{{ route('doctor.dashboard') }}'>Dashboard</a></li>
+                                            @else
+                                            <li><a href='{{ route('Admin.dashboard') }}'>Dashboard</a></li>  
+                                            @endif
                                             <li>
                                                 <form action="{{ route('logout') }}" method="POST" id="logout-form">
                                                     @csrf
