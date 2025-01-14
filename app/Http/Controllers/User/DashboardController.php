@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\DoctorRequest;
 use App\Models\Appoinment;
 use App\Models\Patient\PatientProfile;
 use App\Models\User;
@@ -213,6 +214,26 @@ class DashboardController extends Controller
         }
 
         return view('User.Dashboard.show-appointment',compact('appointment'));
+    }
+
+    public function DoctorRequest(){
+
+        $doctorRequests = DoctorRequest::where('user_id',Auth::user()->id)->get();
+
+        return view('User.Dashboard.Doctor Request.index',compact('doctorRequests'));
+    }
+
+    public function DoctorRequestProfile(int $id){
+
+        $doctorRequest = DoctorRequest::find($id);
+
+        if($doctorRequest == null){
+
+            return redirect()->route('User.dashboard.error');
+        }
+ 
+
+        return view('User.Dashboard.Doctor Request.profile',compact('doctorRequest'));
     }
 
     public function error(){

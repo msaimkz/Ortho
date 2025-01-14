@@ -69,6 +69,8 @@ Route::post('/Ortho/Update-Profile',[DashboardController::class,'UpdateProfile']
 Route::post('/Ortho/Update-Profile-Image',[DashboardController::class,'UpdateProfileImg'])->name('User.UpdateProfileImage');
 Route::post('/Ortho/Change-Password',[DashboardController::class,'ChangePassword'])->name('User.ChangePassword');
 Route::get('/Ortho/404-Not-Found',[DashboardController::class,'error'])->name('User.dashboard.error');
+Route::get('/Ortho/Doctor-Registration-Request',[DashboardController::class,'DoctorRequest'])->name('User.dashboard.DoctorRequest');
+Route::get('/Ortho/Doctor-Registration-Request-Profile/{id}',[DashboardController::class,'DoctorRequestProfile'])->name('User.dashboard.DoctorRequestProfile');
 Route::post('/Ortho/User-Cancelled-Appointment',[AppoinmentController::class,'UserCancelAppointment'])->name('User.appointment.cancel');
 Route::post('/Ortho/Send-Blog-Comment',[BlogController::class,'StoreBlogComment'])->name('User.blog.comment.store');
 Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');

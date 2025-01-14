@@ -134,6 +134,11 @@ class DoctorController extends Controller
  
 
         $doctorRequest = DoctorRequest::find($id);
+
+        if($doctorRequest == null){
+
+            return redirect()->route('Admin.notFound');
+        }
  
 
         return view('Admin.Doctor.request-profile',compact('doctorRequest'));

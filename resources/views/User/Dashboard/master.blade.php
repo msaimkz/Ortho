@@ -77,18 +77,15 @@
                         <li>
                             <div class="user-info">
                                 <div class="image"><a href="{{ route('User.dashboard.profile') }}">
-                                    @if (isset(Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path)))
-                                    <img 
-                                       
-                                        src="{{ asset('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path) }}"
-                                        class="Profile-Image" alt="">
-                                @else
-                                    <img 
-                                       
-                                        src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
-                                        class="Profile-Image" alt="">
-                                @endif
-                                        </a></div>
+                                        @if (isset(Auth::user()->profile_photo_path) &&
+                                                file_exists(public_path('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path)))
+                                            <img src="{{ asset('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path) }}"
+                                                class="Profile-Image" alt="">
+                                        @else
+                                            <img src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                                class="Profile-Image" alt="">
+                                        @endif
+                                    </a></div>
                                 <div class="detail">
                                     <h4> <span class="username">{{ ucwords(Auth::user()->name) }}</span></h4>
                                     <small><a href="{{ route('User.index') }}">Back</a></small>
@@ -100,7 +97,8 @@
                                     class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
                         <li><a href="{{ route('User.dashboard.appoinment') }}"><i
                                     class="zmdi zmdi-calendar-check"></i><span>Appointment</span> </a></li>
-                        <li><a href="book-appointment.html"><i class="zmdi zmdi-folder"></i><span>Report</span> </a>
+                        <li><a href="{{ route('User.dashboard.DoctorRequest') }}"><i
+                                    class="zmdi zmdi-folder"></i><span>Doctor Request</span></a>
                         </li>
                     </ul>
                 </div>
@@ -111,18 +109,15 @@
                         <li>
                             <div class="user-info m-b-20 p-b-15">
                                 <div class="image"><a href="{{ route('User.dashboard.profile') }}">
-                                        @if (isset(Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path)))
-                                            <img 
-                                               
-                                                src="{{ asset('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path) }}"
+                                        @if (isset(Auth::user()->profile_photo_path) &&
+                                                file_exists(public_path('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path)))
+                                            <img src="{{ asset('Uploads/Patient/Profile/' . Auth::user()->profile_photo_path) }}"
                                                 class="Profile-Image" alt="">
                                         @else
-                                            <img 
-                                               
-                                                src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
+                                            <img src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}"
                                                 class="Profile-Image" alt="">
                                         @endif
-                                      
+
                                     </a></div>
                                 <div class="detail">
                                     <h4><span class="username">{{ ucwords(Auth::user()->name) }}</span></h4>

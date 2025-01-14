@@ -58,8 +58,8 @@
                         <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" name="date_of_birth" id="date_of_birth" autocomplete="off"
-                            class="datetimepicker cs_form_field" placeholder="Date Of Birth">
+                        <input type="date" name="date_of_birth" id="date_of_birth" autocomplete="off"
+                            class=" cs_form_field" placeholder="Date Of Birth">
                         <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-6">
@@ -158,14 +158,7 @@
     <script src="{{ asset('Assets/Dashboard/assets/plugins/dropzone/dropzone.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.datetimepicker').datetimepicker({
-                format: 'Y-m-d',
-                timepicker: false,
-              
-               
-            });
-        });
+       
 
         Dropzone.autoDiscover = false;
         const dropzone = $("#image").dropzone({
