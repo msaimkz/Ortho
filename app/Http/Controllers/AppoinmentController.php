@@ -168,16 +168,16 @@ class AppoinmentController extends Controller
                 File::copy($TempSourcePath, $Dpath);
             }
 
-            Mail::to($doctor->email)->send(new DoctorAppointmentInformMail(
-                [
-                    'patientName' => $appoinment->name,
-                    'appointmentDate' => $appoinment->date,
-                    'appointmentStartTime' => $appoinment->start_time,
-                    'appointmentEndTime' => $appoinment->end_time,
-                    'doctorName' => $doctor->name,
+            // Mail::to($doctor->email)->send(new DoctorAppointmentInformMail(
+            //     [
+            //         'patientName' => $appoinment->name,
+            //         'appointmentDate' => $appoinment->date,
+            //         'appointmentStartTime' => $appoinment->start_time,
+            //         'appointmentEndTime' => $appoinment->end_time,
+            //         'doctorName' => $doctor->name,
 
-                ]
-            ));
+            //     ]
+            // ));
 
             return response()->json([
                 'status' => true,
@@ -244,17 +244,17 @@ class AppoinmentController extends Controller
             $appointment->doctor_cancellation_reason = $request->doctor_cancellation_reason;
             $appointment->save();
 
-            Mail::to($appointment->email)->send(new AppointmentCancellMail(
-                [
-                    'patientName' => $appointment->name,
-                    'status' => $appointment->status,
-                    'appointmentDate' => $appointment->date,
-                    'appointmentStartTime' => $appointment->start_time,
-                    'appointmentEndTime' => $appointment->end_time,
-                    'doctorName' => $doctor->name,
-                    'Reason' => $appointment->doctor_cancellation_reason,
-                ]
-            ));
+            // Mail::to($appointment->email)->send(new AppointmentCancellMail(
+            //     [
+            //         'patientName' => $appointment->name,
+            //         'status' => $appointment->status,
+            //         'appointmentDate' => $appointment->date,
+            //         'appointmentStartTime' => $appointment->start_time,
+            //         'appointmentEndTime' => $appointment->end_time,
+            //         'doctorName' => $doctor->name,
+            //         'Reason' => $appointment->doctor_cancellation_reason,
+            //     ]
+            // ));
 
             return response()->json([
                 'status' => true,
@@ -295,16 +295,16 @@ class AppoinmentController extends Controller
 
             $status = 'approved';
 
-            Mail::to($appointment->email)->send(new AppointmentMail(
-                [
-                    'patientName' => $appointment->name,
-                    'status' => $status,
-                    'appointmentDate' => $appointment->date,
-                    'appointmentStartTime' => $appointment->start_time,
-                    'appointmentEndTime' => $appointment->end_time,
-                    'doctorName' => $doctor->name,
-                ]
-            ));
+            // Mail::to($appointment->email)->send(new AppointmentMail(
+            //     [
+            //         'patientName' => $appointment->name,
+            //         'status' => $status,
+            //         'appointmentDate' => $appointment->date,
+            //         'appointmentStartTime' => $appointment->start_time,
+            //         'appointmentEndTime' => $appointment->end_time,
+            //         'doctorName' => $doctor->name,
+            //     ]
+            // ));
 
             return response()->json([
                 'status' => true,
@@ -319,17 +319,17 @@ class AppoinmentController extends Controller
             $status = 'rejected';
             $reason = 'The doctor is unavailable during the requested time.';
 
-            Mail::to($appointment->email)->send(new AppointmentMail(
-                [
-                    'patientName' => $appointment->name,
-                    'status' => $status,
-                    'appointmentDate' => $appointment->date,
-                    'appointmentStartTime' => $appointment->start_time,
-                    'appointmentEndTime' => $appointment->end_time,
-                    'doctorName' => $doctor->name,
-                    'rejectionReason' => $reason,
-                ]
-            ));
+            // Mail::to($appointment->email)->send(new AppointmentMail(
+            //     [
+            //         'patientName' => $appointment->name,
+            //         'status' => $status,
+            //         'appointmentDate' => $appointment->date,
+            //         'appointmentStartTime' => $appointment->start_time,
+            //         'appointmentEndTime' => $appointment->end_time,
+            //         'doctorName' => $doctor->name,
+            //         'rejectionReason' => $reason,
+            //     ]
+            // ));
 
             return response()->json([
                 'status' => true,

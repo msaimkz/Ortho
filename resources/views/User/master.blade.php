@@ -50,6 +50,7 @@
     </div>
     <!-- Start Header Section -->
     <header class="cs_site_header cs_style_1 cs_primary_color cs_sticky_header cs_white_bg">
+        @if (Contact() != null)
         <div class="cs_top_header cs_blue_bg cs_white_color">
             <div class="container">
                 <div class="cs_top_header_in">
@@ -57,25 +58,36 @@
                         <ul class="cs_header_contact_list cs_mp_0">
                             <li>
                                 <i class="fa-solid fa-envelope"></i>
-                                <a href="mailto:demo@example.com">demo@example.com</a>
-                            </li>
-                            <li>
-                                <i class="fa-solid fa-location-dot"></i>
-                                15/K, Dhaka London City, LOT
+                                <a href="{{ Contact()->email }}">{{ Contact()->email }}</a>
                             </li>
                         </ul>
                     </div>
                     <div class="cs_top_header_right">
                         <div class="cs_social_btns cs_style_1">
-                            <a href="#" class="cs_center"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" class="cs_center"><i class="fa-brands fa-pinterest-p"></i></a>
-                            <a href="#" class="cs_center"><i class="fa-brands fa-twitter"></i></a>
-                            <a href="#" class="cs_center"><i class="fa-brands fa-instagram"></i></a>
+                            @if (!empty(Contact()->facebook))
+                            <a href="{{ Contact()->facebook }}" class="cs_center"><i class="fa-brands fa-facebook-f"></i></a>
+                                
+                            @endif
+                            @if (!empty(Contact()->youtube))
+                            <a href="{{ Contact()->youtube }}" class="cs_center"><i class="fa-brands fa-youtube"></i></a>
+                                
+                            @endif
+                            @if (!empty(Contact()->twitter))
+                            <a href="{{ Contact()->twitter }}" class="cs_center"><i class="fa-brands fa-twitter"></i></a>
+                                
+                            @endif
+                            @if (!empty(Contact()->instagram))
+                            <a href="{{ Contact()->instagram }}" class="cs_center"><i class="fa-brands fa-instagram"></i></a>
+                                
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+            
+        @endif
+       
         <div class="cs_main_header">
             <div class="container">
                 <div class="cs_main_header_in">
@@ -155,25 +167,33 @@
                             <img src="{{ asset('Assets/User/assets/img/footer_logo.svg') }}" alt="Logo">
                         </div>
                         <ul class="cs_footer_contact cs_mp_0">
-                            <li>
-                                <i class="fa-regular fa-clock"></i>
-                                Open Hours of Government: <br>
-                                Mon - Fri: 8.00 am. - 6.00 pm.
-                            </li>
+                           
                             <li>
                                 <i class="fa-solid fa-location-dot"></i>
-                                13/A, Miranda Halim City .
+                               {{ ucwords(Contact()->address) }}
                             </li>
                             <li>
                                 <i class="fa-solid fa-phone"></i>
-                                099 695 695 35
+                                {{ ucwords(Contact()->phone) }}
                             </li>
                         </ul>
                         <div class="cs_social_btns cs_style_1">
-                            <a href="#" class="cs_center"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" class="cs_center"><i class="fa-brands fa-pinterest-p"></i></a>
-                            <a href="#" class="cs_center"><i class="fa-brands fa-twitter"></i></a>
-                            <a href="#" class="cs_center"><i class="fa-brands fa-instagram"></i></a>
+                            @if (!empty(Contact()->facebook))
+                            <a href="{{ Contact()->facebook }}" class="cs_center"><i class="fa-brands fa-facebook-f"></i></a>
+                                
+                            @endif
+                            @if (!empty(Contact()->youtube))
+                            <a href="{{ Contact()->youtube }}" class="cs_center"><i class="fa-brands fa-youtube"></i></a>
+                                
+                            @endif
+                            @if (!empty(Contact()->twitter))
+                            <a href="{{ Contact()->twitter }}" class="cs_center"><i class="fa-brands fa-twitter"></i></a>
+                                
+                            @endif
+                            @if (!empty(Contact()->instagram))
+                            <a href="{{ Contact()->instagram }}" class="cs_center"><i class="fa-brands fa-instagram"></i></a>
+                                
+                            @endif
                         </div>
                     </div>
                 </div>

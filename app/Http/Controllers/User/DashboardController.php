@@ -8,6 +8,7 @@ use App\Models\Appoinment;
 use App\Models\Patient\PatientProfile;
 use App\Models\User;
 use App\Rules\ValidDateOfBirth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -239,5 +240,17 @@ class DashboardController extends Controller
     public function error(){
 
         return view('User.Dashboard.error');
+    }
+
+    public function appoinmentSlip(string $id){
+
+        $appointment= Appoinment::where('id',$id)->with('doctor')->first();
+        if($appointment == null ){
+
+            return redirect()->route('User.dashboard.error');
+        }
+        $data['appointment'] = $appointment;
+        $pdf = PDF::loadView('User.Dashboard.appointment-slip',$data)->setOptions(['defualtFont' => 'sans-serif']);
+        return $pdf->download('appointment-slip.pdf');
     }
 }

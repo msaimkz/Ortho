@@ -64,6 +64,7 @@ Route::get('/Ortho/Dashboard/My-Profile',[DashboardController::class,'profile'])
 Route::get('/Ortho/Dashboard/Update-Profile',[DashboardController::class,'Editprofile'])->name('User.dashboard.edit-profile');
 Route::get('/Ortho/Dashboard/My-Appointment',[DashboardController::class,'appoinment'])->name('User.dashboard.appoinment');
 Route::get('/Ortho/Dashboard/Appointment-Detail/{id}',[DashboardController::class,'AppoinmentDetail'])->name('User.dashboard.appoinment.show');
+Route::get('/Ortho/Dashboard/Appointment-Slip/{id}',[DashboardController::class,'appoinmentSlip'])->name('User.dashboard.appoinment.slip');
 Route::post('/Ortho/Send-Contact-Message',[ContactController::class,'store'])->name('User.contact.send');
 Route::post('/Ortho/Send-NewsLetter-Email',[NewsLetterController::class,'store'])->name('User.newsletter.send');
 Route::post('/Ortho/Update-Profile',[DashboardController::class,'UpdateProfile'])->name('User.UpdateProfile');

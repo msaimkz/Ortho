@@ -141,6 +141,8 @@
                                         <button class="btn btn-danger cancel" data-toggle="modal"
                                             data-target="#defaultModal" data-status="cancelled"
                                             data-id="{{ $appointment->id }}">Cancelled</button>
+                                        <a href="{{ route('User.dashboard.appoinment.slip',$appointment->id) }}" 
+                                            class="btn btn-info">Get Appointment Slip</a>
                                     @elseif ($appointment->status == 'cancelled')
                                         @if ($appointment->user_cancelled == 'pending')
                                             <h3 class="m-t-0 m-b-5">Doctor Cancellation Reason</h3>
@@ -304,5 +306,7 @@
 
 
         })
+
+       
     </script>
 @endsection
