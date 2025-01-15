@@ -17,7 +17,7 @@ class HomeController extends Controller
 {
     public function index(){
 
-        $doctors = DoctorProfile::where('status','active')->where('DoctorStatus','active')->get();
+        $doctors = DoctorProfile::where('status','active')->where('DoctorStatus','active')->limit(5)->get();
 
         $blogs = Blog::where('status','active')->where('IsHome','yes')->get();
 
@@ -136,7 +136,11 @@ class HomeController extends Controller
 
     public function timetable(){
 
-        return view('User.timetable');
+        $workingTimes = DoctorWorkingTime::all()->sortBy('start_time')->groupBy(function ($schedule) {
+            return $schedule->start_time; // Group by start_time
+        });
+
+        return view('User.timetable',compact('workingTimes'));
     }
     public function error(){
 

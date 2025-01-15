@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg fixed-top navbar-transparent">
         <div class="container">
             <div class="navbar-translate n_logo">
-                <a class="navbar-brand" href="javascript:void(0);" title="" target="_blank">Ortho</a>
+                <a class="navbar-brand" href="{{ route('User.index') }}">Ortho</a>
 
             </div>
             <div class="navbar-collapse">

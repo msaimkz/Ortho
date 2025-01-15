@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Doctor\DoctorWorkingTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -64,6 +66,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function BlogComment()
     {
         return $this->hasMany(BlogComment::class, 'user_id');
+    }
+
+    public function DoctorWorkingTime()
+    {
+        return $this->hasMany(DoctorWorkingTime::class, 'doctor_id');
     }
 
     /**

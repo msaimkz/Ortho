@@ -153,8 +153,11 @@
                 </li>
                 <li><a href="{{ route('Admin.contact.index') }}"><i class="zmdi zmdi-email"></i><span>Contact
                             Messages</span> </a></li>
+                <li><a href="{{ route('Admin.contactInformation') }}"><i class="zmdi zmdi-email"></i><span>Contact
+                            Information</span> </a></li>
 
-                <li><a href="{{ route('Admin.newsletter') }}"><i class="zmdi zmdi-email"></i><span>Newsletter Emails</span> </a></li>
+                <li><a href="{{ route('Admin.newsletter') }}"><i class="zmdi zmdi-email"></i><span>Newsletter
+                            Emails</span> </a></li>
 
 
                 </ul>

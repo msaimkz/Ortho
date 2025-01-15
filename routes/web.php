@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\Course\CourseController;
 use App\Http\Controllers\Admin\Course\ChapterController;
 use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ContactInformationController;
 use App\Http\Controllers\AppoinmentController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Doctor\DoctorWorkingTimeController;
@@ -146,6 +147,9 @@ Route::get('/Ortho/Admin/Course/Edit-Chapter/{slug}',[ChapterController::class,'
 Route::post('/Ortho/Admin/Course/Update-Chapter/{id}',[ChapterController::class,'update'])->name('Admin.course.chapter.update');
 Route::delete('/Ortho/Admin/Course/Delete-Chapter/',[ChapterController::class,'destroy'])->name('Admin.course.chapter.delete');
 Route::get('/Ortho/Admin/All-NewsLetter-Emails',[NewsLetterController::class,'index'])->name('Admin.newsletter');
+Route::get('/Ortho/Admin/Contact-Information',[ContactInformationController::class,'index'])->name('Admin.contactInformation');
+Route::get('/Ortho/Admin/Add-Contact-Information',[ContactInformationController::class,'create'])->name('Admin.contactInformation.create');
+Route::post('/Ortho/Admin/Save-Contact-Information',[ContactInformationController::class,'save'])->name('Admin.contactInformation.save');
 
 
 
