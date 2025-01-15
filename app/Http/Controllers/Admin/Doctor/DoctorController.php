@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use App\Mail\Admin\DoctorRequestMail;
 use App\Mail\Admin\DoctorStatusMail;
 use App\Mail\Admin\DoctorDeleteMail;
+use App\Models\Patient\PatientProfile;
 use Illuminate\Support\Facades\Mail;
 
 class DoctorController extends Controller
@@ -251,7 +252,7 @@ class DoctorController extends Controller
 
                 $manager = new ImageManager(new Driver());
                 $ImageManager = $manager->read($TempSourcePath);
-                $ImageManager->cover(300,300);
+                $ImageManager->cover(380,580);
                 $ImageManager->save($Dpath);
             }
 
@@ -303,6 +304,14 @@ class DoctorController extends Controller
             $doctorRequest = DoctorRequest::find($id);
             $doctorProfile = new DoctorProfile();
 
+            $patientProfile = PatientProfile::where('user_id',$doctorRequest->user_id)->first();
+
+            if($patientProfile != null){
+                $patientProfile->delete();
+            }
+
+            
+
             $doctorProfile->user_id = $doctorRequest->user_id;
             $doctorProfile->name = $doctorRequest->name;
             $doctorProfile->email = $doctorRequest->email;
@@ -343,12 +352,12 @@ class DoctorController extends Controller
 
             File::copy($spath,$dpath);
 
-            Mail::to($doctorRequest->email)->send(new DoctorRequestMail(
-                [
-                    'name' => $doctorRequest->name,
-                    'status' => $doctorRequest->status,
-                ]
-            ));
+            // Mail::to($doctorRequest->email)->send(new DoctorRequestMail(
+            //     [
+            //         'name' => $doctorRequest->name,
+            //         'status' => $doctorRequest->status,
+            //     ]
+            // ));
 
             return response()->json([
                 'status' => true,
@@ -363,12 +372,12 @@ class DoctorController extends Controller
             $doctorRequest->status = 'reject';
             $doctorRequest->save();
 
-            Mail::to($doctorRequest->email)->send(new DoctorRequestMail(
-                [
-                    'name' => $doctorRequest->name,
-                    'status' => $doctorRequest->status,
-                ]
-            ));
+            // Mail::to($doctorRequest->email)->send(new DoctorRequestMail(
+            //     [
+            //         'name' => $doctorRequest->name,
+            //         'status' => $doctorRequest->status,
+            //     ]
+            // ));
 
             return response()->json([
                 'status' => true,

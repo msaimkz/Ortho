@@ -23,8 +23,7 @@ use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\TempController;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/d', function () {
     return view('welcome');
@@ -36,6 +35,7 @@ Route::get('/d', function () {
 
 // User Routes
 
+Route::middleware(['EmailVerify'])->group(function(){
 Route::get('/',[HomeController::class,'index'])->name('User.index');
 Route::get('/Ortho/About',[HomeController::class,'about'])->name('User.about');
 Route::get('/Ortho/Contact-Us',[HomeController::class,'contact'])->name('User.contact');
@@ -51,12 +51,12 @@ Route::get('/Ortho/Course-Detail/{slug}',[HomeController::class,'CourseDetail'])
 Route::get('/Ortho/FAQs',[HomeController::class,'faq'])->name('User.faq');
 Route::get('/Ortho/Privacy-Policy',[HomeController::class,'privacy'])->name('User.privacy');
 Route::get('/Ortho/404',[HomeController::class,'error'])->name('User.error');
-
+});
 
 
 
 // User Dashboard Routes
-Route::middleware(['auth','patient'])->group(function(){
+Route::middleware(['auth','verified','patient'])->group(function(){
 
 Route::get('/Ortho/Dashboard',[DashboardController::class,'dashboard'])->name('User.dashboard.dashboard');
 Route::get('/Ortho/Dashboard/My-Profile',[DashboardController::class,'profile'])->name('User.dashboard.profile');
@@ -83,7 +83,7 @@ Route::post('/Ortho/Book-Doctor-Appoinment',[AppoinmentController::class,'Store'
 
 
 // Admin Dashboard Routes
-Route::middleware(['auth','admin'])->group(function(){
+Route::middleware(['auth','verified','admin'])->group(function(){
 Route::get('/Ortho/Admin/Dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
 Route::get('/Ortho/Admin/Profile',[AdminController::class,'Profile'])->name('Admin.profile');
 Route::get('/Ortho/Admin/Update-Profile',[AdminController::class,'EditProfile'])->name('Admin.profile.edit');
@@ -161,7 +161,7 @@ Route::delete('Ortho/Admin/Delete-Blog-Comment',[BlogController::class,'BlogComm
 
 
 // Doctor Dashboard Routes
-Route::middleware(['auth','doctor'])->group(function(){
+Route::middleware(['auth','verified','doctor'])->group(function(){
 
 Route::get('/Ortho/Doctor/404-Not-Found',[DoctorsController::class,'notFound'])->name('doctor.notfound');
 Route::get('/Ortho/Doctor/Dashboard',[DoctorsController::class,'index'])->name('doctor.dashboard');
@@ -202,7 +202,7 @@ Route::middleware([
 
 
 // Other Routes
-Route::get('/home',[UserAuthController::class,'index'])->middleware(['auth']);
+Route::get('/home',[UserAuthController::class,'index'])->middleware(['auth','verified']);
 Route::get('/Ortho/403-Forbidden/Accout-Block',[UserAuthController::class,'statusblockError'])->name('statusblockError');
 Route::get('/Ortho/403-Forbidden',[UserAuthController::class,'accessBlock'])->name('accessBlock');
 Route::post('/Ortho/Temp-Images',[TempController::class,'image'])->name('TempImages');

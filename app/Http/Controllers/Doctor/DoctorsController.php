@@ -272,22 +272,22 @@ class DoctorsController extends Controller
             $doctor->DoctorStatus = 'inactive';
             $doctor->save();
 
-            Mail::to($admin->email)->send(new AdminSendMail(
-                [
-                    'name' => $doctor->name,
-                    'is_active' => false,
-                ]
-            ));
+            // Mail::to($admin->email)->send(new AdminSendMail(
+            //     [
+            //         'name' => $doctor->name,
+            //         'is_active' => false,
+            //     ]
+            // ));
         } else {
             $doctor->DoctorStatus = 'active';
             $doctor->save();
 
-            Mail::to($admin->email)->send(new AdminSendMail(
-                [
-                    'name' => $doctor->name,
-                    'is_active' => true,
-                ]
-            ));
+            // Mail::to($admin->email)->send(new AdminSendMail(
+            //     [
+            //         'name' => $doctor->name,
+            //         'is_active' => true,
+            //     ]
+            // ));
         }
 
         return response()->json([

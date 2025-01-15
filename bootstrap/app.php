@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             "admin" => App\Http\Middleware\AdminAcess::class,
             "doctor" => App\Http\Middleware\DoctorAccess::class,
             "patient" => App\Http\Middleware\PatientAccess::class,
+            "EmailVerify" => App\Http\Middleware\MustVerifyEmail::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
