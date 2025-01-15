@@ -19,6 +19,8 @@ use Carbon\Carbon;
 use App\Mail\Admin\DoctorRequestMail;
 use App\Mail\Admin\DoctorStatusMail;
 use App\Mail\Admin\DoctorDeleteMail;
+use App\Models\Appoinment;
+use App\Models\Doctor\DoctorWorkingTime;
 use App\Models\Patient\PatientProfile;
 use Illuminate\Support\Facades\Mail;
 
@@ -35,7 +37,9 @@ class DoctorController extends Controller
     public function profile(string $id){
 
         $doctor = DoctorProfile::find($id);
-        return view('Admin.Doctor.doctor-profile',compact('doctor'));
+        $Schedules = DoctorWorkingTime::where('doctor_id',$doctor->user_id)->where('status','active')->get();
+        $appointments = Appoinment::where('doctor_id',$doctor->user_id)->with('patient')->latest()->get();
+        return view('Admin.Doctor.doctor-profile',compact('doctor','Schedules','appointments'));
     }
 
     public function ChangeStatus(Request $request){

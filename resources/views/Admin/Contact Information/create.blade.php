@@ -37,7 +37,7 @@
                             <div class="body">
                                 <div class="form-group">
                                     <input type="text" name="phone" id="phone" class="form-control"
-                                        placeholder="Enter Phone Number" />
+                                        placeholder="Enter Phone Number" value="{{ ($ContactInformation != null ) ? $ContactInformation->phone : '' }}" />
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                             <div class="body">
                                 <div class="form-group">
                                     <input type="email" name="email" id="email"  class="form-control"
-                                        placeholder="Enter Email Address" />
+                                        placeholder="Enter Email Address" value="{{ ($ContactInformation != null ) ? $ContactInformation->email : '' }}"/>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
 
                                 <div class="form-group">
                                     <textarea rows="4" name="address" id="address" class="form-control no-resize"
-                                        placeholder="Please Write  Address..."></textarea>
+                                        placeholder="Please Write  Address...">{{  ($ContactInformation != null) ? $ContactInformation->address : ''}}</textarea>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                             <div class="body">
                                 <div class="form-group">
                                     <input type="text" name="facebook" id="facebook"  class="form-control"
-                                        placeholder="Enter Facebook Url" />
+                                        placeholder="Enter Facebook Url" value="{{ ($ContactInformation != null && !empty($ContactInformation->facebook)) ? $ContactInformation->facebook : '' }}"/>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                             <div class="body">
                                 <div class="form-group">
                                     <input type="text" name="youtube" id="youtube"  class="form-control"
-                                        placeholder="Enter Youtube Url" />
+                                        placeholder="Enter Youtube Url" value="{{ ($ContactInformation != null && !empty($ContactInformation->youtube)) ? $ContactInformation->youtube : '' }}"/>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                             <div class="body">
                                 <div class="form-group">
                                     <input type="text" name="instagram" id="instagram"  class="form-control"
-                                        placeholder="Enter Instagram Url" />
+                                        placeholder="Enter Instagram Url" value="{{ ($ContactInformation != null && !empty($ContactInformation->instagram)) ? $ContactInformation->instagram : '' }}"/>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -114,8 +114,8 @@
                         <div class="card">
                             <div class="body">
                                 <div class="form-group">
-                                    <input type="text" name="Twitter" id="Twitter"  class="form-control"
-                                        placeholder="Enter Twitter Url" />
+                                    <input type="text" name="twitter" id="twitter"  class="form-control"
+                                        placeholder="Enter Twitter Url" value="{{ ($ContactInformation != null && !empty($ContactInformation->twitter)) ? $ContactInformation->twitter : '' }}"/>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>

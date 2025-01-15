@@ -60,12 +60,15 @@
                         <div class="body">
                             <div class="workingtime">
                                 <h6>Working Time</h6>
-                                <small class="text-muted">Tuesday</small>
-                                <p>06:00 AM - 07:00 AM</p>
-                                <hr>
-                                <small class="text-muted">Thursday</small>
-                                <p>06:00 AM - 07:00 AM</p>
-                                <hr>
+                                @if ($Schedules != null)
+                                    @foreach ($Schedules as $Schedule)
+                                        <small class="text-muted">{{ ucwords($Schedule->day) }}</small>
+                                        <p>{{ \Carbon\Carbon::parse($Schedule->start_time)->format('g:i A') }} -
+                                            {{ \Carbon\Carbon::parse($Schedule->end_time)->format('g:i A') }}</p>
+                                        <hr>
+                                    @endforeach
+                                @else
+                                @endif
                             </div>
 
                         </div>
@@ -90,6 +93,16 @@
                                         @else
                                             <p><strong>Account Status:</strong> <span class="badge badge-danger"
                                                     id="status-badge">Blocked</span></p>
+                                        @endif
+
+                                    </li>
+                                    <li>
+                                        @if ($doctor->DoctorStatus == 'active')
+                                            <p><strong>Doctor Account Status:</strong> <span class="badge badge-success"
+                                                    >Active</span></p>
+                                        @else
+                                            <p><strong>Doctor Account Status:</strong> <span class="badge badge-danger"
+                                                    >Blocked</span></p>
                                         @endif
 
                                     </li>
@@ -146,45 +159,39 @@
                         </div>
                         <div class="body user_activity">
                             <div class="streamline b-accent">
-                                <div class="sl-item">
-                                    <img class="user rounded-circle"
-                                        src="{{ asset('Assets/Dashboard/assets/images/xs/avatar4.jpg') }}" alt="">
-                                    <div class="sl-content">
-                                        <h5 class="m-b-0">Admin Birthday</h5>
-                                        <small>Jan 21 <a href="javascript:void(0);" class="text-info">Sophia</a>.</small>
-                                    </div>
-                                </div>
-                                <div class="sl-item">
-                                    <img class="user rounded-circle"
-                                        src="{{ asset('Assets/Dashboard/assets/images/xs/avatar5.jpg') }}" alt="">
-                                    <div class="sl-content">
-                                        <h5 class="m-b-0">Add New Contact</h5>
-                                        <small>30min ago <a href="javascript:void(0);">Alexander</a>.</small>
-                                        <small><strong>P:</strong> +264-625-2323</small>
-                                        <small><strong>E:</strong> maryamamiri@gmail.com</small>
-                                    </div>
-                                </div>
-                                <div class="sl-item">
-                                    <img class="user rounded-circle"
-                                        src="{{ asset('Assets/Dashboard/assets/images/xs/avatar6.jpg') }}" alt="">
-                                    <div class="sl-content">
-                                        <h5 class="m-b-0">General Surgery</h5>
-                                        <small>Today <a href="javascript:void(0);">Grayson</a>.</small>
-                                        <small>The standard chunk of Lorem Ipsum used since the 1500s is reproduced</small>
-                                    </div>
-                                </div>
-                                <div class="sl-item">
-                                    <img class="user rounded-circle"
-                                        src="{{ asset('Assets/Dashboard/assets/images/xs/avatar7.jpg') }}" alt="">
-                                    <div class="sl-content">
-                                        <h5 class="m-b-0">General Surgery</h5>
-                                        <small>45min ago <a href="javascript:void(0);" class="text-info">Fidel
-                                                Tonn</a>.</small>
-                                        <small><strong>P:</strong> +264-625-2323</small>
-                                        <small>The standard chunk of Lorem Ipsum used since the 1500s is reproduced used
-                                            since the 1500s is reproduced</small>
-                                    </div>
-                                </div>
+                                @if (!empty($appointments))
+                                    @foreach ($appointments as $appointment)
+                                        <div class="sl-item">
+                                            @if (isset($appointment->patient->profile_photo_path) && file_exists(public_path('Uploads/Patient/Profile/' . $appointment->patient->profile_photo_path)))
+                                                <img src="{{ asset('Uploads/Patient/Profile/' . $appointment->patient->profile_photo_path) }}"
+                                                    alt="profile-image" class="user rounded-circle">
+                                            @else
+                                                <img src="{{ asset('Assets/Dashboard/assets/images/xs/avatar4.jpg') }}"
+                                                    alt="profile-image" class="user rounded-circle">
+                                            @endif
+                                            
+                                            <div class="sl-content">
+                                                <h5 class="m-b-0">{{ ucwords($appointment->name) }}</h5>
+                                                <small>{{ \Carbon\Carbon::parse($appointment->date)->format('d D M Y') }}
+                                                    <a href="javascript:void(0);" class="text-info">
+                                                        {{ \Carbon\Carbon::parse($appointment->start_time)->format('g:i A') }}-{{ \Carbon\Carbon::parse($appointment->end_time)->format('g:i A') }}</a>.</small>
+                                                <small>
+                                                    @if ($appointment->status == 'pending')
+                                                        <span class="badge badge-danger">Pending</span>
+                                                    @elseif ($appointment->status == 'approved')
+                                                        <span class="badge badge-success">Approved</span>
+                                                    @elseif ($appointment->status == 'rejected')
+                                                        <span class="badge badge-danger">Rejected</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Cancelled</span>
+                                                    @endif
+                                                </small>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+
+
                             </div>
                         </div>
                     </div>
@@ -249,8 +256,8 @@
         })
 
         $('#delete').click(function() {
-            if(confirm("Are you sure you want to Delete this user Account?"))
-            $('#delete').prop('disabled', true);
+            if (confirm("Are you sure you want to Delete this user Account?"))
+                $('#delete').prop('disabled', true);
 
             $.ajax({
                 url: "{{ route('Admin.doctor.DeleteAccount') }}",

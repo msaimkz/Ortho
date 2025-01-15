@@ -19,8 +19,10 @@ class ContactInformationController extends Controller
 
     public function create()
     {
+        $ContactInformation = ContactInformation::first();
 
-        return view('Admin.Contact Information.create');
+
+        return view('Admin.Contact Information.create',compact('ContactInformation'));
     }
 
     public function save(Request $request)
@@ -59,7 +61,7 @@ class ContactInformationController extends Controller
                 $ContactInformation->address = $request->address;
                 $ContactInformation->facebook = $request->facebook;
                 $ContactInformation->youtube = $request->youtube;
-                $ContactInformation->instagram = $request->instargam;
+                $ContactInformation->instagram = $request->instagram;
                 $ContactInformation->twitter = $request->twitter;
                 $ContactInformation->update();
             }
