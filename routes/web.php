@@ -5,7 +5,7 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Doctor\DoctorController;
-use App\Http\Controllers\Admin\Patient\PatientController;
+use App\Http\Controllers\Admin\Patient\PatientController; 
 use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\FAQs\FAQController;
