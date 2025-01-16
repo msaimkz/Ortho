@@ -271,6 +271,8 @@
             event.preventDefault();
             var element = $(this);
             $('#btn').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
+
 
             $.ajax({
                 url: "{{ route('User.DoctorRegiestrationRequest') }}",
@@ -279,6 +281,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('#btn').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
 
                     if (response['status'] === true) {
 

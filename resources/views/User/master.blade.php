@@ -25,9 +25,86 @@
     <link rel="stylesheet" href="{{ asset('Assets/User/assets/css/style.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <style>
+        .loading-container {
+
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffffa2;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .loader {
+            width: 20px;
+            aspect-ratio: 1;
+            position: relative;
+            animation: l9-0 1.5s infinite steps(2);
+
+        }
+
+        .loader::before,
+        .loader::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: #2EA6F7;
+            color: #2EA6F7;
+        }
+
+        .loader::before {
+            box-shadow: 26px 0;
+            transform: translateX(-26px);
+            animation: l9-1 .75s infinite linear alternate;
+        }
+
+        .loader::after {
+            transform: translateX(13px) rotate(0deg) translateX(13px);
+            animation: l9-2 .75s infinite linear alternate;
+        }
+
+        @keyframes l9-0 {
+
+            0%,
+            49.9% {
+                transform: scale(1)
+            }
+
+            50%,
+            100% {
+                transform: scale(-1)
+            }
+        }
+
+        @keyframes l9-1 {
+            100% {
+                box-shadow: 52px 0
+            }
+        }
+
+        @keyframes l9-2 {
+            100% {
+                transform: translateX(13px) rotate(-180deg) translateX(13px)
+            }
+        }
+        .hidden-loading-container{
+            display: none;
+        }
+    </style>
+
 </head>
 
 <body>
+    <div class="loading-container hidden-loading-container" id="response-loader">
+        <div class="loader"></div>
+    </div>
     <div class="cs_preloader">
         <div class="cs_preloader_in">
             <div class="cs_wave_first">
@@ -51,43 +128,43 @@
     <!-- Start Header Section -->
     <header class="cs_site_header cs_style_1 cs_primary_color cs_sticky_header cs_white_bg">
         @if (Contact() != null)
-        <div class="cs_top_header cs_blue_bg cs_white_color">
-            <div class="container">
-                <div class="cs_top_header_in">
-                    <div class="cs_top_header_left">
-                        <ul class="cs_header_contact_list cs_mp_0">
-                            <li>
-                                <i class="fa-solid fa-envelope"></i>
-                                <a href="{{ Contact()->email }}">{{ Contact()->email }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="cs_top_header_right">
-                        <div class="cs_social_btns cs_style_1">
-                            @if (!empty(Contact()->facebook))
-                            <a href="{{ Contact()->facebook }}" class="cs_center"><i class="fa-brands fa-facebook-f"></i></a>
-                                
-                            @endif
-                            @if (!empty(Contact()->youtube))
-                            <a href="{{ Contact()->youtube }}" class="cs_center"><i class="fa-brands fa-youtube"></i></a>
-                                
-                            @endif
-                            @if (!empty(Contact()->twitter))
-                            <a href="{{ Contact()->twitter }}" class="cs_center"><i class="fa-brands fa-twitter"></i></a>
-                                
-                            @endif
-                            @if (!empty(Contact()->instagram))
-                            <a href="{{ Contact()->instagram }}" class="cs_center"><i class="fa-brands fa-instagram"></i></a>
-                                
-                            @endif
+            <div class="cs_top_header cs_blue_bg cs_white_color">
+                <div class="container">
+                    <div class="cs_top_header_in">
+                        <div class="cs_top_header_left">
+                            <ul class="cs_header_contact_list cs_mp_0">
+                                <li>
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <a href="{{ Contact()->email }}">{{ Contact()->email }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="cs_top_header_right">
+                            <div class="cs_social_btns cs_style_1">
+                                @if (!empty(Contact()->facebook))
+                                    <a href="{{ Contact()->facebook }}" class="cs_center"><i
+                                            class="fa-brands fa-facebook-f"></i></a>
+                                @endif
+                                @if (!empty(Contact()->youtube))
+                                    <a href="{{ Contact()->youtube }}" class="cs_center"><i
+                                            class="fa-brands fa-youtube"></i></a>
+                                @endif
+                                @if (!empty(Contact()->twitter))
+                                    <a href="{{ Contact()->twitter }}" class="cs_center"><i
+                                            class="fa-brands fa-twitter"></i></a>
+                                @endif
+                                @if (!empty(Contact()->instagram))
+                                    <a href="{{ Contact()->instagram }}" class="cs_center"><i
+                                            class="fa-brands fa-instagram"></i></a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-            
+
         @endif
-       
+
         <div class="cs_main_header">
             <div class="container">
                 <div class="cs_main_header_in">
@@ -120,11 +197,12 @@
                                         <a href="#">{{ Auth::user()->name }}</a>
                                         <ul>
                                             @if (Auth::user()->role == 'patients')
-                                            <li><a href='{{ route('User.dashboard.dashboard') }}'>Dashboard</a></li>
+                                                <li><a href='{{ route('User.dashboard.dashboard') }}'>Dashboard</a>
+                                                </li>
                                             @elseif (Auth::user()->role == 'doctor')
-                                            <li><a href='{{ route('doctor.dashboard') }}'>Dashboard</a></li>
+                                                <li><a href='{{ route('doctor.dashboard') }}'>Dashboard</a></li>
                                             @else
-                                            <li><a href='{{ route('Admin.dashboard') }}'>Dashboard</a></li>  
+                                                <li><a href='{{ route('Admin.dashboard') }}'>Dashboard</a></li>
                                             @endif
                                             <li>
                                                 <form action="{{ route('logout') }}" method="POST" id="logout-form">
@@ -167,10 +245,10 @@
                             <img src="{{ asset('Assets/User/assets/img/footer_logo.svg') }}" alt="Logo">
                         </div>
                         <ul class="cs_footer_contact cs_mp_0">
-                           
+
                             <li>
                                 <i class="fa-solid fa-location-dot"></i>
-                               {{ ucwords(Contact()->address) }}
+                                {{ ucwords(Contact()->address) }}
                             </li>
                             <li>
                                 <i class="fa-solid fa-phone"></i>
@@ -179,20 +257,20 @@
                         </ul>
                         <div class="cs_social_btns cs_style_1">
                             @if (!empty(Contact()->facebook))
-                            <a href="{{ Contact()->facebook }}" class="cs_center"><i class="fa-brands fa-facebook-f"></i></a>
-                                
+                                <a href="{{ Contact()->facebook }}" class="cs_center"><i
+                                        class="fa-brands fa-facebook-f"></i></a>
                             @endif
                             @if (!empty(Contact()->youtube))
-                            <a href="{{ Contact()->youtube }}" class="cs_center"><i class="fa-brands fa-youtube"></i></a>
-                                
+                                <a href="{{ Contact()->youtube }}" class="cs_center"><i
+                                        class="fa-brands fa-youtube"></i></a>
                             @endif
                             @if (!empty(Contact()->twitter))
-                            <a href="{{ Contact()->twitter }}" class="cs_center"><i class="fa-brands fa-twitter"></i></a>
-                                
+                                <a href="{{ Contact()->twitter }}" class="cs_center"><i
+                                        class="fa-brands fa-twitter"></i></a>
                             @endif
                             @if (!empty(Contact()->instagram))
-                            <a href="{{ Contact()->instagram }}" class="cs_center"><i class="fa-brands fa-instagram"></i></a>
-                                
+                                <a href="{{ Contact()->instagram }}" class="cs_center"><i
+                                        class="fa-brands fa-instagram"></i></a>
                             @endif
                         </div>
                     </div>
@@ -271,6 +349,7 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('User.newsletter.send') }}",
@@ -279,6 +358,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
+
 
                     if (response['status'] == true) {
 
@@ -325,7 +406,7 @@
 
                         }
 
-                       
+
                         var errors = response['errors'];
 
 
