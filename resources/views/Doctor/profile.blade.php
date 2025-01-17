@@ -183,6 +183,8 @@
     <script type="text/javascript">
         $('#ChangePasswordForm').submit(function(event) {
             $('#btn').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
+
             event.preventDefault();
             var element = $(this);
 
@@ -192,6 +194,7 @@
                 data: element.serializeArray(),
                 dataType: 'json',
                 success: function(response) {
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     $('#Currentpassword').val('')
                     $('#password').val('')
@@ -262,6 +265,7 @@
         $('.Doctorstatus').click(function() {
 
             $('.Doctorstatus').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('doctor.ChangeAccountStatus') }}",
@@ -274,6 +278,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('.Doctorstatus').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     if (response['status'] == true) {
 
                         if (response['accountStatus'] == 'active') {

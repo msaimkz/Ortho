@@ -341,6 +341,15 @@ class BlogController extends Controller
                 ]);
             }
 
+            if(Auth::user()->role == 'admin'){
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => false,
+                    'error' => "Admins are not allowed to submit comment to Blog."
+                ]);
+            }
+
             $blog = Blog::find($request->blog_id);
 
             if ($blog == null) {
@@ -349,6 +358,15 @@ class BlogController extends Controller
                     'status' => false,
                     'isError' => true,
                     'error' => "Blog Not Found"
+                ]);
+            }
+
+            $isCommentExist = BlogComment::where('user_id',Auth::user()->id)->where('blog_id',$request->blog_id)->first();
+            if($isCommentExist != null){
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => "You already get a comment to this blog."
                 ]);
             }
 

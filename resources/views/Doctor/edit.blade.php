@@ -249,6 +249,7 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('doctor.profile.update') }}",
@@ -257,6 +258,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -317,6 +319,8 @@
                     if (this.files.length > 1) {
                         this.removeFile(this.files[0]);
                     }
+                    $('#response-loader').removeClass('hidden-loading-container')
+
                 });
             },
             url: "{{ route('doctor.profile.update.img') }}",
@@ -328,6 +332,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(file, response) {
+                $('#response-loader').addClass('hidden-loading-container')
+
                 $('#image').attr('src', '/Uploads/Doctor/Profile/' + response['imageName']);
                 $('.Profile-Image').attr('src', '/Uploads/Doctor/Profile/' + response['imageName']);
                 const Toast = Swal.mixin({

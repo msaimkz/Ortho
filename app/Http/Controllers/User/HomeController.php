@@ -151,8 +151,14 @@ class HomeController extends Controller
 
         if(Auth::check() == false){
 
+            if (!session()->has('url.intended')) {
+                session(['url.intended' => url()->current()]);
+            }
+
             return redirect()->route('login');
         }
+
+        session()->forget('url.intended');
 
         $doctor = DoctorProfile::find($id);
 
@@ -170,8 +176,14 @@ class HomeController extends Controller
 
         if(Auth::check() == false){
 
+            if (!session()->has('url.intended')) {
+                session(['url.intended' => url()->current()]);
+            }
+
             return redirect()->route('login');
         }
+
+        session()->forget('url.intended');
 
         return view('User.doctor-regiestraion');
     }

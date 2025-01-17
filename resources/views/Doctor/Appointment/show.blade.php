@@ -226,6 +226,8 @@
         $('.status').click(function() {
             if (confirm("Are you sure you want to Reply this Appointment?"))
                 $('.status').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
+
 
             $.ajax({
                 url: "{{ route('doctor.Appointment.changeStatus') }}",
@@ -239,6 +241,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('.status').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
 
                     if (response['status'] == true) {
 
@@ -301,6 +305,8 @@
             event.preventDefault();
 
             $('#cancel').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
+
 
             var element = $(this);
 
@@ -311,6 +317,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('#cancel').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
 
 
                     if (response['status'] == true) {

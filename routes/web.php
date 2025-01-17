@@ -65,8 +65,7 @@ Route::get('/Ortho/Dashboard/Update-Profile',[DashboardController::class,'Editpr
 Route::get('/Ortho/Dashboard/My-Appointment',[DashboardController::class,'appoinment'])->name('User.dashboard.appoinment');
 Route::get('/Ortho/Dashboard/Appointment-Detail/{id}',[DashboardController::class,'AppoinmentDetail'])->name('User.dashboard.appoinment.show');
 Route::get('/Ortho/Dashboard/Appointment-Slip/{id}',[DashboardController::class,'appoinmentSlip'])->name('User.dashboard.appoinment.slip');
-Route::post('/Ortho/Send-Contact-Message',[ContactController::class,'store'])->name('User.contact.send');
-Route::post('/Ortho/Send-NewsLetter-Email',[NewsLetterController::class,'store'])->name('User.newsletter.send');
+
 Route::post('/Ortho/Update-Profile',[DashboardController::class,'UpdateProfile'])->name('User.UpdateProfile');
 Route::post('/Ortho/Update-Profile-Image',[DashboardController::class,'UpdateProfileImg'])->name('User.UpdateProfileImage');
 Route::post('/Ortho/Change-Password',[DashboardController::class,'ChangePassword'])->name('User.ChangePassword');
@@ -74,14 +73,18 @@ Route::get('/Ortho/404-Not-Found',[DashboardController::class,'error'])->name('U
 Route::get('/Ortho/Doctor-Registration-Request',[DashboardController::class,'DoctorRequest'])->name('User.dashboard.DoctorRequest');
 Route::get('/Ortho/Doctor-Registration-Request-Profile/{id}',[DashboardController::class,'DoctorRequestProfile'])->name('User.dashboard.DoctorRequestProfile');
 Route::post('/Ortho/User-Cancelled-Appointment',[AppoinmentController::class,'UserCancelAppointment'])->name('User.appointment.cancel');
-Route::post('/Ortho/Send-Blog-Comment',[BlogController::class,'StoreBlogComment'])->name('User.blog.comment.store');
-Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');
+
+});
+
+// Patient Routes
+Route::post('/Ortho/Send-Contact-Message',[ContactController::class,'store'])->name('User.contact.send');
+Route::post('/Ortho/Send-NewsLetter-Email',[NewsLetterController::class,'store'])->name('User.newsletter.send');
 Route::get('/Ortho/Doctor-Registration',[HomeController::class,'DoctorRegistration'])->name('User.doctorRegiestraion');
 Route::post('/Ortho/Send-Doctor-Registration-Request',[DoctorController::class,'DoctorRegiestration'])->name('User.DoctorRegiestrationRequest');
 Route::post('/Ortho/Get-Doctor-Appoinment-Time',[AppoinmentController::class,'GetTime'])->name('User.appoinment.GetTime');
 Route::post('/Ortho/Book-Doctor-Appoinment',[AppoinmentController::class,'Store'])->name('User.appoinment.book');
-});
-
+Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');
+Route::post('/Ortho/Send-Blog-Comment',[BlogController::class,'StoreBlogComment'])->name('User.blog.comment.store');
 
 
 // Admin Dashboard Routes

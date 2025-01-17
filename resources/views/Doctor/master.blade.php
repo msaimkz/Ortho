@@ -20,10 +20,86 @@
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('Assets/Dashboard/assets/css/color_skins.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        .loading-container {
 
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffffa2;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 1s ease-in;
+
+        }
+
+        .loader-two {
+            width: 20px;
+            aspect-ratio: 1;
+            position: relative;
+            animation: l9-0 1.5s infinite steps(2);
+
+        }
+
+        .loader-two::before,
+        .loader-two::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: #2EA6F7;
+            color: #2EA6F7;
+        }
+
+        .loader-two::before {
+            box-shadow: 26px 0;
+            transform: translateX(-26px);
+            animation: l9-1 .75s infinite linear alternate;
+        }
+
+        .loader-two::after {
+            transform: translateX(13px) rotate(0deg) translateX(13px);
+            animation: l9-2 .75s infinite linear alternate;
+        }
+
+        @keyframes l9-0 {
+
+            0%,
+            49.9% {
+                transform: scale(1)
+            }
+
+            50%,
+            100% {
+                transform: scale(-1)
+            }
+        }
+
+        @keyframes l9-1 {
+            100% {
+                box-shadow: 52px 0
+            }
+        }
+
+        @keyframes l9-2 {
+            100% {
+                transform: translateX(13px) rotate(-180deg) translateX(13px)
+            }
+        }
+        .hidden-loading-container{
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="theme-cyan">
+    <div class="loading-container hidden-loading-container" id="response-loader">
+        <div class="loader-two"></div>
+    </div>
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">

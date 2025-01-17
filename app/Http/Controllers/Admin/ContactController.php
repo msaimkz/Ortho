@@ -14,14 +14,7 @@ class ContactController extends Controller
 {
     public function store(Request $request){
 
-        if(Auth::check() == false){
-
-            return response()->json([
-                'status' => false,
-                'IsLogin' => false,
-                'error' => "Access Denied: Please log in to your account to continue"
-            ]);
-        }
+        
 
         $validator = Validator::make($request->all(),[
            'name' => ['required','min:3','max:15','regex:/^[a-zA-Z\s]+$/'],
@@ -32,6 +25,24 @@ class ContactController extends Controller
         ]);
 
         if($validator->passes()){
+
+            if(Auth::check() == false){
+
+                return response()->json([
+                    'status' => false,
+                    'IsError' => false,
+                    'error' => "Access Denied: Please log in to your account to continue"
+                ]);
+            }
+
+            if(Auth::user()->role == 'admin'){
+
+                return response()->json([
+                    'status' => false,
+                    'IsError' => false,
+                    'error' => "Admins are not allowed to send a contact message."
+                ]);
+            }
 
             $contact = New Contact();
             $contact->user_id = Auth::user()->id;

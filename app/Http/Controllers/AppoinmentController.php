@@ -76,6 +76,15 @@ class AppoinmentController extends Controller
                 ]);
             }
 
+            if (Auth::user()->role != "patients") {
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => 'Doctors and Admins are not allowed to book a appointment with doctor.'
+                ]);
+            }
+
             if ($request->doctor_id == Auth::user()->id) {
 
                 return response()->json([
@@ -345,7 +354,7 @@ class AppoinmentController extends Controller
         ]);
     }
 
-   
+
 
     public function GetTime(Request $request)
     {
@@ -383,15 +392,17 @@ class AppoinmentController extends Controller
             ]);
         }
 
-        $validator = Validator::make($request->all(), [
-            'id' => ['required', 'numeric'],
-            'user_cancellation_reason' => ['required', 'min:10'],
-        ],
-        [
-            'user_cancellation_reason.required' => "Cancellation Reason Field is Required",
-            'user_cancellation_reason.min' => "Cancellation Reason required minimum 10 letter"
-        ]
-    );
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id' => ['required', 'numeric'],
+                'user_cancellation_reason' => ['required', 'min:10'],
+            ],
+            [
+                'user_cancellation_reason.required' => "Cancellation Reason Field is Required",
+                'user_cancellation_reason.min' => "Cancellation Reason required minimum 10 letter"
+            ]
+        );
 
         if ($validator->passes()) {
 

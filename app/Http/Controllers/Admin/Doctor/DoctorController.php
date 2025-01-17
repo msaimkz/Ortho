@@ -201,8 +201,17 @@ class DoctorController extends Controller
 
                 return response()->json([
                     'status' => false,
-                    'IsAlreadyRegister' => true,
+                    'IsError' => true,
                     'error' => 'You have already sent a request for this doctor.'
+                ]);
+            }
+
+            if(Auth::user()->role != "patients"){
+
+                return response()->json([
+                    'status' => false,
+                    'IsError' => true,
+                    'error' => 'Doctors and Admins are not allowed to send a registration request for doctor roles.'
                 ]);
             }
 

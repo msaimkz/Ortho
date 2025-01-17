@@ -104,6 +104,8 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
+
 
             $.ajax({
                 url: "{{ route('User.contact.send') }}",
@@ -111,6 +113,9 @@
                 data: element.serializeArray(),
                 dataType: "json",
                 success: function(response) {
+                    $('#response-loader').addClass('hidden-loading-container')
+                    $('button[type=submit]').prop('disabled', false)
+
                     if (response['status'] == true) {
 
                       $('#ContactForm')[0].reset();
@@ -137,7 +142,7 @@
 
                     } else {
                       
-                       if(response['IsLogin'] == false){
+                       if(response['IsError'] == false){
                         const Toast = Swal.mixin({
                             toast: true,
                             position: "top-end",

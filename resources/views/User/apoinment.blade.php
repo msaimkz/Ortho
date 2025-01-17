@@ -115,6 +115,8 @@
         $('#AppoinmentForm').submit(function(event) {
             event.preventDefault();
             var element = $(this);
+            $('#response-loader').removeClass('hidden-loading-container')
+
             $('button[type=submit]').prop('disabled', true)
 
             $.ajax({
@@ -124,6 +126,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -191,6 +194,8 @@
         })
         $('#day').change(function() {
             $('#btn').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
+
 
             let selectedValue = $(this).val();
 
@@ -204,6 +209,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('#btn').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
 
                     console.log(response['time'])
 
@@ -246,6 +253,8 @@
 
                         this.removeFile(this.files[0]);
                     }
+                    $('#btn').prop('disabled', true);
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -273,6 +282,9 @@
                 </div>
             `;
                     $('#file-row').html(fileCard);
+
+                    $('#btn').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {

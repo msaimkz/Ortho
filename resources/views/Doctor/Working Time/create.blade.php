@@ -139,6 +139,8 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
+
 
             $.ajax({
                 url: "{{ route('doctor.schedules.store') }}",
@@ -147,6 +149,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
+
 
                     if (response['status'] == true) {
 

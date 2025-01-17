@@ -96,7 +96,8 @@
                         <span class="error-message" style="color: red"></span>
                     </div>
                     <div class="col-md-12">
-                        <textarea name="bio" class="cs_form_field" id="bio" cols="10" rows="3" placeholder="About Bio"></textarea>
+                        <textarea name="bio" class="cs_form_field" id="bio" cols="10" rows="3"
+                            placeholder="About Bio"></textarea>
                         <span class="error-message" style="color: red"></span>
                     </div>
 
@@ -158,8 +159,6 @@
     <script src="{{ asset('Assets/Dashboard/assets/plugins/dropzone/dropzone.js') }}"></script>
 
     <script>
-       
-
         Dropzone.autoDiscover = false;
         const dropzone = $("#image").dropzone({
             url: "{{ route('TempImages') }}",
@@ -171,11 +170,15 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             init: function() {
+               
+
                 this.on('addedfile', function(file) {
                     if (this.files.length > 1) {
 
                         this.removeFile(this.files[0]);
                     }
+                    $('#btn').prop('disabled', true);
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -196,6 +199,9 @@
                 </div>
             `;
                     $('#image-row').html(imgCard);
+
+                    $('#btn').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {
@@ -221,11 +227,14 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             init: function() {
+                
                 this.on('addedfile', function(file) {
                     if (this.files.length > 1) {
 
                         this.removeFile(this.files[0]);
                     }
+                    $('#btn').prop('disabled', true);
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -253,6 +262,9 @@
                 </div>
             `;
                     $('#file-row').html(fileCard);
+
+                    $('#btn').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {
@@ -306,16 +318,16 @@
 
                     } else {
 
-                        if(response['IsAlreadyRegister']  == true){
+                        if (response['IsError'] == true) {
                             Swal.fire({
-                            icon: "error",
-                            title: response['error'],
-                            toast: true,
-                            position: "top-end",
-                            timer: 3000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                        });
+                                icon: "error",
+                                title: response['error'],
+                                toast: true,
+                                position: "top-end",
+                                timer: 3000,
+                                timerProgressBar: true,
+                                showConfirmButton: false,
+                            });
                         }
 
                         var errors = response['errors'];
