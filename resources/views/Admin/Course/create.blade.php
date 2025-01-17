@@ -95,7 +95,7 @@
                         <div class="card">
                             <div class="body">
                                 <div class="form-group">
-                                    <input type="text"  class="form-control" name="price" id="price"
+                                    <input type="text" class="form-control" name="price" id="price"
                                         placeholder="Enter Course Price" />
                                     <span class="text-danger"></span>
 
@@ -110,7 +110,8 @@
                                 <label for="">Descripion</label>
 
                                 <div class="form-group">
-                                    <textarea rows="4" class="form-control no-resize" name="description" id="description" placeholder="Please Write Short Descriptipn..."></textarea>
+                                    <textarea rows="4" class="form-control no-resize" name="description" id="description"
+                                        placeholder="Please Write Short Descriptipn..."></textarea>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -118,7 +119,7 @@
 
                     </div>
 
-                  
+
 
 
                     <div class="col-lg-12">
@@ -152,8 +153,10 @@
                         <div class="card">
                             <div class="body">
 
-                                <button type="submit" class="btn btn-primary btn-round waves-effect m-t-20">Create</button>
-                                <a href="{{ route('Admin.course') }}" class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
+                                <button type="submit"
+                                    class="btn btn-primary btn-round waves-effect m-t-20">Create</button>
+                                <a href="{{ route('Admin.course') }}"
+                                    class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
                             </div>
                         </div>
                     </div>
@@ -185,6 +188,8 @@
 
                         this.removeFile(this.files[0]);
                     }
+                    $('button[type=submit]').prop('disabled', true)
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -212,6 +217,8 @@
                             </div>
             `;
                     $('#image-row').html(imgCard);
+                    $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {
@@ -230,6 +237,7 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Admin.course.store') }}",
@@ -238,6 +246,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -261,22 +270,22 @@
 
                     } else {
 
-                        if(response['noChapter'] == true){
+                        if (response['noChapter'] == true) {
                             const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response['error'],
-                        });
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
 
                         }
                         var errors = response['errors'];
@@ -296,7 +305,7 @@
                                 if (key === 'thumbnail') {
                                     $('#ImageInfo').html(value);
                                 }
-                                
+
                             }
                         });
                     }
@@ -308,6 +317,8 @@
         $('#title').change(function() {
             var element = $(this).val();
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
+
             $.ajax({
                 url: '{{ route('GetSlug') }}',
                 type: 'get',
@@ -317,6 +328,8 @@
                 dataType: 'json',
                 success: function(respose) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     $('#slug').val(respose['slug']);
                 }
             })

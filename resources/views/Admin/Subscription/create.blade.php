@@ -138,6 +138,7 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Admin.subscripion.store') }}",
@@ -146,6 +147,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -164,7 +166,7 @@
                             icon: "success",
                             title: response['msg'],
                         });
-                       
+
                         window.location.href = "{{ route('Admin.subscripion') }}"
 
                     } else {
@@ -180,10 +182,10 @@
                             if (field.length) {
                                 field.addClass('is-invalid').siblings('span.text-danger')
                                     .html(value);
-                                    if('#' + key == '#plan'){
-                                        $('#planspan').html(value)
+                                if ('#' + key == '#plan') {
+                                    $('#planspan').html(value)
 
-                                    }
+                                }
                             }
                         });
                     }
@@ -195,6 +197,8 @@
         $('#name').change(function() {
             var element = $(this).val();
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
+
             $.ajax({
                 url: '{{ route('GetSlug') }}',
                 type: 'get',
@@ -204,6 +208,8 @@
                 dataType: 'json',
                 success: function(respose) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     $('#slug').val(respose['slug']);
                 }
             })

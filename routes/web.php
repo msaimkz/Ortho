@@ -22,6 +22,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Doctor\DoctorPatientController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\TempController;
+use App\Models\CourseComment;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,6 +86,7 @@ Route::post('/Ortho/Get-Doctor-Appoinment-Time',[AppoinmentController::class,'Ge
 Route::post('/Ortho/Book-Doctor-Appoinment',[AppoinmentController::class,'Store'])->name('User.appoinment.book');
 Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');
 Route::post('/Ortho/Send-Blog-Comment',[BlogController::class,'StoreBlogComment'])->name('User.blog.comment.store');
+Route::post('/Ortho/Send-Course-Comment',[CourseController::class,'StoreCourseComment'])->name('User.course.comment.store');
 
 
 // Admin Dashboard Routes

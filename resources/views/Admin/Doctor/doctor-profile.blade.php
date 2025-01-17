@@ -98,11 +98,11 @@
                                     </li>
                                     <li>
                                         @if ($doctor->DoctorStatus == 'active')
-                                            <p><strong>Doctor Account Status:</strong> <span class="badge badge-success"
-                                                    >Active</span></p>
+                                            <p><strong>Doctor Account Status:</strong> <span
+                                                    class="badge badge-success">Active</span></p>
                                         @else
-                                            <p><strong>Doctor Account Status:</strong> <span class="badge badge-danger"
-                                                    >Blocked</span></p>
+                                            <p><strong>Doctor Account Status:</strong> <span
+                                                    class="badge badge-danger">Blocked</span></p>
                                         @endif
 
                                     </li>
@@ -162,14 +162,15 @@
                                 @if (!empty($appointments))
                                     @foreach ($appointments as $appointment)
                                         <div class="sl-item">
-                                            @if (isset($appointment->patient->profile_photo_path) && file_exists(public_path('Uploads/Patient/Profile/' . $appointment->patient->profile_photo_path)))
+                                            @if (isset($appointment->patient->profile_photo_path) &&
+                                                    file_exists(public_path('Uploads/Patient/Profile/' . $appointment->patient->profile_photo_path)))
                                                 <img src="{{ asset('Uploads/Patient/Profile/' . $appointment->patient->profile_photo_path) }}"
                                                     alt="profile-image" class="user rounded-circle">
                                             @else
                                                 <img src="{{ asset('Assets/Dashboard/assets/images/xs/avatar4.jpg') }}"
                                                     alt="profile-image" class="user rounded-circle">
                                             @endif
-                                            
+
                                             <div class="sl-content">
                                                 <h5 class="m-b-0">{{ ucwords($appointment->name) }}</h5>
                                                 <small>{{ \Carbon\Carbon::parse($appointment->date)->format('d D M Y') }}
@@ -207,6 +208,7 @@
         $('#status').click(function() {
             if (confirm("Are you sure you want to change the Account status of this user's account?")) {
                 $('#status').prop('disabled', true);
+                $('#response-loader').removeClass('hidden-loading-container')
 
                 $.ajax({
                     url: "{{ route('Admin.doctor.ChangeStatus') }}",
@@ -219,6 +221,7 @@
                     dataType: "json",
                     success: function(response) {
                         $('#status').prop('disabled', false);
+                        $('#response-loader').addClass('hidden-loading-container')
 
                         if (response['Doctorstatus'] == 'active') {
 
@@ -258,6 +261,7 @@
         $('#delete').click(function() {
             if (confirm("Are you sure you want to Delete this user Account?"))
                 $('#delete').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Admin.doctor.DeleteAccount') }}",
@@ -270,6 +274,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('#delete').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     window.location.href = " {{ route('Admin.doctor') }}"
 
                 }

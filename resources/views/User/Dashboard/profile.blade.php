@@ -141,9 +141,10 @@
             $('#btn').prop('disabled', true);
             event.preventDefault();
             var element = $(this);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
-                url: "{{ route('doctor.ChangePassword') }}",
+                url: "{{ route('User.ChangePassword') }}",
                 type: 'post',
                 data: element.serializeArray(),
                 dataType: 'json',
@@ -154,6 +155,7 @@
                     $('#Currentpassword').val('')
                     $('#password').val('')
                     $('#password_confirmation').val('')
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     $('#btn').prop('disabled', false);
                     if (response['status'] == true) {

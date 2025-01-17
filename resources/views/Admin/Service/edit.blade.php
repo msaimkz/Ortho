@@ -255,6 +255,8 @@
 
                         this.removeFile(this.files[0]);
                     }
+                    $('button[type=submit]').prop('disabled', true)
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -282,6 +284,8 @@
                             </div>
             `;
                     $('#thumbnail-container').html(imgCard);
+                    $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {
@@ -311,6 +315,8 @@
 
                         this.removeFile(this.files[0]);
                     }
+                    $('button[type=submit]').prop('disabled', true)
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -338,6 +344,8 @@
                             </div>
             `;
                     $('#icon-container').html(imgCard);
+                    $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {

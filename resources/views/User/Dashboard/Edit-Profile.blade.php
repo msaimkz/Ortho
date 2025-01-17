@@ -182,6 +182,7 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('User.UpdateProfile') }}",
@@ -190,6 +191,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -250,6 +252,8 @@
                     if (this.files.length > 1) {
                         this.removeFile(this.files[0]);
                     }
+                    $('#response-loader').removeClass('hidden-loading-container')
+
                 });
             },
             url: "{{ route('User.UpdateProfileImage') }}",
@@ -263,6 +267,8 @@
             success: function(file, response) {
                 $('#image').attr('src', '/Uploads/Patient/Profile/' + response['imageName']);
                 $('.Profile-Image').attr('src', '/Uploads/Patient/Profile/' + response['imageName']);
+                $('#response-loader').addClass('hidden-loading-container')
+
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "top-end",

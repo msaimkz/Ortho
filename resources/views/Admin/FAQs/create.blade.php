@@ -117,6 +117,7 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Admin.FAQ.store') }}",
@@ -125,6 +126,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -159,7 +161,7 @@
                             if (field.length) {
                                 field.addClass('is-invalid').siblings('span.text-danger')
                                     .html(value);
-                            } 
+                            }
                         });
                     }
                 }
@@ -168,6 +170,8 @@
         $('#question').change(function() {
             var element = $(this).val();
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
+
             $.ajax({
                 url: '{{ route('GetSlug') }}',
                 type: 'get',
@@ -177,6 +181,8 @@
                 dataType: 'json',
                 success: function(respose) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     $('#slug').val(respose['slug']);
                 }
             })

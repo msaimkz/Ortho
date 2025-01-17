@@ -29,20 +29,18 @@
                         <div class="body text-center">
                             <div class="profile-image">
                                 @if (Auth::user()->profile_photo_path != null)
-                                <img
-                                src="{{ asset('Uploads/Admin/ProfileImages/'. Auth::user()->profile_photo_path) }}" alt="">
+                                    <img src="{{ asset('Uploads/Admin/ProfileImages/' . Auth::user()->profile_photo_path) }}"
+                                        alt="">
                                 @else
-                                <img
-                                src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}" alt=""> 
+                                    <img src="{{ asset('Assets/Dashboard/assets/images/profile_av.jpg') }}" alt="">
                                 @endif
-                                 
+
                             </div>
                             <div>
                                 <h4 class="m-b-0"><strong>{{ Auth::user()->name }}</strong></h4>
                                 <span class="job_post"><a href="{{ route('Admin.profile.edit') }}">Edit Profile</a></span>
                                 @if (!empty($profile->address))
-                                <p>{{ ucwords($profile->address) }}</p>
-                                    
+                                    <p>{{ ucwords($profile->address) }}</p>
                                 @endif
                             </div>
 
@@ -61,9 +59,9 @@
                         <div class="tab-content">
                             <div class="tab-pane body active" id="about">
                                 @if (!empty($profile->bio))
-                                <p>{{ $profile->bio }}.</p>
+                                    <p>{{ $profile->bio }}.</p>
                                 @endif
-                                
+
                                 <h6>Qualifications</h6>
                                 <hr>
                                 <ul class="list-unstyled">
@@ -80,32 +78,33 @@
                                         <p><strong>Phone:</strong> {{ Auth::user()->phone }}</p>
                                     </li>
                                     @if (!empty($profile->address))
-                                    <li>
-                                        <p><strong>Address:</strong> {{ $profile->address }}</p>
-                                    </li>
+                                        <li>
+                                            <p><strong>Address:</strong> {{ $profile->address }}</p>
+                                        </li>
                                     @endif
-                                   
+
                                     @if (!empty($profile->gender))
-                                    <li>
-                                        <p><strong>Gender:</strong> {{ ucwords($profile->gender) }}</p>
-                                    </li>
+                                        <li>
+                                            <p><strong>Gender:</strong> {{ ucwords($profile->gender) }}</p>
+                                        </li>
                                     @endif
-                                   
+
                                     @if (!empty($profile->address))
-                                    <li>
-                                        <p><strong>Date Of Birth:</strong> {{ \Carbon\Carbon::parse($profile->date_of_birth)->format('d D M Y') }}</p>
-                                    </li>
+                                        <li>
+                                            <p><strong>Date Of Birth:</strong>
+                                                {{ \Carbon\Carbon::parse($profile->date_of_birth)->format('d D M Y') }}</p>
+                                        </li>
                                     @endif
-                                   
+
                                     @if (!empty($profile->age))
-                                    <li>
-                                        <p><strong>Age:</strong> {{ $profile->age }} Years</p>
-                                    </li>
+                                        <li>
+                                            <p><strong>Age:</strong> {{ $profile->age }} Years</p>
+                                        </li>
                                     @endif
-                                   
-                                    
+
+
                                 </ul>
-                               
+
 
                             </div>
                             <div class="tab-pane body" id="Account">
@@ -143,6 +142,8 @@
     <script type="text/javascript">
         $('#ChangePasswordForm').submit(function(event) {
             $('#btn').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
+
             event.preventDefault();
             var element = $(this);
 
@@ -152,10 +153,11 @@
                 data: element.serializeArray(),
                 dataType: 'json',
                 success: function(response) {
-                    
+
                     $('#Currentpassword').val('')
                     $('#password').val('')
                     $('#password_confirmation').val('')
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     $('#btn').prop('disabled', false);
                     if (response['status'] == true) {

@@ -181,6 +181,8 @@
     <script type="text/javascript">
         $('#UpdateProfileForm').submit(function(event) {
             $('#btn').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
+
             event.preventDefault();
             var element = $(this);
 
@@ -191,6 +193,8 @@
                 dataType: 'json',
                 success: function(response) {
                     $('#btn').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     if (response['status'] == true) {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -297,6 +301,8 @@
                     if (this.files.length > 1) {
                         this.removeFile(this.files[0]);
                     }
+                    $('#response-loader').removeClass('hidden-loading-container')
+
                 });
             },
             url: "{{ route('Admin.UpdateProfileImage') }}",
@@ -310,6 +316,8 @@
             success: function(file, response) {
                 $('#image').attr('src', '/Uploads/Admin/ProfileImages/' + response.imageName);
                 $('.Profile-Image').attr('src', '/Uploads/Admin/ProfileImages/' + response.imageName);
+                $('#response-loader').addClass('hidden-loading-container')
+
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "top-end",

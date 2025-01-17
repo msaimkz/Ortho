@@ -97,7 +97,8 @@
                                 <label for="">Short Descripion</label>
 
                                 <div class="form-group">
-                                    <textarea rows="4" class="form-control no-resize" name="short_description" id="short_description" placeholder="Please Write Short Descriptipn..."></textarea>
+                                    <textarea rows="4" class="form-control no-resize" name="short_description" id="short_description"
+                                        placeholder="Please Write Short Descriptipn..."></textarea>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -111,7 +112,8 @@
                                 <label for="">Long Descripion</label>
 
                                 <div class="form-group">
-                                    <textarea rows="4" class="form-control no-resize" name="description" id="description" placeholder="Please Write Long Descriptipn..."></textarea>
+                                    <textarea rows="4" class="form-control no-resize" name="description" id="description"
+                                        placeholder="Please Write Long Descriptipn..."></textarea>
                                     <span class="text-danger"></span>
 
                                 </div>
@@ -153,7 +155,8 @@
                             <div class="body">
 
                                 <button type="submit" class="btn btn-primary btn-round waves-effect m-t-20">Post</button>
-                                <a href="{{ route('Admin.blog') }}" class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
+                                <a href="{{ route('Admin.blog') }}"
+                                    class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
                             </div>
                         </div>
                     </div>
@@ -185,6 +188,9 @@
 
                         this.removeFile(this.files[0]);
                     }
+                    $('button[type=submit]').prop('disabled', true)
+                    $('#response-loader').removeClass('hidden-loading-container')
+
                 });
 
                 this.on('success', function(file, response) {
@@ -212,6 +218,8 @@
                             </div>
             `;
                     $('#image-row').html(imgCard);
+                    $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {
@@ -230,6 +238,7 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Store-Blog') }}",
@@ -238,6 +247,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -277,7 +287,7 @@
                                 if (key === 'thumbnail') {
                                     $('#ImageInfo').html(value);
                                 }
-                                
+
                             }
                         });
                     }

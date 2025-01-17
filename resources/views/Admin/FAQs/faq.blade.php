@@ -95,6 +95,7 @@
         $('.delete').click(function() {
             if (confirm("Are you sure you want to Delete this FAQs ?"))
                 $('.delete').prop('disabled', true);
+                $('#response-loader').removeClass('hidden-loading-container')
 
              $.ajax({
                 url: "{{ route('Admin.FAQ.delete') }}",
@@ -107,6 +108,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('.delete').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
 
 
 

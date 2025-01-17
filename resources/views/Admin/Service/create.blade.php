@@ -221,6 +221,8 @@
 
                         this.removeFile(this.files[0]);
                     }
+                    $('button[type=submit]').prop('disabled', true)
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -248,6 +250,9 @@
                             </div>
             `;
                     $('#thumbnail-container').html(imgCard);
+
+                    $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {
@@ -277,6 +282,8 @@
 
                         this.removeFile(this.files[0]);
                     }
+                    $('button[type=submit]').prop('disabled', true)
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -304,6 +311,9 @@
                             </div>
             `;
                     $('#icon-container').html(imgCard);
+
+                    $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {
@@ -321,6 +331,7 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Admin.service.store') }}",
@@ -329,6 +340,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -368,7 +380,7 @@
                                 if (key === 'thumbnail') {
                                     $('#ThumbnailImageInfo').html(value);
                                 }
-                                if(key === 'icon_img'){
+                                if (key === 'icon_img') {
                                     $('#iconImageInfo').html(value);
 
                                 }
@@ -385,6 +397,8 @@
         $('#title').change(function() {
             var element = $(this).val();
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
+
             $.ajax({
                 url: '{{ route('GetSlug') }}',
                 type: 'get',
@@ -394,6 +408,8 @@
                 dataType: 'json',
                 success: function(respose) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     $('#slug').val(respose['slug']);
                 }
             })

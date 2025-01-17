@@ -78,7 +78,8 @@
                                                 class="btn btn-round btn-info">Read More</a>
                                             <a href="{{ route('Admin.blog.edit', $blog->slug) }}" title="edit blog"
                                                 class="btn btn-round btn-primary">Edit</a>
-                                            <button type="button" title="delete blog" class="btn btn-round btn-danger delete"
+                                            <button type="button" title="delete blog"
+                                                class="btn btn-round btn-danger delete"
                                                 data-id="{{ $blog->id }}">Delete</button>
 
 
@@ -100,6 +101,7 @@
         $('.delete').click(function() {
             if (confirm("Are you sure you want to Delete this Blog ?"))
                 $('.delete').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Delete-Blog') }}",
@@ -112,8 +114,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('.delete').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
 
-                    
 
                     if (response['status'] == true) {
 
@@ -133,8 +135,7 @@
                             icon: "success",
                             title: response['msg'],
                         });
-                    }
-                    else{
+                    } else {
 
                         const Toast = Swal.mixin({
                             toast: true,

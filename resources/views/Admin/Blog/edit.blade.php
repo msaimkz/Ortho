@@ -39,7 +39,7 @@
                             <div class="body">
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="title" id="title"
-                                        placeholder="Enter Blog title" value="{{ $blog->title }}"/>
+                                        placeholder="Enter Blog title" value="{{ $blog->title }}" />
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -64,8 +64,10 @@
                             <div class="body">
                                 <label for="status">Status</label>
                                 <select name="status" id="status" class="form-control show-tick">
-                                    <option value="active" {{ ($blog->status == 'active') ? 'selected' : ''  }}>Active</option>
-                                    <option value="inactive"  {{ ($blog->status == 'inactive') ? 'selected' : ''  }}>Inactive</option>
+                                    <option value="active" {{ $blog->status == 'active' ? 'selected' : '' }}>Active
+                                    </option>
+                                    <option value="inactive" {{ $blog->status == 'inactive' ? 'selected' : '' }}>Inactive
+                                    </option>
 
                                 </select>
                                 <span class="text-danger"></span>
@@ -80,8 +82,8 @@
                                 <label for="IsHome">Is Home</label>
 
                                 <select name="IsHome" id="IsHome" class="form-control show-tick">
-                                    <option value="yes"  {{ ($blog->IsHome == 'yes') ? 'selected' : ''  }}>Yes</option>
-                                    <option value="no" {{ ($blog->IsHome == 'no') ? 'selected' : ''  }}>No</option>
+                                    <option value="yes" {{ $blog->IsHome == 'yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="no" {{ $blog->IsHome == 'no' ? 'selected' : '' }}>No</option>
 
                                 </select>
                                 <span class="text-danger"></span>
@@ -97,7 +99,8 @@
                                 <label for="">Short Descripion</label>
 
                                 <div class="form-group">
-                                    <textarea rows="4" class="form-control no-resize" name="short_description" id="short_description" placeholder="Please Write Short Descriptipn...">{{ $blog->short_description }}</textarea>
+                                    <textarea rows="4" class="form-control no-resize" name="short_description" id="short_description"
+                                        placeholder="Please Write Short Descriptipn...">{{ $blog->short_description }}</textarea>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -111,7 +114,8 @@
                                 <label for="">Long Descripion</label>
 
                                 <div class="form-group">
-                                    <textarea rows="4" class="form-control no-resize" name="description" id="description" placeholder="Please Write Long Descriptipn...">{{ $blog->description }}</textarea>
+                                    <textarea rows="4" class="form-control no-resize" name="description" id="description"
+                                        placeholder="Please Write Long Descriptipn...">{{ $blog->description }}</textarea>
                                     <span class="text-danger"></span>
 
                                 </div>
@@ -144,22 +148,25 @@
                             <div class="tab-pane active" id="a2017">
                                 <div class="row clearfix" id="image-row">
                                     @if (!empty($blog->thumbnail))
-                                    <div class="col-lg-3 col-md-4 col-sm-12">
-                                        <input type="hidden" name="thumbnail" id="thumbnail" value="{{ $blog->id }}">
-                                        <div class="card">
-                                            <div class="file">
-                                                <a href="javascript:void(0);">
-                                                   
-                                                    <div class="image">
-                                                        <img src="{{ asset('Uploads/Blog/'.$blog->thumbnail) }}" alt="img" class="img-fluid" >
-                                                    </div>
-                                                    <div class="file-name">
-                                                        <button type="button" class="btn btn-danger btn-round waves-effect m-3">Delete</button>
-                                                    </div>
-                                                </a>
+                                        <div class="col-lg-3 col-md-4 col-sm-12">
+                                            <input type="hidden" name="thumbnail" id="thumbnail"
+                                                value="{{ $blog->id }}">
+                                            <div class="card">
+                                                <div class="file">
+                                                    <a href="javascript:void(0);">
+
+                                                        <div class="image">
+                                                            <img src="{{ asset('Uploads/Blog/' . $blog->thumbnail) }}"
+                                                                alt="img" class="img-fluid">
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-round waves-effect m-3">Delete</button>
+                                                        </div>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endif
 
                                 </div>
@@ -170,7 +177,8 @@
                             <div class="body">
 
                                 <button type="submit" class="btn btn-primary btn-round waves-effect m-t-20">Post</button>
-                                <a href="{{ route('Admin.blog') }}" class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
+                                <a href="{{ route('Admin.blog') }}"
+                                    class="btn  btn-outline-secondary btn-round waves-effect m-t-20">Back</a>
                             </div>
                         </div>
                     </div>
@@ -202,6 +210,8 @@
 
                         this.removeFile(this.files[0]);
                     }
+                    $('button[type=submit]').prop('disabled', true)
+                    $('#response-loader').removeClass('hidden-loading-container')
                 });
 
                 this.on('success', function(file, response) {
@@ -229,6 +239,8 @@
                             </div>
             `;
                     $('#image-row').html(imgCard);
+                    $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
                 });
 
                 this.on('removedfile', function(file) {
@@ -247,14 +259,16 @@
             event.preventDefault();
             var element = $(this);
             $('button[type=submit]').prop('disabled', true)
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
-                url: "{{ route('Update-Blog',$blog->id) }}",
+                url: "{{ route('Update-Blog', $blog->id) }}",
                 type: "post",
                 data: element.serializeArray(),
                 dataType: "json",
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -294,7 +308,7 @@
                                 title: response['error'],
                             });
                         }
-                        
+
                         var errors = response['errors'];
 
 
@@ -312,7 +326,7 @@
                                 if (key === 'thumbnail') {
                                     $('#ImageInfo').html(value);
                                 }
-                                
+
                             }
                         });
                     }

@@ -144,6 +144,7 @@
     <script>
         $('#approve').click(function() {
             $('#approve').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Admin.doctor.RequestChangeStatus') }}",
@@ -156,6 +157,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('#approve').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     var html = `<button class="btn btn-danger btn-round" id="delete"
                                         data-id="{{ $doctorRequest->id }}">Delete</button>`
                     $('#button-container').html(html)
@@ -182,6 +185,7 @@
 
         $('#reject').click(function() {
             $('#reject').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Admin.doctor.RequestChangeStatus') }}",
@@ -194,6 +198,8 @@
                 dataType: "json",
                 success: function(response) {
                     $('#reject').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
                     var html = `<button class="btn btn-danger btn-round" id="delete"
                                         data-id="{{ $doctorRequest->id }}">Delete</button>`
                     $('#button-container').html(html)
@@ -218,6 +224,7 @@
         })
         $('#delete').click(function() {
             $('#delete').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: "{{ route('Admin.doctor.RequestDelete') }}",
@@ -230,6 +237,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('#delete').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 

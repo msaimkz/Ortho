@@ -13,6 +13,7 @@ use App\Rules\MatchTitleAndSlug;
 use App\Models\Admin\Course;
 use App\Models\Admin\CourseChapter;
 use App\Jobs\SendEmailsToNewsletterSubscribers;
+use App\Models\CourseComment;
 use App\Models\NewsletterEmail;
 use App\Models\TempImage;
 
@@ -313,6 +314,7 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Request $request)
     {
         $course = Course::find($request->id);
@@ -346,5 +348,76 @@ class CourseController extends Controller
             'id' => $request->id,
             'msg' => "Course Deleted Successfully",
         ]);
+    }
+
+    public function StoreCourseComment(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'min:3', 'max:15', 'regex:/^[a-zA-Z\s]+$/'],
+            'email' => ['required', 'email', 'max:30'],
+            'comment' => ['required', 'min:10'],
+            'course_id' => ['required', 'numeric']
+        ]);
+
+        if ($validator->passes()) {
+
+            if (Auth::check() == false) {
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => "Access Denied: Please log in to your account to continue"
+                ]);
+            }
+
+            if(Auth::user()->role == 'admin'){
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => false,
+                    'error' => "Admins are not allowed to submit comment to Course."
+                ]);
+            }
+
+            $course = Course::find($request->course_id);
+
+            if ($course == null) {
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => "Course Not Found"
+                ]);
+            }
+
+            $isCommentExist = CourseComment::where('user_id',Auth::user()->id)->where('course',$request->course_id)->first();
+            if($isCommentExist != null){
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => "You already get a comment to this Course."
+                ]);
+            }
+
+            $CourseComment = new CourseComment();
+            $CourseComment->user_id = Auth::user()->id;
+            $CourseComment->course = $request->course_id;
+            $CourseComment->name = $request->name;
+            $CourseComment->email = $request->email;
+            $CourseComment->comment = $request->comment;
+            $CourseComment->save();
+
+            return response()->json([
+                'status' => true,
+                'msg' => 'Thank you! Your Comment has been successfully sent. We will get back to you shortly'
+            ]);
+        } else {
+
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors(),
+            ]);
+        }
     }
 }

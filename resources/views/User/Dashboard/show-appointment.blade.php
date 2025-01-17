@@ -225,6 +225,7 @@
             event.preventDefault();
 
             $('#cancel').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             var element = $(this);
 
@@ -235,6 +236,7 @@
                 dataType: "json",
                 success: function(response) {
                     $('#cancel').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
 
 
                     if (response['status'] == true) {

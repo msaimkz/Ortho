@@ -8,6 +8,7 @@ use App\Models\Admin\Faq;
 use App\Models\Admin\Service;
 use App\Models\Blog;
 use App\Models\BlogComment;
+use App\Models\CourseComment;
 use App\Models\Doctor\DoctorWorkingTime;
 use App\Models\DoctorProfile;
 use Illuminate\Http\Request;
@@ -124,13 +125,15 @@ class HomeController extends Controller
     public function CourseDetail(string $slug){
 
         $course = Course::where('slug',$slug)->first();
+        $RecentCourses = Course::where('status','active')->latest()->limit(3)->get();
+        $CourseComment = CourseComment::where('course',$course->id)->where('status','active')->with('user')->get();
 
         if($course == null){
 
             return redirect()->route('User.error');
         }
 
-        return view('User.CourseDetail',compact('course'));
+        return view('User.CourseDetail',compact('course','RecentCourses','CourseComment'));
 
     }
 

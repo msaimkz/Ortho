@@ -108,6 +108,7 @@
     <script type="text/javascript">
         $('#status').click(function() {
             $('#status').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: '{{ route('Admin.patients.statusChange', $patient->id) }}',
@@ -116,6 +117,7 @@
                 dataType: 'json',
                 success: function(response) {
                     $('#status').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
@@ -155,6 +157,7 @@
 
         $('#delete').click(function() {
             $('#delete').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
 
             $.ajax({
                 url: '{{ route('Admin.patients.DeletePatient', $patient->id) }}',
@@ -163,6 +166,7 @@
                 dataType: 'json',
                 success: function(response) {
                     $('#delete').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
 
                     if (response['status'] == true) {
 
