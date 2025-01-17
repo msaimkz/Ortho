@@ -90,7 +90,8 @@
                 transform: translateX(13px) rotate(-180deg) translateX(13px)
             }
         }
-        .hidden-loading-container{
+
+        .hidden-loading-container {
             display: none;
         }
     </style>
@@ -175,6 +176,9 @@
                                     class="zmdi zmdi-calendar-check"></i><span>Appointment</span> </a></li>
                         <li><a href="{{ route('User.dashboard.DoctorRequest') }}"><i
                                     class="zmdi zmdi-folder"></i><span>Doctor Request</span></a>
+                        </li>
+                        <li><a href="{{ route('User.dashboard.FavouriteDoctor') }}"><i
+                                    class="zmdi zmdi-account-add"></i><span>Favourite Doctors</span></a>
                         </li>
                     </ul>
                 </div>

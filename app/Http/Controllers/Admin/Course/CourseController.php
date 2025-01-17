@@ -142,6 +142,7 @@ class CourseController extends Controller
     public function show(string $slug)
     {
         $course = Course::where('slug',$slug)->with('chapters')->first();
+        $CourseComments = CourseComment::where('course', $course->id)->with('user')->get();
 
 
         if($course == null){
@@ -151,7 +152,7 @@ class CourseController extends Controller
 
         $chapterCount = CourseChapter::where('course_id',$course->id)->count();  
 
-        return view('Admin.Course.show',compact('course','chapterCount'));
+        return view('Admin.Course.show',compact('course','chapterCount','CourseComments'));
     }
 
     /**
@@ -419,5 +420,64 @@ class CourseController extends Controller
                 'errors' => $validator->errors(),
             ]);
         }
+    }
+
+    public function CourseCommentStatus(Request $request)
+    {
+
+        $id = $request->id;
+
+        $CourseComment = CourseComment::find($id);
+
+        if ($CourseComment == null) {
+
+            return response()->json([
+                'status' => false,
+                'error' => "Course Comment Not Found"
+            ]);
+        }
+
+        if ($CourseComment->status == 'inactive') {
+
+            $CourseComment->status = 'active';
+            $CourseComment->save();
+
+            return response()->json([
+                'status' => true,
+                'CourseCommentStatus' => $CourseComment->status,
+                'msg' => "Course Comment Status Changed Successfully"
+            ]);
+        } else {
+            $CourseComment->status = 'inactive';
+            $CourseComment->save();
+
+            return response()->json([
+                'status' => true,
+                'CourseCommentStatus' => $CourseComment->status,
+                'msg' => "Course Comment Status Changed Successfully"
+            ]);
+        }
+    }
+    public function CourseCommentDelete(Request $request){
+
+        $id = $request->id;
+
+        $CourseComment = CourseComment::find($id);
+
+        if ($CourseComment == null) {
+
+            return response()->json([
+                'status' => false,
+                'error' => "Course Comment Not Found"
+            ]);
+        }
+
+        $CourseComment->delete();
+
+        return response()->json([
+            'status' => true,
+            'id' => $request->id,
+            'msg' => "Course Comment Deleted  Successfully"
+        ]);
     }
 }

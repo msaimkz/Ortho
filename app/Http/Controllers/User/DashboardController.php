@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\DoctorRequest;
 use App\Models\Appoinment;
+use App\Models\FavouriteDoctor;
 use App\Models\Patient\PatientProfile;
 use App\Models\User;
 use App\Rules\ValidDateOfBirth;
@@ -252,5 +253,13 @@ class DashboardController extends Controller
         $data['appointment'] = $appointment;
         $pdf = PDF::loadView('User.Dashboard.appointment-slip',$data)->setOptions(['defualtFont' => 'sans-serif']);
         return $pdf->download('appointment-slip.pdf');
+    }
+
+    public function FavouriteDoctor(){
+
+        $doctors = FavouriteDoctor::where('user_id',Auth::user()->id)->with('doctor')->latest()->get();
+
+
+        return view('User.Dashboard.Favourite Doctor.index',compact('doctors'));
     }
 }

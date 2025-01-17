@@ -20,6 +20,7 @@ use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Doctor\DoctorWorkingTimeController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Doctor\DoctorPatientController;
+use App\Http\Controllers\FavouriteDoctorController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\TempController;
 use App\Models\CourseComment;
@@ -44,7 +45,7 @@ Route::get('/Ortho/Contact-Us',[HomeController::class,'contact'])->name('User.co
 Route::get('/Ortho/Our-Services',[HomeController::class,'service'])->name('User.service');
 Route::get('/Ortho/Our-Blogs',[HomeController::class,'blog'])->name('User.blog');
 Route::get('/Ortho/Our-Doctors',[HomeController::class,'doctor'])->name('User.doctor');
-Route::get('/Ortho/Our-Projects',[HomeController::class,'project'])->name('User.project');
+Route::get('/Ortho/Our-Courses',[HomeController::class,'project'])->name('User.project');
 Route::get('/Ortho/Our-TimeTable',[HomeController::class,'timetable'])->name('User.timetable');
 Route::get('/Ortho/Blog-Detail/{slug}',[HomeController::class,'blogDetail'])->name('User.blogDetail');
 Route::get('/Ortho/Doctor-Detail/{id}',[HomeController::class,'DoctorDetail'])->name('User.DoctorDetail');
@@ -66,6 +67,7 @@ Route::get('/Ortho/Dashboard/Update-Profile',[DashboardController::class,'Editpr
 Route::get('/Ortho/Dashboard/My-Appointment',[DashboardController::class,'appoinment'])->name('User.dashboard.appoinment');
 Route::get('/Ortho/Dashboard/Appointment-Detail/{id}',[DashboardController::class,'AppoinmentDetail'])->name('User.dashboard.appoinment.show');
 Route::get('/Ortho/Dashboard/Appointment-Slip/{id}',[DashboardController::class,'appoinmentSlip'])->name('User.dashboard.appoinment.slip');
+Route::get('/Ortho/Dashboard/Favourite-Doctors',[DashboardController::class,'FavouriteDoctor'])->name('User.dashboard.FavouriteDoctor');
 
 Route::post('/Ortho/Update-Profile',[DashboardController::class,'UpdateProfile'])->name('User.UpdateProfile');
 Route::post('/Ortho/Update-Profile-Image',[DashboardController::class,'UpdateProfileImg'])->name('User.UpdateProfileImage');
@@ -87,13 +89,23 @@ Route::post('/Ortho/Book-Doctor-Appoinment',[AppoinmentController::class,'Store'
 Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])->name('User.apoinment');
 Route::post('/Ortho/Send-Blog-Comment',[BlogController::class,'StoreBlogComment'])->name('User.blog.comment.store');
 Route::post('/Ortho/Send-Course-Comment',[CourseController::class,'StoreCourseComment'])->name('User.course.comment.store');
+Route::post('/Ortho/Add-Favourite-Doctor',[FavouriteDoctorController::class,'store'])->name('User.AddFavourite.doctor');
 
 
 // Admin Dashboard Routes
 Route::middleware(['auth','verified','admin'])->group(function(){
+ 
+    // Dashboards Routes   
 Route::get('/Ortho/Admin/Dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
+
+   // Profile Routes
 Route::get('/Ortho/Admin/Profile',[AdminController::class,'Profile'])->name('Admin.profile');
 Route::get('/Ortho/Admin/Update-Profile',[AdminController::class,'EditProfile'])->name('Admin.profile.edit');
+Route::post('/Ortho/Admin/Change-Password',[AdminController::class,'ChangePassword'])->name('Admin.ChangePassword');
+Route::post('/Ortho/Admin/Edit-Profile',[AdminController::class,'UpdateProfile'])->name('Admin.UpdateProfile');
+Route::post('/Ortho/Admin/Edit-Profile-Image',[AdminController::class,'ProfileImg'])->name('Admin.UpdateProfileImage');
+
+   // Doctor Routes
 Route::get('/Ortho/Admin/All-Doctors',[DoctorController::class,'doctor'])->name('Admin.doctor');
 Route::get('/Ortho/Admin/Doctor-Profile/{id}',[DoctorController::class,'profile'])->name('Admin.doctor.profile');
 Route::post('/Ortho/Admin/Doctor-Change-Status/',[DoctorController::class,'ChangeStatus'])->name('Admin.doctor.ChangeStatus');
@@ -102,15 +114,21 @@ Route::get('/Ortho/Admin/Doctor-Registration-Requests',[DoctorController::class,
 Route::get('/Ortho/Admin/Doctor-Request-Profile/{id}',[DoctorController::class,'requestProfile'])->name('Admin.doctor.request-profile');
 Route::post('/Ortho/Admin/Doctor-Request-Status',[DoctorController::class,'requestProfileStatus'])->name('Admin.doctor.RequestChangeStatus');
 Route::delete('/Ortho/Admin/Doctor-Request-Delete',[DoctorController::class,'requestDelete'])->name('Admin.doctor.RequestDelete');
+
+   // Patient Routes
 Route::get('/Ortho/Admin/All-Patients',[PatientController::class,'index'])->name('Admin.patients');
 Route::get('/Ortho/Admin/Patient-Profile/{id}',[PatientController::class,'profile'])->name('Admin.patients.profile');
 Route::get('/Ortho/Admin/Change-Patient-Status/{id}',[PatientController::class,'status'])->name('Admin.patients.statusChange');
 Route::delete('/Ortho/Admin/Delete-Patient/{id}',[PatientController::class,'delete'])->name('Admin.patients.DeletePatient');
+
+  // Blog Routes
 Route::get('/Ortho/Admin/All-Blogs',[BlogController::class,'blog'])->name('Admin.blog');
 Route::get('/Ortho/Admin/Blog-Detail/{slug}',[BlogController::class,'detail'])->name('Admin.blog.detail');
 Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');
 Route::get('/Ortho/Admin/Edit-Blog/{slug}',[BlogController::class,'edit'])->name('Admin.blog.edit');
 Route::get('/Ortho/Admin/Create-Blog',[BlogController::class,'create'])->name('Admin.blog.create');
+
+  // Service Routes
 Route::get('/Ortho/Admin/All-Services',[ServiceController::class,'index'])->name('Admin.service');
 Route::get('/Ortho/Admin/Service-Detail/{slug}',[ServiceController::class,'show'])->name('Admin.service.detail');
 Route::get('/Ortho/Admin/Create-Service',[ServiceController::class,'create'])->name('Admin.service.create');
@@ -118,6 +136,8 @@ Route::post('/Ortho/Admin/Store-Service',[ServiceController::class,'store'])->na
 Route::get('/Ortho/Admin/Edit-Service/{slug}',[ServiceController::class,'edit'])->name('Admin.service.edit');
 Route::post('/Ortho/Admin/Update-Service/{id}',[ServiceController::class,'update'])->name('Admin.service.update');
 Route::delete('/Ortho/Admin/Delete-Service',[ServiceController::class,'destroy'])->name('Admin.service.delete');
+
+  // FAQs Routes
 Route::get('/Ortho/Admin/All-FAQs',[FAQController::class,'index'])->name('Admin.FAQ');
 Route::get('/Ortho/Admin/Create-FAQ',[FAQController::class,'create'])->name('Admin.FAQ.create');
 Route::post('/Ortho/Admin/Store-FAQ',[FAQController::class,'store'])->name('Admin.FAQ.store');
@@ -125,6 +145,8 @@ Route::get('/Ortho/Admin/Edit-FAQ/{slug}',[FAQController::class,'edit'])->name('
 Route::get('/Ortho/Admin/Show-FAQ/{slug}',[FAQController::class,'show'])->name('Admin.FAQ.show');
 Route::post('/Ortho/Admin/Update-FAQ/{id}',[FAQController::class,'update'])->name('Admin.FAQ.update');
 Route::delete('/Ortho/Admin/Delete-FAQ',[FAQController::class,'destroy'])->name('Admin.FAQ.delete');
+
+  // Subscriptions Routes
 Route::get('/Ortho/Admin/All-Subscriptions',[SubscriptionController::class,'index'])->name('Admin.subscripion');
 Route::get('/Ortho/Admin/Create-Subscription',[SubscriptionController::class,'create'])->name('Admin.subscripion.create');
 Route::post('/Ortho/Admin/Store-Subscription',[SubscriptionController::class,'store'])->name('Admin.subscripion.store');
@@ -132,14 +154,18 @@ Route::get('/Ortho/Admin/Edit-Subscription/{slug}',[SubscriptionController::clas
 Route::post('/Ortho/Admin/Update-Subscription/{id}',[SubscriptionController::class,'update'])->name('Admin.subscripion.update');
 Route::delete('/Ortho/Admin/Delete-Subscription',[SubscriptionController::class,'destroy'])->name('Admin.subscripion.delete');
 Route::get('/Ortho/Admin/Subscribe-Patients',[SubscriptionController::class,'show'])->name('Admin.subscripion.subscriber');
-Route::post('/Ortho/Admin/Change-Password',[AdminController::class,'ChangePassword'])->name('Admin.ChangePassword');
-Route::post('/Ortho/Admin/Edit-Profile',[AdminController::class,'UpdateProfile'])->name('Admin.UpdateProfile');
-Route::post('/Ortho/Admin/Edit-Profile-Image',[AdminController::class,'ProfileImg'])->name('Admin.UpdateProfileImage');
+
+
+  // Error Route
 Route::get('/Ortho/Admin/404-Not-Found',[AdminController::class,'notFound'])->name('Admin.notFound');
+
+  // Contact Message Routes
 Route::get('/Ortho/Admin/All-Contact-Messages',[ContactController::class,'index'])->name('Admin.contact.index');
 Route::get('/Ortho/Admin/Contact-Message/{id}',[ContactController::class,'show'])->name('Admin.contact.show');
 Route::post('/Ortho/Admin/Send-Reply-Message/',[ContactController::class,'sendReply'])->name('Admin.contact.sendReply');
 Route::delete('/Ortho/Admin/Delete-Contact-Message/',[ContactController::class,'delete'])->name('Admin.contact.delete');
+
+  // Course Routes
 Route::get('/Ortho/Admin/All-Courses',[CourseController::class,'index'])->name('Admin.course');
 Route::get('/Ortho/Admin/Create-Course',[CourseController::class,'create'])->name('Admin.course.create');
 Route::post('/Ortho/Admin/Store-Course',[CourseController::class,'store'])->name('Admin.course.store');
@@ -147,12 +173,19 @@ Route::get('/Ortho/Admin/Show-Course/{slug}',[CourseController::class,'show'])->
 Route::get('/Ortho/Admin/Edit-Course/{slug}',[CourseController::class,'edit'])->name('Admin.course.edit');
 Route::post('/Ortho/Admin/Update-Course/{id}',[CourseController::class,'update'])->name('Admin.course.update');
 Route::delete('/Ortho/Admin/Delete-Course',[CourseController::class,'destroy'])->name('Admin.course.delete');
+Route::post('Ortho/Admin/Change-Course-Comment-Status',[CourseController::class,'CourseCommentStatus'])->name('Course.comment.status');
+Route::delete('Ortho/Admin/Delete-Course-Comment',[CourseController::class,'CourseCommentDelete'])->name('Course.comment.delete');
 Route::get('/Ortho/Admin/Course/Add-Chapter/{slug}',[ChapterController::class,'create'])->name('Admin.course.chapter.create');
 Route::post('/Ortho/Admin/Course/Add-Chapter/{id}',[ChapterController::class,'store'])->name('Admin.course.chapter.store');
 Route::get('/Ortho/Admin/Course/Edit-Chapter/{slug}',[ChapterController::class,'edit'])->name('Admin.course.chapter.edit');
 Route::post('/Ortho/Admin/Course/Update-Chapter/{id}',[ChapterController::class,'update'])->name('Admin.course.chapter.update');
 Route::delete('/Ortho/Admin/Course/Delete-Chapter/',[ChapterController::class,'destroy'])->name('Admin.course.chapter.delete');
+
+ // Newsletter Routes
 Route::get('/Ortho/Admin/All-NewsLetter-Emails',[NewsLetterController::class,'index'])->name('Admin.newsletter');
+
+//  Contact Information Routes
+
 Route::get('/Ortho/Admin/Contact-Information',[ContactInformationController::class,'index'])->name('Admin.contactInformation');
 Route::get('/Ortho/Admin/Add-Contact-Information',[ContactInformationController::class,'create'])->name('Admin.contactInformation.create');
 Route::post('/Ortho/Admin/Save-Contact-Information',[ContactInformationController::class,'save'])->name('Admin.contactInformation.save');

@@ -49,6 +49,51 @@
                     </div>
                     <div class="card">
                         <div class="header">
+                            <h2><strong>Comments</strong> {{ $CourseComments->count() }}</h2>
+                        </div>
+                        <div class="body">
+                            <ul class="comment-reply list-unstyled">
+                                @if (!empty($CourseComments))
+                                    @foreach ($CourseComments as $CourseComment)
+                                        <li class="row" id="Course-Comment-{{ $CourseComment->id }}">
+                                            <div class="icon-box col-md-2 col-4">
+                                                @if (isset($CourseComment->user->profile_photo_path) &&
+                                                        file_exists(public_path('Uploads/Patient/Profile/' . $CourseComment->user->profile_photo_path)))
+                                                    <img src="{{ asset('Uploads/Patient/Profile/' . $CourseComment->user->profile_photo_path) }}"
+                                                        alt="Awesome Image" class="img-fluid img-thumbnail">
+                                                @else
+                                                    <img src="{{ asset('Assets/Dashboard/assets/images/blog/blog-page-3.jpg') }}"
+                                                        alt="Awesome Image" class="img-fluid img-thumbnail">
+                                                @endif
+                                            </div>
+                                            <div class="text-box col-md-10 col-8 p-l-0 p-r0">
+                                                <h5 class="m-b-0">{{ ucwords($CourseComment->name) }}</h5>
+                                                <p>{{ ucwords($CourseComment->comment) }}</p>
+                                                <ul class="list-inline">
+                                                    @if ($CourseComment->status == 'inactive')
+                                                        <li><button type="button" data-status="{{ $CourseComment->status }}"
+                                                                data-id="{{ $CourseComment->id }}"
+                                                                class="btn btn-success Commentstatus">Active</button></li>
+                                                    @else
+                                                        <li><button type="button" data-id="{{ $CourseComment->id }}"
+                                                                data-status="{{ $CourseComment->status }}"
+                                                                class="btn btn-danger Commentstatus">Inactive</button></li>
+                                                    @endif
+                                                    <li><button type="button" data-id="{{ $CourseComment->id }}"
+                                                            class="btn btn-danger Commentdelete">Delete</button></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <hr>
+                                    @endforeach
+                                @endif
+
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
                             <h2><strong>Chapters</strong> <span class="chapter-counter"> {{ $chapterCount }}</span></h2>
                         </div>
                         <div class="body">
@@ -163,6 +208,133 @@
 
                 }
             })
+
+        })
+        $('.Commentstatus').click(function() {
+            $('.Commentstatus').prop('disabled', true);
+            $('#response-loader').removeClass('hidden-loading-container')
+
+            $.ajax({
+                url: "{{ route('Course.comment.status') }}",
+                type: 'post',
+                data: {
+                    id: $(this).data('id'),
+                    status: $(this).data('status')
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('.Commentstatus').prop('disabled', false);
+                    $('#response-loader').addClass('hidden-loading-container')
+
+                    if (response['status'] == true) {
+
+                        if (response['CourseCommentStatus'] == 'active') {
+
+                            $('.Commentstatus').removeClass('btn-success').addClass('btn-danger').html(
+                                'Inactive')
+
+                        } else {
+                            $('.Commentstatus').removeClass('btn-danger').addClass('btn-success').html(
+                                'Active')
+
+
+                        }
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+                    } else {
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['error'],
+                        });
+                    }
+
+                }
+            })
+        })
+
+        $('.Commentdelete').click(function() {
+            if (confirm("Are you sure want to delete this Course Comment")) {
+                $('.Commentdelete').prop('disabled', true);
+                $('#response-loader').removeClass('hidden-loading-container')
+
+                $.ajax({
+                    url: "{{ route('Course.comment.delete') }}",
+                    type: 'delete',
+                    data: {
+                        id: $(this).data('id'),
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        $('.Commentdelete').prop('disabled', false);
+                        $('#response-loader').addClass('hidden-loading-container')
+
+                        $(`#Course-Comment-${response['id']}`).remove();
+
+                        if (response['status'] == true) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response['msg'],
+                            });
+
+                        } else {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
+                        }
+
+                    }
+                })
+            }
 
         })
     </script>
