@@ -29,7 +29,7 @@
                     @foreach ($doctors as $doctor)
                         <div class="cs_team cs_style_1 cs_blue_bg">
                             <div class="cs_team_shape cs_accent_bg"></div>
-                            <a class='cs_team_thumbnail' href='{{ route('User.DoctorDetail', $doctor->id) }}'>
+                            <a class='cs_team_thumbnail' href='{{ route('User.DoctorDetail',$doctor->user_id) }}'>
                                 @if (isset($doctor->profile_img) && file_exists(public_path('Uploads/Doctor/Profile/' . $doctor->profile_img)))
                                     <img src="{{ asset('Uploads/Doctor/Profile/' . $doctor->profile_img) }}"
                                         alt="profile-image">
@@ -39,7 +39,7 @@
                                 @endif
                             </a>
                             <div class="cs_team_bio">
-                                <h3 class="cs_team_title cs_extra_bold mb-0"><a href='{{ route('User.DoctorDetail', $doctor->id) }}'>Dr.
+                                <h3 class="cs_team_title cs_extra_bold mb-0"><a href='{{ route('User.DoctorDetail',$doctor->user_id) }}'>Dr.
                                         {{ ucwords($doctor->name) }}</a></h3>
                                 <p class="cs_team_subtitle">{{ ucwords($doctor->speciality) }}</p>
                                 <div class="cs_social_btns cs_style_1">

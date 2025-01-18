@@ -105,7 +105,7 @@ class HomeController extends Controller
 
     public function doctorDetail(string $id){
 
-        $doctor = DoctorProfile::find($id);
+        $doctor = DoctorProfile::where('user_id',$id)->where('status','active')->where('DoctorStatus','active')->first();
 
         if($doctor == null){
 

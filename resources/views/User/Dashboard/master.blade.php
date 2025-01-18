@@ -170,7 +170,7 @@
                             </div>
                         </li>
                         <li class="header">MAIN</li>
-                        <li class="active open"><a href="index.html"><i
+                        <li class="active open"><a href="{{ route('User.dashboard.dashboard') }}"><i
                                     class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
                         <li><a href="{{ route('User.dashboard.appoinment') }}"><i
                                     class="zmdi zmdi-calendar-check"></i><span>Appointment</span> </a></li>
@@ -180,6 +180,9 @@
                         <li><a href="{{ route('User.dashboard.FavouriteDoctor') }}"><i
                                     class="zmdi zmdi-account-add"></i><span>Favourite Doctors</span></a>
                         </li>
+                        <li><a href="{{ route('User.dashboard.FavouriteCourse') }}"><i
+                            class="zmdi zmdi-book"></i><span>Favourite Courses</span></a>
+                </li>
                     </ul>
                 </div>
             </div>

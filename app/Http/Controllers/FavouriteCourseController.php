@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FavouriteDoctor;
-use App\Models\User;
+use App\Models\Admin\Course;
+use App\Models\FavouriteCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class FavouriteDoctorController extends Controller
+class FavouriteCourseController extends Controller
 {
     public function store(Request $request){
 
+        
         if(Auth::check() == false){
 
             return response()->json([
@@ -30,21 +31,21 @@ class FavouriteDoctorController extends Controller
         }
 
         $user = Auth::user()->id; 
-        $doctor = User::find($request->id);
-        FavouriteDoctor::updateOrCreate(
+        $course = Course::find($request->id);
+        FavouriteCourse::updateOrCreate(
             [
                 'user_id' => $user,
-                'doctor_id' => $doctor->id,
+                'course_id' => $course->id,
             ],
             [
                 'user_id' => $user,
-                'doctor_id' => $doctor->id,
+                'course_id' => $course->id,
             ]
         );
 
         return response()->json([
             'status' => true,
-            'msg' => "Dr: ".ucwords($doctor->name)." add successfully to our Favourite Doctors List"
+            'msg' => "This Course is add successfully to our Favourite Courses List"
         ]);
 
 
@@ -52,23 +53,22 @@ class FavouriteDoctorController extends Controller
 
     public function remove(Request $request){
 
-        $doctor = FavouriteDoctor::find($request->id);
+        $course = FavouriteCourse::find($request->id);
 
-        if($doctor == null){
+        if($course == null){
 
             return response()->json([
                 'status' => false,
-                'error' => "Favourite Doctor Not Found"
+                'error' => "Favourite Course Not Found"
             ]);
         }
 
-        $user = User::where('id',$doctor->doctor_id)->first();
-        $doctor->delete();
+        $course->delete();
 
         return response()->json([
             'status' => true,
             'id' => $request->id,
-            'msg'=> "Dr : ".ucwords($user->name)." has been remove your Favourite doctors list",
+            'msg'=> "This Course has been remove your Favourite courses list",
         ]);
     }
 }

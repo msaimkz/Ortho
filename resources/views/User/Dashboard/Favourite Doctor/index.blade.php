@@ -54,13 +54,13 @@
                                         <tbody>
                                             @if (!empty($doctors))
                                                 @foreach ($doctors as $doctor )
-                                                <tr>
+                                                <tr id="favourite-doctor-{{ $doctor->id }}">
                                                    
                                                     <td>
                                                         @if (isset($doctor->doctor->profile_photo_path) &&
                                                                 file_exists(public_path('Uploads/Doctor/Profile/' . $doctor->doctor->profile_photo_path)))
                                                             <img src="{{ asset('Uploads/Doctor/Profile/' . $doctor->doctor->profile_photo_path) }}"
-                                                                alt="Profile-Image" class="rounded-circle" width="50" style="object-fit: cover;">
+                                                                alt="Profile-Image" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
                                                         @else
                                                             <img src="http://via.placeholder.com/35x35" alt="Avatar"
                                                                 class="rounded-circle">
@@ -71,7 +71,10 @@
                                                     <td>{{ ucwords($doctor->doctor->city) }}</td>
                                                     <td>{{ $doctor->doctor->phone }}</td>
                                                     
-                                                    <td><a href="{{ route('Admin.patients.profile', $doctor->doctor->id) }}"><span class="badge badge-success">View</span></a></td>
+                                                    <td>
+                                                        <a href="{{ route('User.DoctorDetail', $doctor->doctor->id) }}"><span class="badge badge-success">View</span></a>
+                                                        <a href="javascript:void(0)" class="Remove" data-id="{{ $doctor->id }}"><span class="badge badge-danger">Remove to Favourite</span></a>
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             @else
@@ -89,4 +92,70 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('js')
+    
+<script>
+   $('.Remove').click(function() {
+            if (confirm("Are you sure you want to Remove this doctor our favourite doctors list?"))
+                $('#response-loader').removeClass('hidden-loading-container')
+
+             $.ajax({
+                url: "{{ route('User.RemoveFavourite.doctor') }}",
+                type: "delete",
+                data: {
+
+                    id: $(this).data('id'),
+
+                },
+                dataType: "json",
+                success: function(response) {
+                    $('#response-loader').addClass('hidden-loading-container')
+
+
+
+                    if (response['status'] == true) {
+
+                        
+                        $(`#favourite-doctor-${response['id']}`).remove();
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+                    } else {
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['error'],
+                        });
+                    }
+
+                }
+            })
+
+        })
+</script>
 @endsection

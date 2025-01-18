@@ -43,7 +43,8 @@
                                 <span>Appoinment Now </span>
                                 <i class="fa-solid fa-angles-right"></i>
                             </a>
-                            <button class='cs_btn cs_style_1 cs_color_1' id="FavouriteDoctor" style="outline: none; border:none;" type="button" data-id="{{ $doctor->user_id }}">
+                            <button class='cs_btn cs_style_1 cs_color_1' id="FavouriteDoctor"
+                                style="outline: none; border:none;" type="button" data-id="{{ $doctor->user_id }}">
                                 <span>Add Favourite Doctor</span>
                                 <i class="fa-solid fa-angles-right"></i>
                             </button>
@@ -133,65 +134,65 @@
 @section('js')
     <script>
         $('#FavouriteDoctor').click(function() {
-            if (confirm("Are you sure you want to Add this doctor to our Favourite Doctors list ?"))
+            if (confirm("Are you sure you want to Add this doctor to our Favourite Doctors list ?")) {
                 $('#FavouriteDoctor').prop('disabled', true);
                 $('#response-loader').removeClass('hidden-loading-container')
 
-             $.ajax({
-                url: "{{ route('User.AddFavourite.doctor') }}",
-                type: "post",
-                data: {
+                $.ajax({
+                    url: "{{ route('User.AddFavourite.doctor') }}",
+                    type: "post",
+                    data: {
 
-                    id: $(this).data('id'),
+                        id: $(this).data('id'),
 
-                },
-                dataType: "json",
-                success: function(response) {
-                    $('#FavouriteDoctor').prop('disabled', false);
-                    $('#response-loader').addClass('hidden-loading-container')
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#FavouriteDoctor').prop('disabled', false);
+                        $('#response-loader').addClass('hidden-loading-container')
 
 
 
-                    if (response['status'] == true) {
+                        if (response['status'] == true) {
 
-                        
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: response['msg'],
-                        });
-                    } else {
 
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response['error'],
-                        });
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response['msg'],
+                            });
+                        } else {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
+                        }
+
                     }
-
-                }
-            })
-
+                })
+            }
         })
     </script>
 @endsection

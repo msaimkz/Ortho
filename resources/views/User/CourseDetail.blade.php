@@ -41,6 +41,11 @@
                             <span>Buy Now </span>
                             <i class="fa-solid fa-angles-right"></i>
                         </a>
+                        <button class='cs_btn cs_style_1 cs_color_1' id="FavouriteCourse" data-id="{{ $course->id }}"
+                            type='button' style="outline: none; border: none;">
+                            <span>Add Favourite Course</span>
+                            <i class="fa-solid fa-angles-right"></i>
+                        </button>
                         <div class="cs_height_47 cs_height_lg_30"></div>
 
                         <div class="cs_height_70 cs_height_lg_40"></div>
@@ -58,14 +63,15 @@
                                                 <img src="{{ asset('Assets/Dashboard/assets/images/blog/blog-page-3.jpg') }}"
                                                     alt="Awesome Image" class="cs_radius_5">
                                             @endif
-                                           
+
                                         </div>
                                         <div class="cs_comment_info">
                                             <h3>{{ ucwords($Comment->name) }}</h3>
                                             <p>{{ ucwords($Comment->comment) }}.</p>
                                             <div class="cs_comment_meta_wrapper">
                                                 <div class="cs_comment_date">
-                                                    <span>{{ \Carbon\Carbon::parse($Comment->created_at)->format('M d, Y') }}</span><span> {{ \Carbon\Carbon::parse($Comment->created_at)->format('g:i A') }}</span>
+                                                    <span>{{ \Carbon\Carbon::parse($Comment->created_at)->format('M d, Y') }}</span><span>
+                                                        {{ \Carbon\Carbon::parse($Comment->created_at)->format('g:i A') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +131,8 @@
                                         </a>
                                         <div class="cs_post_info">
                                             <div class="cs_post_meta"><i class="fa-regular fa-calendar-days"></i>
-                                                {{ \Carbon\Carbon::parse($RecentCourse->created_at)->format('M-d-Y') }}</div>
+                                                {{ \Carbon\Carbon::parse($RecentCourse->created_at)->format('M-d-Y') }}
+                                            </div>
                                             <h3 class="cs_post_title mb-0"><a
                                                     href='{{ route('User.CourseDetail', $RecentCourse->slug) }}'>{{ ucwords($RecentCourse->title) }}.</a>
                                             </h3>
@@ -227,6 +234,69 @@
                     }
                 }
             })
+        })
+
+        $('#FavouriteCourse').click(function() {
+            if (confirm("Are you sure you want to Add this course to our Favourite Courses list ?") == true)
+            {
+                $('#FavouriteCourse').prop('disabled', true);
+               $('#response-loader').removeClass('hidden-loading-container')
+
+                $.ajax({
+                    url: "{{ route('User.AddFavourite.course') }}",
+                    type: "post",
+                    data: {
+
+                        id: $(this).data('id'),
+
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#FavouriteCourse').prop('disabled', false);
+                        $('#response-loader').addClass('hidden-loading-container')
+
+
+
+                        if (response['status'] == true) {
+
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response['msg'],
+                            });
+                        } else {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
+                        }
+
+                    }
+                })
+            }
         })
     </script>
 @endsection

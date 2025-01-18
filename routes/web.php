@@ -20,6 +20,7 @@ use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Doctor\DoctorWorkingTimeController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Doctor\DoctorPatientController;
+use App\Http\Controllers\FavouriteCourseController;
 use App\Http\Controllers\FavouriteDoctorController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\TempController;
@@ -68,6 +69,7 @@ Route::get('/Ortho/Dashboard/My-Appointment',[DashboardController::class,'appoin
 Route::get('/Ortho/Dashboard/Appointment-Detail/{id}',[DashboardController::class,'AppoinmentDetail'])->name('User.dashboard.appoinment.show');
 Route::get('/Ortho/Dashboard/Appointment-Slip/{id}',[DashboardController::class,'appoinmentSlip'])->name('User.dashboard.appoinment.slip');
 Route::get('/Ortho/Dashboard/Favourite-Doctors',[DashboardController::class,'FavouriteDoctor'])->name('User.dashboard.FavouriteDoctor');
+Route::get('/Ortho/Dashboard/Favourite-Courses',[DashboardController::class,'FavouriteCourse'])->name('User.dashboard.FavouriteCourse');
 
 Route::post('/Ortho/Update-Profile',[DashboardController::class,'UpdateProfile'])->name('User.UpdateProfile');
 Route::post('/Ortho/Update-Profile-Image',[DashboardController::class,'UpdateProfileImg'])->name('User.UpdateProfileImage');
@@ -76,6 +78,8 @@ Route::get('/Ortho/404-Not-Found',[DashboardController::class,'error'])->name('U
 Route::get('/Ortho/Doctor-Registration-Request',[DashboardController::class,'DoctorRequest'])->name('User.dashboard.DoctorRequest');
 Route::get('/Ortho/Doctor-Registration-Request-Profile/{id}',[DashboardController::class,'DoctorRequestProfile'])->name('User.dashboard.DoctorRequestProfile');
 Route::post('/Ortho/User-Cancelled-Appointment',[AppoinmentController::class,'UserCancelAppointment'])->name('User.appointment.cancel');
+Route::delete('/Ortho/Remove-Favourite-Doctor',[FavouriteDoctorController::class,'remove'])->name('User.RemoveFavourite.doctor');
+Route::delete('/Ortho/Remove-Favourite-Course',[FavouriteCourseController::class,'remove'])->name('User.RemoveFavourite.course');
 
 });
 
@@ -90,6 +94,7 @@ Route::get('/Ortho/Booking-Appionment/{id}',[HomeController::class,'apoinment'])
 Route::post('/Ortho/Send-Blog-Comment',[BlogController::class,'StoreBlogComment'])->name('User.blog.comment.store');
 Route::post('/Ortho/Send-Course-Comment',[CourseController::class,'StoreCourseComment'])->name('User.course.comment.store');
 Route::post('/Ortho/Add-Favourite-Doctor',[FavouriteDoctorController::class,'store'])->name('User.AddFavourite.doctor');
+Route::post('/Ortho/Add-Favourite-Course',[FavouriteCourseController::class,'store'])->name('User.AddFavourite.course');
 
 
 // Admin Dashboard Routes

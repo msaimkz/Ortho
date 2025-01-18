@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\DoctorRequest;
 use App\Models\Appoinment;
+use App\Models\FavouriteCourse;
 use App\Models\FavouriteDoctor;
 use App\Models\Patient\PatientProfile;
 use App\Models\User;
@@ -261,5 +262,13 @@ class DashboardController extends Controller
 
 
         return view('User.Dashboard.Favourite Doctor.index',compact('doctors'));
+    }
+
+    public function FavouriteCourse(){
+
+        $courses = FavouriteCourse::where('user_id',Auth::user()->id)->with('course')->latest()->get();
+
+
+        return view('User.Dashboard.Favourite Course.index',compact('courses'));
     }
 }
