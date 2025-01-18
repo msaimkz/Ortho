@@ -90,7 +90,8 @@
                 transform: translateX(13px) rotate(-180deg) translateX(13px)
             }
         }
-        .hidden-loading-container{
+
+        .hidden-loading-container {
             display: none;
         }
     </style>
@@ -124,7 +125,13 @@
             </li>
             <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a>
             </li>
-            <li class="float-right">
+            <li class="d-none d-lg-inline-block"><a href="{{ route('doctor.comment.index') }}" title="Inbox"><i
+                        class="zmdi zmdi-email"></i>
+                    
+                </a>
+            </li>
+
+            <li class="float-right" title="Sign out">
                 <form action="{{ route('logout') }}" method="post" id="logout-form">
                     @csrf
                 </form>
@@ -153,11 +160,14 @@
                             <div class="user-info">
                                 <div class="image"><a href="{{ route('doctor.profile') }}">
 
-                                        @if (isset( Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path)))
-                                            <img class="Profile-Image" src="{{ asset('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path) }}"
+                                        @if (isset(Auth::user()->profile_photo_path) &&
+                                                file_exists(public_path('Uploads/Doctor/Profile/' . Auth::user()->profile_photo_path)))
+                                            <img class="Profile-Image"
+                                                src="{{ asset('Uploads/Doctor/Profile/' . Auth::user()->profile_photo_path) }}"
                                                 alt="profile-image">
                                         @else
-                                            <img class="Profile-Image" src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
+                                            <img class="Profile-Image"
+                                                src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
                                                 alt="profile-image">
                                         @endif
                                     </a></div>
@@ -197,11 +207,14 @@
                         <li>
                             <div class="user-info m-b-20 p-b-15">
                                 <div class="image"><a href="{{ route('doctor.profile') }}">
-                                        @if (isset(Auth::user()->profile_photo_path) && file_exists(public_path('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path)))
-                                            <img class="Profile-Image" src="{{ asset('Uploads/Doctor/Profile/'.Auth::user()->profile_photo_path) }}"
+                                        @if (isset(Auth::user()->profile_photo_path) &&
+                                                file_exists(public_path('Uploads/Doctor/Profile/' . Auth::user()->profile_photo_path)))
+                                            <img class="Profile-Image"
+                                                src="{{ asset('Uploads/Doctor/Profile/' . Auth::user()->profile_photo_path) }}"
                                                 alt="profile-image">
                                         @else
-                                            <img class="Profile-Image" src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
+                                            <img class="Profile-Image"
+                                                src="{{ asset('Assets/Dashboard/assets/images/doctors/member1.png') }}"
                                                 alt="profile-image">
                                         @endif
                                     </a></div>
@@ -213,7 +226,7 @@
                             </div>
                         </li>
                         <li>
-                           
+
                             <small class="text-muted">Email address: </small>
                             <p class="doctoremail">{{ Auth::user()->email }}</p>
                             <hr>

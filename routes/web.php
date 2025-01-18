@@ -19,6 +19,7 @@ use App\Http\Controllers\AppoinmentController;
 use App\Http\Controllers\Doctor\DoctorsController;
 use App\Http\Controllers\Doctor\DoctorWorkingTimeController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Doctor\DoctorCommentController;
 use App\Http\Controllers\Doctor\DoctorPatientController;
 use App\Http\Controllers\FavouriteCourseController;
 use App\Http\Controllers\FavouriteDoctorController;
@@ -95,6 +96,7 @@ Route::post('/Ortho/Send-Blog-Comment',[BlogController::class,'StoreBlogComment'
 Route::post('/Ortho/Send-Course-Comment',[CourseController::class,'StoreCourseComment'])->name('User.course.comment.store');
 Route::post('/Ortho/Add-Favourite-Doctor',[FavouriteDoctorController::class,'store'])->name('User.AddFavourite.doctor');
 Route::post('/Ortho/Add-Favourite-Course',[FavouriteCourseController::class,'store'])->name('User.AddFavourite.course');
+Route::post('/Ortho/Send-Doctor-Comment',[DoctorCommentController::class,'store'])->name('User.doctor.comment.store');
 
 
 // Admin Dashboard Routes
@@ -231,6 +233,9 @@ Route::post('/Ortho/Doctor/Change-Appointment-Status',[AppoinmentController::cla
 Route::post('/Ortho/Doctor/Cancelled-Appointment',[AppoinmentController::class,'Cancel'])->name('doctor.Appointment.Cancel');
 Route::get('/Ortho/Doctor/All-Patients',[DoctorPatientController::class,'index'])->name('doctor.Patients');
 Route::get('/Ortho/Doctor/Patient-Profile/{id}',[DoctorPatientController::class,'profile'])->name('doctor.Patients.profile');
+Route::get('/Ortho/Doctor/All-Comment-Messages',[DoctorCommentController::class,'index'])->name('doctor.comment.index');
+Route::get('/Ortho/Doctor/View-Comment-Messages/{id}',[DoctorCommentController::class,'show'])->name('doctor.comment.show');
+Route::get('/Ortho/Doctor/Reply-Comment-Messages',[DoctorCommentController::class,'reply'])->name('doctor.comment.reply');
 });
 
 
