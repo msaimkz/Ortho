@@ -14,17 +14,17 @@ class DoctorCommentController extends Controller
     public function index()
     {
 
-        $comments = DoctorComment::where('doctor_id',Auth::user()->id)->latest()->with('user')->get();
+        $comments = DoctorComment::where('doctor_id', Auth::user()->id)->latest()->with('user')->get();
 
-        return view('Doctor.Comment.index',compact('comments'));
+        return view('Doctor.Comment.index', compact('comments'));
     }
 
     public function show(string $id)
     {
 
-        $comment = DoctorComment::where('id',$id)->with('user')->first();
+        $comment = DoctorComment::where('id', $id)->with('user')->first();
 
-        if($comment == null){
+        if ($comment == null) {
 
             return redirect()->route('doctor.notfound');
         }
@@ -32,13 +32,19 @@ class DoctorCommentController extends Controller
         $comment->isView = "yes";
         $comment->save();
 
-        return view('Doctor.Comment.show',compact('comment'));
+        return view('Doctor.Comment.show', compact('comment'));
     }
 
-    public function reply()
+    public function reply(string $id)
     {
+        $comment = DoctorComment::where('id', $id)->with('user')->first();
 
-        return view('Doctor.Comment.reply');
+        if ($comment == null) {
+
+            return redirect()->route('doctor.notfound');
+        }
+
+        return view('Doctor.Comment.reply', compact('comment'));
     }
 
     public function store(Request $request)
@@ -46,7 +52,7 @@ class DoctorCommentController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:3', 'max:15', 'regex:/^[a-zA-Z\s]+$/'],
-            'email' => ['required', 'email', 'max:30', 'unique:doctor_comments'],
+            'email' => ['required', 'email', 'max:30'],
             'comment' => ['required', 'min:10'],
             'doctor_id' => ['required', 'numeric']
         ]);
@@ -102,6 +108,117 @@ class DoctorCommentController extends Controller
             return response()->json([
                 'status' => true,
                 'msg' => 'Thank you! Your Comment has been successfully sent. We will get back to you shortly'
+            ]);
+        } else {
+
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors(),
+            ]);
+        }
+    }
+
+    public function status(Request $request)
+    {
+
+        $comment = DoctorComment::find($request->id);
+
+        if ($comment == null) {
+
+            return response()->json([
+                'status' => false,
+                'isError' => true,
+                'error' => "Doctor Comment not Found"
+            ]);
+        }
+
+        if ($comment->status == 'inactive') {
+
+            $comment->status = 'active';
+            $comment->save();
+
+
+            return response()->json([
+                'status' => true,
+                'Commentstatus' => $comment->status,
+                'msg' => "Comment Status " . $comment->status . " Successfully"
+            ]);
+        } else {
+
+            $comment->status = 'inactive';
+            $comment->save();
+
+
+            return response()->json([
+                'status' => true,
+                'Commentstatus' => $comment->status,
+                'msg' => "Comment Status " . $comment->status . " Successfully"
+            ]);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+
+        $comment = DoctorComment::find($request->id);
+
+        if ($comment == null) {
+
+            return response()->json([
+                'status' => false,
+                'isError' => true,
+                'error' => "Doctor Comment not Found"
+            ]);
+        }
+
+        $comment->delete();
+
+
+        return response()->json([
+            'status' =>  true,
+            'msg' => "Comment Deleted Sucessfully",
+
+        ]);
+    }
+
+    public function replyComment(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email'],
+            'id' => ['required', 'numeric'],
+            'comment' => ['required', 'min:10', 'max:200'],
+        ]);
+
+
+        if ($validator->passes()) {
+
+            $comment = DoctorComment::find($request->id);
+
+            if ($comment == null) {
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => "Doctor Comment not Found"
+                ]);
+            }
+
+            if ($comment->email != $request->email) {
+
+                return response()->json([
+                    'status' => false,
+                    'isError' => true,
+                    'error' => "Please email does not change"
+                ]);
+            }
+
+            $comment->reply = $request->comment;
+            $comment->save();
+
+            return response()->json([
+                'status' => true,
+                'msg' => "Comment Reply Message Submit Successfully"
             ]);
         } else {
 

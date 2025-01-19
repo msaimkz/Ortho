@@ -235,7 +235,10 @@ Route::get('/Ortho/Doctor/All-Patients',[DoctorPatientController::class,'index']
 Route::get('/Ortho/Doctor/Patient-Profile/{id}',[DoctorPatientController::class,'profile'])->name('doctor.Patients.profile');
 Route::get('/Ortho/Doctor/All-Comment-Messages',[DoctorCommentController::class,'index'])->name('doctor.comment.index');
 Route::get('/Ortho/Doctor/View-Comment-Messages/{id}',[DoctorCommentController::class,'show'])->name('doctor.comment.show');
-Route::get('/Ortho/Doctor/Reply-Comment-Messages',[DoctorCommentController::class,'reply'])->name('doctor.comment.reply');
+Route::get('/Ortho/Doctor/Reply-Comment-Messages/{id}',[DoctorCommentController::class,'reply'])->name('doctor.comment.reply');
+Route::post('/Ortho/Doctor/Change-Comment-Status',[DoctorCommentController::class,'status'])->name('doctor.comment.status');
+Route::delete('/Ortho/Doctor/Delete-Comment',[DoctorCommentController::class,'delete'])->name('doctor.comment.delete');
+Route::post('/Ortho/Doctor/Send-Comment-Reply',[DoctorCommentController::class,'replyComment'])->name('doctor.comment.reply.msg');
 });
 
 

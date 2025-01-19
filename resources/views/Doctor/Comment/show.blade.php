@@ -20,7 +20,33 @@
             </div>
         </div>
         <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card action_bar">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-1 col-md-2 col-3">
+                                    <button type="button" id="delete" data-id="{{ $comment->id }}"
+                                        class="btn  btn-danger">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
 
+                                </div>
+                                <div class="col-lg-1 col-md-12 col-3">
+                                    @if ($comment->status == 'inactive')
+                                        <button class="btn btn-success" id="status"
+                                            data-id="{{ $comment->id }}">Acitve</button>
+                                    @else
+                                        <button class="btn btn-danger" id="status"
+                                            data-id="{{ $comment->id }}">Inacitve</button>
+                                    @endif
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row clearfix">
                 <div class="col-lg-12">
                     <div class="card">
@@ -39,7 +65,7 @@
                                                     <img src="http://via.placeholder.com/35x35" alt="Avatar"
                                                         class="rounded" width="60">
                                                 @endif
-                                               
+
                                             </div>
                                         </div>
                                         <div class="media-body">
@@ -64,11 +90,157 @@
                     </div>
                     <div class="card">
                         <div class="body">
-                            <strong>Click here to</strong> <a href="{{ route('doctor.comment.reply') }}">Reply</a>
+                            @if ($comment->reply != null)
+                            <p>{{ ucwords($comment->reply) }}</p>
+                            <strong>Click here to</strong> <a href="{{ route('doctor.comment.reply',$comment->id) }}">Update Reply Message</a>
+                                
+                            @else
+                            <strong>Click here to</strong> <a href="{{ route('doctor.comment.reply',$comment->id) }}">Reply</a>
+
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+@endsection
+
+@section('js')
+    <script>
+        $('#status').click(function() {
+            if (confirm("Are you sure you want to Change Status to this Comment ?")) {
+                $('#status').prop('disabled', true);
+                $('#response-loader').removeClass('hidden-loading-container')
+
+                $.ajax({
+                    url: "{{ route('doctor.comment.status') }}",
+                    type: "post",
+                    data: {
+
+                        id: $(this).data('id'),
+
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#status').prop('disabled', false);
+                        $('#response-loader').addClass('hidden-loading-container')
+
+
+
+                        if (response['status'] == true) {
+
+                            if (response['Commentstatus'] == 'active') {
+
+                                $('#status').removeClass('btn-success').addClass('btn-danger').html(
+                                    'Inactive')
+                            } else {
+
+                                $('#status').removeClass('btn-danger').addClass('btn-success').html(
+                                    'Active')
+
+                            }
+
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response['msg'],
+                            });
+                        } else {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
+                        }
+
+                    }
+                })
+            }
+        })
+        $('#delete').click(function() {
+            if (confirm("Are you sure you want to Change Delete to this Comment ?")) {
+                $('#delete').prop('disabled', true);
+                $('#response-loader').removeClass('hidden-loading-container')
+
+                $.ajax({
+                    url: "{{ route('doctor.comment.delete') }}",
+                    type: "delete",
+                    data: {
+
+                        id: $(this).data('id'),
+
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#delete').prop('disabled', false);
+                        $('#response-loader').addClass('hidden-loading-container')
+
+
+
+                        if (response['status'] == true) {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response['msg'],
+                            });
+
+                            window.location.href = "{{ route('doctor.comment.index') }}"
+                        } else {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
+                        }
+
+                    }
+                })
+            }
+        })
+    </script>
 @endsection
