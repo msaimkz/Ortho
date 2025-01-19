@@ -34,9 +34,10 @@
                                         <div class="pull-left">
                                             <div class="controls">
 
-                                                <a href="javascript:void(0);"
-                                                    class="favourite text-muted d-none d-md-inline-block"
-                                                    data-toggle="active"><i class="zmdi zmdi-star-outline"></i></a>
+                                                <a id="favourite" href="javascript:void(0);"
+                                                    class="favourite {{ $comment->isFavourite == 'yes' ? 'col-amber' : '' }} {{ $comment->isFavourite == 'no' ? 'text-muted' : '' }}  d-none d-md-inline-block"
+                                                    data-toggle="active" data-id="{{ $comment->id }}"><i
+                                                        class="zmdi zmdi-star-outline"></i></a>
                                             </div>
                                             <div class="thumb d-none d-md-inline-block m-r-20">
                                                 @if (isset($comment->user->profile_photo_path) &&
@@ -47,12 +48,12 @@
                                                     <img src="http://via.placeholder.com/35x35" alt="Avatar"
                                                         class="rounded-circle">
                                                 @endif
-                                               
+
                                             </div>
                                         </div>
                                         <div class="media-body">
                                             <div class="media-heading">
-                                                <a href="{{ route('doctor.comment.show',$comment->id) }}"
+                                                <a href="{{ route('doctor.comment.show', $comment->id) }}"
                                                     class="m-r-10">{{ ucwords($comment->name) }}</a>
 
                                                 <small class="float-right text-muted"><time class="d-none d-md-inline-block"
@@ -72,4 +73,75 @@
             </div>
         </div>
     </section>
+@endsection
+@section('js')
+    <script>
+        $('#favourite').click(function() {
+            $('#response-loader').removeClass('hidden-loading-container')
+
+            $.ajax({
+                url: "{{ route('doctor.comment.favourite') }}",
+                type: "post",
+                data: {
+
+                    id: $(this).data('id'),
+
+                },
+                dataType: "json",
+                success: function(response) {
+                    $('#response-loader').addClass('hidden-loading-container')
+
+
+
+                    if (response['status'] == true) {
+
+                        if (response['isFavourite'] == 'yes') {
+
+                            $('#favourite').removeClass('text-muted').addClass('col-amber')
+
+                        } else {
+
+                            $('#favourite').removeClass('col-amber').addClass('text-muted')
+
+                        }
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response['msg'],
+                        });
+                    } else {
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['error'],
+                        });
+                    }
+
+                }
+            })
+
+        })
+    </script>
 @endsection

@@ -36,8 +36,8 @@ class SubscriptionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:subscriptions',new MatchTitleAndSlug($request->name)],
+            'name' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/','unique:subscriptions',new MatchTitleAndSlug($request->name)],
             'description' => ['required','min:10','max:550'],
             'plan' => ['required','in:free,professional,community','unique:subscriptions'],
             'monthly_price' => ['nullable', 'numeric', 'min:0'],
@@ -135,8 +135,8 @@ class SubscriptionController extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'name' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:subscriptions,slug,'.$subscription->id.',id',new MatchTitleAndSlug($request->name)],
+            'name' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/','unique:subscriptions,slug,'.$subscription->id.',id',new MatchTitleAndSlug($request->name)],
             'description' => ['required','min:10','max:550'],
             'plan' => ['required','in:free,professional,community','unique:subscriptions,plan,'.$subscription->id.',id'],
             'monthly_price' => ['nullable', 'numeric', 'min:0'],

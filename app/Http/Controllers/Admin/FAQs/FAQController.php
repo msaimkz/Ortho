@@ -35,8 +35,8 @@ class FAQController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'question' => ['required','min:3','max:200','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:200','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:faqs',new MatchTitleAndSlug($request->question)],
+            'question' => ['required','min:3','max:200','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required','min:3','max:200','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/','unique:faqs',new MatchTitleAndSlug($request->question)],
             'answer' => ['required','min:10',],
             'status' => ['required','in:visible,hidden'],
         ]);
@@ -111,8 +111,8 @@ class FAQController extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'question' => ['required','min:3','max:200','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:200','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:faqs,slug,'.$FAQ->id.',id',new MatchTitleAndSlug($request->question)],
+            'question' => ['required','min:3','max:200','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required','min:3','max:200','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/','unique:faqs,slug,'.$FAQ->id.',id',new MatchTitleAndSlug($request->question)],
             'answer' => ['required','min:10',],
             'status' => ['required','in:visible,hidden'],
         ]);

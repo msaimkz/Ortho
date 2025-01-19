@@ -29,9 +29,9 @@
                     <div class="row clearfix">
                         @if (!empty($courses))
                             @foreach ($courses as $course)
-                              @php
-                                  $chapterCount = $course->chapters->count();
-                              @endphp
+                                @php
+                                    $chapterCount = $course->chapters->count();
+                                @endphp
                                 <div class="col-lg-6 col-md-12" id="course-card-{{ $course->id }}">
                                     <div class="card single_post">
                                         <div class="body">
@@ -41,7 +41,8 @@
                                             <ul class="meta">
                                                 <li><a href="#"><i class="zmdi zmdi-money col-blue"></i>Price:
                                                         ${{ number_format($course->price, 2) }}</a></li>
-                                                <li><a href="#"><i class="zmdi zmdi-book col-blue"></i>Chapter: {{ $chapterCount }}</a>
+                                                <li><a href="#"><i class="zmdi zmdi-book col-blue"></i>Chapter:
+                                                        {{ $chapterCount }}</a>
                                                 </li>
                                             </ul>
                                             <ul class="meta" style="margin-top: 10px ">
@@ -80,15 +81,16 @@
                                             <p>{{ ucwords($course->description) }}</p>
                                             <a href="{{ route('Admin.course.show', $course->slug) }}" title="read more"
                                                 class="btn btn-round btn-info">Read More</a>
-                                                @if ($chapterCount < 5)
-                                                <a href="{{ route('Admin.course.chapter.create', $course->slug) }}" title="Add Chapter"
-                                                    class="btn btn-round btn-info">Add Chapter</a>
-                                                @endif
-                                            
+                                            @if ($chapterCount < 5)
+                                                <a href="{{ route('Admin.course.chapter.create', $course->slug) }}"
+                                                    title="Add Chapter" class="btn btn-round btn-info">Add Chapter</a>
+                                            @endif
+
                                             <a href="{{ route('Admin.course.edit', $course->slug) }}" title="edit course"
                                                 class="btn btn-round btn-primary">Edit</a>
-                                            <button type="button" title="delete course" class="btn btn-round btn-danger delete"
-                                                data-id="{{ $course->id }}" >Delete</button>
+                                            <button type="button" title="delete course"
+                                                class="btn btn-round btn-danger delete"
+                                                data-id="{{ $course->id }}">Delete</button>
 
 
                                         </div>
@@ -107,63 +109,63 @@
 @section('js')
     <script>
         $('.delete').click(function() {
-            if (confirm("Are you sure you want to Delete this Course ?"))
+            if (confirm("Are you sure you want to Delete this Course ?")) {
                 $('.delete').prop('disabled', true);
 
-            $.ajax({
-                url: "{{ route('Admin.course.delete') }}",
-                type: "delete",
-                data: {
+                $.ajax({
+                    url: "{{ route('Admin.course.delete') }}",
+                    type: "delete",
+                    data: {
 
-                    id: $(this).data('id'),
+                        id: $(this).data('id'),
 
-                },
-                dataType: "json",
-                success: function(response) {
-                    $('.delete').prop('disabled', false);
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('.delete').prop('disabled', false);
 
 
 
-                    if (response['status'] == true) {
+                        if (response['status'] == true) {
 
-                        $(`#course-card-${response['id']}`).remove();
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: response['msg'],
-                        });
-                    } else {
+                            $(`#course-card-${response['id']}`).remove();
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response['msg'],
+                            });
+                        } else {
 
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response['error'],
-                        });
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
+                        }
+
                     }
-
-                }
-            })
-
+                })
+            }
         })
     </script>
 @endsection

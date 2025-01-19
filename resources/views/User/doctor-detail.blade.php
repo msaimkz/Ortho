@@ -126,55 +126,62 @@
                 <div class="cs_height_30 cs_height_lg_30"></div>
 
                 <div class="cs_height_70 cs_height_lg_40"></div>
-                        <h2 class="cs_doctor_title mb-0">Comments 0</h2>
-                        <ul class="cs_comment_list cs_mp0">
-                            
-                                
-                                    <li class="cs_comment_body">
-                                        <div class="cs_comment_thumbnail">
-                                           
-                                                <img src="{{ asset('Assets/Dashboard/assets/images/blog/blog-page-3.jpg') }}"
-                                                    alt="Awesome Image" class="cs_radius_5">
-                                           
-                                           
+                <h3 class="cs_doctor_title mb-0">Comments {{ $doctorComments->count() }}</h3>
+                <ul class="cs_comment_list cs_mp0">
+
+                    @if (!empty($doctorComments))
+                        @foreach ($doctorComments as $doctorComment)
+                            <li class="cs_comment_body" >
+                                <div class="cs_comment_thumbnail">
+                                    @if (isset($doctorComment->user->profile_photo_path) &&
+                                            file_exists(public_path('Uploads/Patient/Profile/' . $doctorComment->user->profile_photo_path)))
+                                        <img src="{{ asset('Uploads/Patient/Profile/' . $doctorComment->user->profile_photo_path) }}"
+                                            alt="Profile-Image" class="cs_radius_5">
+                                    @else
+                                        <img src="http://via.placeholder.com/35x35" alt="Avatar" class="cs_radius_5">
+                                    @endif
+                                </div>
+                                <div class="cs_comment_info">
+                                    <h3>{{ ucwords($doctorComment->name) }}</h3>
+                                    <p>{{ ucwords($doctorComment->comment) }}.</p>
+                                    <div class="cs_comment_meta_wrapper">
+                                        <div class="cs_comment_date">
+                                            <span>{{ \Carbon\Carbon::parse($doctorComment->created_at)->format('d M Y g:i A') }}</span>
+                                            
                                         </div>
-                                        <div class="cs_comment_info">
-                                            <h3>{{ ucwords('saim imran') }}</h3>
-                                            <p>{{ ucwords('this is best doctor') }}.</p>
-                                            <div class="cs_comment_meta_wrapper">
-                                                <div class="cs_comment_date">
-                                                    <span>23 jan 2025 12:00 AM</span>                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                
+                                       
+                                    </div>
+                                   
+                                </div>
+                            </li>       
+                        @endforeach
+                    @endif
+                </ul>
+                <div class="cs_height_90 cs_height_lg_60"></div>
+                <h3 class="cs_doctor_title">Get a Comment</h3>
+                <form class="cs_reply_form row cs_row_gap_30 cs_gap_y_30" id="CommentForm" name="CommentForm">
+                    <input type="hidden" name="doctor_id" id="doctor_id" value="{{ $doctor->user_id }}">
+                    <div class="col-md-6">
+                        <input type="text" name="name" id="name" placeholder="Your Name"
+                            class="cs_form_field">
+                        <span class="text-danger"></span>
 
-                        </ul>
-                        <div class="cs_height_90 cs_height_lg_60"></div>
-                        <h2 class="cs_doctor_title">Get a Comment</h2>
-                        <form class="cs_reply_form row cs_row_gap_30 cs_gap_y_30" id="CommentForm" name="CommentForm">
-                            <input type="hidden" name="doctor_id" id="doctor_id" value="{{ $doctor->user_id }}">
-                            <div class="col-md-6">
-                                <input type="text" name="name" id="name" placeholder="Your Name"
-                                    class="cs_form_field">
-                                <span class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="email" name="email" id="email" placeholder="Your Email"
+                            class="cs_form_field">
+                        <span class="text-danger"></span>
 
-                            </div>
-                            <div class="col-md-6">
-                                <input type="email" name="email" id="email" placeholder="Your Email"
-                                    class="cs_form_field">
-                                <span class="text-danger"></span>
-
-                            </div>
-                            <div class="col-md-12">
-                                <textarea name="comment" class="cs_form_field" id="comment" cols="10" rows="3"
-                                    placeholder="Give your Comment"></textarea>
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="col-md-12">
-                                <button type="submit" class="cs_btn cs_style_1 cs_color_1">Submit Now</button>
-                            </div>
-                        </form>
+                    </div>
+                    <div class="col-md-12">
+                        <textarea name="comment" class="cs_form_field" id="comment" cols="10" rows="3"
+                            placeholder="Give your Comment"></textarea>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="cs_btn cs_style_1 cs_color_1">Submit Now</button>
+                    </div>
+                </form>
 
             </div>
             <div class="cs_height_100 cs_height_lg_60"></div>

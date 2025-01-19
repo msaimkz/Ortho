@@ -228,4 +228,41 @@ class DoctorCommentController extends Controller
             ]);
         }
     }
+
+    public function favourite(Request $request)
+    {
+
+        $comment = DoctorComment::find($request->id);
+
+        if ($comment == null) {
+
+            return response()->json([
+                'status' => false,
+                'isError' => true,
+                'error' => "Doctor Comment not Found"
+            ]);
+        }
+
+        if ($comment->isFavourite == 'no') {
+
+            $comment->isFavourite = 'yes';
+            $comment->save();
+
+            return response()->json([
+                'status' => true,
+                'isFavourite' => $comment->isFavourite,
+                'msg' => "This Comment add successfully to our favourite comments list"
+            ]);
+        } else {
+
+            $comment->isFavourite = 'no';
+            $comment->save();
+
+            return response()->json([
+                'status' => true,
+                'isFavourite' => $comment->isFavourite,
+                'msg' => "This Comment remove successfully to our favourite comments list"
+            ]);
+        }
+    }
 }

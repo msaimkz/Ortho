@@ -259,28 +259,28 @@
         })
 
         $('#delete').click(function() {
-            if (confirm("Are you sure you want to Delete this user Account?"))
+            if (confirm("Are you sure you want to Delete this user Account?")) {
                 $('#delete').prop('disabled', true);
-            $('#response-loader').removeClass('hidden-loading-container')
+                $('#response-loader').removeClass('hidden-loading-container')
 
-            $.ajax({
-                url: "{{ route('Admin.doctor.DeleteAccount') }}",
-                type: "delete",
-                data: {
+                $.ajax({
+                    url: "{{ route('Admin.doctor.DeleteAccount') }}",
+                    type: "delete",
+                    data: {
 
-                    id: $(this).data('id'),
+                        id: $(this).data('id'),
 
-                },
-                dataType: "json",
-                success: function(response) {
-                    $('#delete').prop('disabled', false);
-                    $('#response-loader').addClass('hidden-loading-container')
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('#delete').prop('disabled', false);
+                        $('#response-loader').addClass('hidden-loading-container')
 
-                    window.location.href = " {{ route('Admin.doctor') }}"
+                        window.location.href = " {{ route('Admin.doctor') }}"
 
-                }
-            })
-
+                    }
+                })
+            }
         })
     </script>
 @endsection

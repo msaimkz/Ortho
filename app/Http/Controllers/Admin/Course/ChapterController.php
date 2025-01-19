@@ -48,8 +48,8 @@ class ChapterController extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'title' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/', 
+            'title' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/', 
             Rule::unique('course_chapters')->where(function ($query) use ($course) {
                 return $query->where('course_id', $course->id);
             }),new MatchTitleAndSlug($request->title)],
@@ -157,8 +157,8 @@ class ChapterController extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'title' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/',
+            'title' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
             Rule::unique('course_chapters')->where(function ($query) use ($course) {
                 return $query->where('course_id', $course->id);
             }),

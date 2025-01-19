@@ -239,6 +239,7 @@ Route::get('/Ortho/Doctor/Reply-Comment-Messages/{id}',[DoctorCommentController:
 Route::post('/Ortho/Doctor/Change-Comment-Status',[DoctorCommentController::class,'status'])->name('doctor.comment.status');
 Route::delete('/Ortho/Doctor/Delete-Comment',[DoctorCommentController::class,'delete'])->name('doctor.comment.delete');
 Route::post('/Ortho/Doctor/Send-Comment-Reply',[DoctorCommentController::class,'replyComment'])->name('doctor.comment.reply.msg');
+Route::post('/Ortho/Doctor/Make-Favourite-Comment',[DoctorCommentController::class,'favourite'])->name('doctor.comment.favourite');
 });
 
 

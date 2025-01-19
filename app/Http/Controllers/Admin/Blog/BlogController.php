@@ -51,8 +51,8 @@ class BlogController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'title' => ['required', 'min:3', 'max:100', 'regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required', 'min:3', 'max:100', 'regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/', 'unique:blogs', new MatchTitleAndSlug($request->title)],
+            'title' => ['required', 'min:3', 'max:100', 'regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required', 'min:3', 'max:100', 'regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/', 'unique:blogs', new MatchTitleAndSlug($request->title)],
             'short_description' => ['required', 'min:10', 'max:250'],
             'description' => ['required', 'min:10'],
             'status' => ['required', 'in:active,inactive'],
@@ -173,8 +173,8 @@ class BlogController extends Controller
             ]);
         }
         $validator = Validator::make($request->all(), [
-            'title' => ['required', 'min:3', 'max:100', 'regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required', 'min:3', 'max:100', 'regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/', 'unique:blogs,slug,' . $blog->id . ',id', new MatchTitleAndSlug($request->title)],
+            'title' => ['required', 'min:3', 'max:100', 'regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required', 'min:3', 'max:100', 'regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/', 'unique:blogs,slug,' . $blog->id . ',id', new MatchTitleAndSlug($request->title)],
             'short_description' => ['required', 'min:10', 'max:250'],
             'description' => ['required', 'min:10'],
             'status' => ['required', 'in:active,inactive'],

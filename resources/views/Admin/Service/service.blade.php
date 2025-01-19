@@ -67,11 +67,12 @@
 
                                             </div>
                                             <p>{{ ucwords($service->short_description) }}</p>
-                                            <a href="{{ route('Admin.service.detail',$service->slug) }}" title="read more"
+                                            <a href="{{ route('Admin.service.detail', $service->slug) }}" title="read more"
                                                 class="btn btn-round btn-info">Read More</a>
-                                            <a href="{{ route('Admin.service.edit',$service->slug) }}" title="Edit"
+                                            <a href="{{ route('Admin.service.edit', $service->slug) }}" title="Edit"
                                                 class="btn btn-round btn-primary">Edit</a>
-                                            <button type="button" title="Delete" data-id="{{ $service->id }}" class="btn btn-round btn-danger delete">Delete</button>
+                                            <button type="button" title="Delete" data-id="{{ $service->id }}"
+                                                class="btn btn-round btn-danger delete">Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -91,67 +92,65 @@
 @section('js')
     <script>
         $('.delete').click(function() {
-            if (confirm("Are you sure you want to Delete this Service ?"))
+            if (confirm("Are you sure you want to Delete this Service ?")) {
                 $('.delete').prop('disabled', true);
                 $('#response-loader').removeClass('hidden-loading-container')
 
-            $.ajax({
-                url: "{{ route('Admin.service.delete') }}",
-                type: "delete",
-                data: {
+                $.ajax({
+                    url: "{{ route('Admin.service.delete') }}",
+                    type: "delete",
+                    data: {
 
-                    id: $(this).data('id'),
+                        id: $(this).data('id'),
 
-                },
-                dataType: "json",
-                success: function(response) {
-                    $('.delete').prop('disabled', false);
-                    $('#response-loader').addClass('hidden-loading-container')
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        $('.delete').prop('disabled', false);
+                        $('#response-loader').addClass('hidden-loading-container')
 
-                    
 
-                    if (response['status'] == true) {
 
-                        $(`#service-${response['id']}`).remove();
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: response['msg'],
-                        });
+                        if (response['status'] == true) {
+
+                            $(`#service-${response['id']}`).remove();
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response['msg'],
+                            });
+                        } else {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response['error'],
+                            });
+                        }
+
                     }
-                    else{
-
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "error",
-                            title: response['error'],
-                        });
-                    }
-
-                }
-            })
-
+                })
+            }
         })
     </script>
 @endsection
-

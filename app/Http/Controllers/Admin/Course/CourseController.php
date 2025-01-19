@@ -47,8 +47,8 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'title' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:courses',new MatchTitleAndSlug($request->title)],
+            'title' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/','unique:courses',new MatchTitleAndSlug($request->title)],
             'description' => ['required','min:10'],
             'price' => ['required','numeric','min:1'],
             'status' => ['required','in:active,inactive'],
@@ -187,8 +187,8 @@ class CourseController extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'title' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/'],
-            'slug' => ['required','min:3','max:100','regex:/^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]).*$/','unique:courses,slug,'.$course->id.',id',new MatchTitleAndSlug($request->title)],
+            'title' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/'],
+            'slug' => ['required','min:3','max:100','regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/','unique:courses,slug,'.$course->id.',id',new MatchTitleAndSlug($request->title)],
             'description' => ['required','min:10'],
             'price' => ['required','numeric','min:1'],
             'status' => ['required','in:active,inactive'],

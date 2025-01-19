@@ -14,7 +14,8 @@
                         <i class="zmdi zmdi-plus"></i>
                     </button>
                     <ul class="breadcrumb float-md-right">
-                        <li class="breadcrumb-item"><a href="{{ route('User.dashboard.dashboard') }}"><i class="zmdi zmdi-home"></i> Ortho</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('User.dashboard.dashboard') }}"><i
+                                    class="zmdi zmdi-home"></i> Ortho</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Favourite Doctors</a></li>
                         <li class="breadcrumb-item active">All Favourite Doctors</li>
                     </ul>
@@ -41,50 +42,55 @@
                                     <table class="table m-b-0 table-hover">
                                         <thead>
                                             <tr>
-                                               
+
                                                 <th></th>
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>City</th>
                                                 <th>Number</th>
-                                                
+
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @if (!empty($doctors))
-                                                @foreach ($doctors as $doctor )
-                                                <tr id="favourite-doctor-{{ $doctor->id }}">
-                                                   
-                                                    <td>
-                                                        @if (isset($doctor->doctor->profile_photo_path) &&
-                                                                file_exists(public_path('Uploads/Doctor/Profile/' . $doctor->doctor->profile_photo_path)))
-                                                            <img src="{{ asset('Uploads/Doctor/Profile/' . $doctor->doctor->profile_photo_path) }}"
-                                                                alt="Profile-Image" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
-                                                        @else
-                                                            <img src="http://via.placeholder.com/35x35" alt="Avatar"
-                                                                class="rounded-circle">
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ ucwords($doctor->doctor->name) }}</td>
-                                                    <td>{{ $doctor->doctor->email }}</td>
-                                                    <td>{{ ucwords($doctor->doctor->city) }}</td>
-                                                    <td>{{ $doctor->doctor->phone }}</td>
-                                                    
-                                                    <td>
-                                                        <a href="{{ route('User.DoctorDetail', $doctor->doctor->id) }}"><span class="badge badge-success">View</span></a>
-                                                        <a href="javascript:void(0)" class="Remove" data-id="{{ $doctor->id }}"><span class="badge badge-danger">Remove to Favourite</span></a>
-                                                    </td>
-                                                </tr>
+                                                @foreach ($doctors as $doctor)
+                                                    <tr id="favourite-doctor-{{ $doctor->id }}">
+
+                                                        <td>
+                                                            @if (isset($doctor->doctor->profile_photo_path) &&
+                                                                    file_exists(public_path('Uploads/Doctor/Profile/' . $doctor->doctor->profile_photo_path)))
+                                                                <img src="{{ asset('Uploads/Doctor/Profile/' . $doctor->doctor->profile_photo_path) }}"
+                                                                    alt="Profile-Image" class="rounded-circle"
+                                                                    width="50" height="50"
+                                                                    style="object-fit: cover;">
+                                                            @else
+                                                                <img src="http://via.placeholder.com/35x35" alt="Avatar"
+                                                                    class="rounded-circle">
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ ucwords($doctor->doctor->name) }}</td>
+                                                        <td>{{ $doctor->doctor->email }}</td>
+                                                        <td>{{ ucwords($doctor->doctor->city) }}</td>
+                                                        <td>{{ $doctor->doctor->phone }}</td>
+
+                                                        <td>
+                                                            <a href="{{ route('User.DoctorDetail', $doctor->doctor->id) }}"><span
+                                                                    class="badge badge-success">View</span></a>
+                                                            <a href="javascript:void(0)" class="Remove"
+                                                                data-id="{{ $doctor->id }}"><span
+                                                                    class="badge badge-danger">Remove to
+                                                                    Favourite</span></a>
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                             @else
-                                                
                                             @endif
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -95,13 +101,12 @@
 @endsection
 
 @section('js')
-    
-<script>
-   $('.Remove').click(function() {
-            if (confirm("Are you sure you want to Remove this doctor our favourite doctors list?"))
+    <script>
+        $('.Remove').click(function() {
+            if (confirm("Are you sure you want to Remove this doctor our favourite doctors list?")){
                 $('#response-loader').removeClass('hidden-loading-container')
 
-             $.ajax({
+            $.ajax({
                 url: "{{ route('User.RemoveFavourite.doctor') }}",
                 type: "delete",
                 data: {
@@ -117,7 +122,7 @@
 
                     if (response['status'] == true) {
 
-                        
+
                         $(`#favourite-doctor-${response['id']}`).remove();
                         const Toast = Swal.mixin({
                             toast: true,
@@ -155,7 +160,7 @@
 
                 }
             })
-
+        }
         })
-</script>
+    </script>
 @endsection
